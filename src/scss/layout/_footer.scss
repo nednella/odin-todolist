@@ -5,6 +5,8 @@ footer {
     justify-content: center;
     gap: 0.5rem;
     user-select: none;
+    color: var(--header-text);
+    transition: $default-transition;
 
     & p {
             font-size: 16px;

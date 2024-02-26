@@ -43,13 +43,14 @@
             }
         
             & #nav-close:hover { 
-                background-color: rgba(0, 0, 0, 0.3);
+                background-color: var(--header-btn-hover);
             }
         } 
         
         & .nav-options {
             grid-area: options;
             padding: 0 24px 24px 24px;
+            color: var(--nav-text);
         }
     }
 }

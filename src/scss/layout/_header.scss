@@ -29,7 +29,7 @@ header {
     }
 
     & #nav-open:hover { 
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: var(--header-btn-hover);
     }
 
     & .title {
@@ -95,6 +95,6 @@ header {
         }
     
     & #theme-toggle:hover {
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: var(--header-btn-hover);
     }      
 }
