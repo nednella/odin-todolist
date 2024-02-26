@@ -1,0 +1,21 @@
+@import './_themes.scss';
+
+:root {
+    $active-theme: $dark-theme;
+
+    @each $property, $value in $active-theme {
+        --#{$property}: #{$value};
+    }
+  }
+  
+html[data-theme='light'] {
+    @each $property, $value in $light-theme {
+        --#{$property}: #{$value};
+    }
+}
+
+html[data-theme='dark'] {
+    @each $property, $value in $dark-theme {
+        --#{$property}: #{$value};
+    }
+}
