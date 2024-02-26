@@ -23,7 +23,7 @@ header {
         width: 40px;
         border-radius: 4px;
         font-size: 32px;
-        color: $nav-font-colour;
+        color: var(--nav-text);
     }
 
     & #nav-menu:hover { 
@@ -36,14 +36,14 @@ header {
         
         & svg {
             width: 80px;
-            fill: $nav-font-colour;
+            fill: var(--nav-text);
         }
 
         & p {
             margin-top: -6px;
             font-family: "Paytone One", sans-serif;
             font-size: 40px;
-            color: $nav-font-colour;
+            color: var(--nav-text);
             text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.5);
         }
     }

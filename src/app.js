@@ -1,4 +1,4 @@
-import './scss/main.scss'
+import './scss/app.scss'
 
 const themeToggle = document.getElementById('theme-toggle')
 themeToggle.addEventListener('click', toggleTheme)

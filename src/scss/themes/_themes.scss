@@ -1,7 +1,4 @@
-
 // Credit for implementing SCSS themes: https://medium.com/@dmitriy.borodiy/easy-color-theming-with-scss-bc38fd5734d1
-
-$nav-font-colour: white;
 
 $default-transition: 
     color .3s ease-in-out,
@@ -12,6 +9,7 @@ $default-transition:
 $light-theme: (
     'bg-gradient-top': #32767d,
     'bg-gradient-bottom': #f7d9cf,
+    'nav-text': #fff,
 
     // Theme button colours
     'icon-sun': #997f44,
@@ -23,6 +21,7 @@ $light-theme: (
 $dark-theme: (
     'bg-gradient-top': #374280,
     'bg-gradient-bottom': #aa9289,
+    'nav-text': #fff,
 
     // Theme button colours
     'icon-sun': #b1b0b5,
