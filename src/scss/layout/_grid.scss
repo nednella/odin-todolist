@@ -9,18 +9,17 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-* {
-    transition: $default-transition;
-}
+// * {
+//     transition: $default-transition;
+// }
 
 #grid-container {
     height: 100%;
     background: linear-gradient(
         to bottom,
-        var(--bg-gradient-top) 0%,
-        var(--bg-gradient-top) 30%,
-        var(--bg-gradient-bottom) 80%,
-        // var(--bg-gradient-bottom) 100%,
+        var(--body-bg-gradient-top) 0%,
+        var(--body-bg-gradient-middle) 60%,
+        var(--body-bg-gradient-bottom) 100%,
     );
     display: grid;
     grid-template-rows: $header-height 1fr $footer-height;

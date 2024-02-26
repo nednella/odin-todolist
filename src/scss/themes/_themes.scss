@@ -1,15 +1,20 @@
-// Credit for implementing SCSS themes: https://medium.com/@dmitriy.borodiy/easy-color-theming-with-scss-bc38fd5734d1
 
 $default-transition: 
-    color .3s ease-in-out,
-    background-color .15s ease-in-out,
-    box-shadow .3s ease-in-out,
-    transform .3s ease-in-out;
+    fill .2s ease-in-out,
+    color .2s ease-in-out,
+    background-color .2s ease-in-out,
+    box-shadow .2s ease-in-out,
+    transform .2s ease-in-out;
+
+// Credit for implementing SCSS themes: https://medium.com/@dmitriy.borodiy/easy-color-theming-with-scss-bc38fd5734d1
 
 $light-theme: (
-    'bg-gradient-top': #32767d,
-    'bg-gradient-bottom': #f7d9cf,
-    'nav-text': #fff,
+    'body-bg-gradient-top': #44929c,
+    'body-bg-gradient-middle': #aab9c0,
+    'body-bg-gradient-bottom': #f4d7cf,
+    'header-text': black,
+
+    'nav-bg': #fff,
 
     // Theme button colours
     'icon-sun': #997f44,
@@ -19,9 +24,12 @@ $light-theme: (
 );
 
 $dark-theme: (
-    'bg-gradient-top': #374280,
-    'bg-gradient-bottom': #aa9289,
-    'nav-text': #fff,
+    'body-bg-gradient-top': #191d33,
+    'body-bg-gradient-middle': #4d6068,
+    'body-bg-gradient-bottom': #ac8b80,
+    'header-text': white,
+
+    'nav-bg': #a0a0a0,
 
     // Theme button colours
     'icon-sun': #b1b0b5,

@@ -1,7 +1,7 @@
 
 header {
     grid-area: header;
-    padding: 24px 24px;
+    padding: 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,39 +12,44 @@ header {
         'FILL' 0,
         'wght' 300,
         'GRAD' 0,
-        'opsz' 24
+        'opsz' 24;
     }
 
-    & #nav-menu {
+    & #nav-open {
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
         height: 40px;
         width: 40px;
         border-radius: 4px;
         font-size: 32px;
-        color: var(--nav-text);
+        color: var(--header-text);
+        transition: $default-transition;
     }
 
-    & #nav-menu:hover { 
+    & #nav-open:hover { 
         background-color: rgba(0, 0, 0, 0.3);
     }
 
     & .title {
         display: flex;
         align-items: center;
+        transition: $default-transition;
         
         & svg {
             width: 80px;
-            fill: var(--nav-text);
+            fill: var(--header-text);
+            transition: $default-transition;
         }
 
         & p {
             margin-top: -6px;
             font-family: "Paytone One", sans-serif;
             font-size: 40px;
-            color: var(--nav-text);
-            text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.5);
+            color: var(--header-text);
+            text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.3);
+            transition: $default-transition;
         }
     }
 
