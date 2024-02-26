@@ -1,0 +1,75 @@
+
+#nav {
+    position: fixed;
+    z-index: 1;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    min-height: 100%;
+    width: 40%;
+    min-width: 200px;
+    background: none;
+    background-color: var(--nav-bg);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4),0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    animation: slide-in .2s ease, slide-out .2s ease;
+
+    > * {
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-rows: 70px 1fr;
+        grid-template-areas:
+            "header"
+            "options";
+        
+        & .nav-header {
+            grid-area: header;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            user-select: none;
+        
+            & #nav-close {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                height: 40px;
+                width: 40px;
+                border-radius: 4px;
+                font-size: 32px;
+                color: var(--header-text);
+                transition: $default-transition;
+            }
+        
+            & #nav-close:hover { 
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+        } 
+        
+        & .nav-options {
+            grid-area: options;
+            padding: 0 24px 24px 24px;
+        }
+    }
+}
+
+#nav:modal {
+    max-height: 100vh;
+    max-width: 100vh;
+}
+
+#nav::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#nav:not(.show) {
+    translate: translateX(-100%);
+}
+
+@keyframes slide-in {
+    0% { transform: translateX(-100%) }
+    100% { transform: translateX(0%) }
+}
+
+
