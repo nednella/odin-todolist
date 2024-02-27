@@ -23,14 +23,14 @@
             "header"
             "options";
         
-        & .nav-header {
+        .nav-header {
             grid-area: header;
             padding: 24px;
             display: flex;
             align-items: center;
             user-select: none;
         
-            & #nav-close {
+            #nav-close {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -43,12 +43,12 @@
                 transition: $default-transition;
             }
         
-            & #nav-close:hover { 
+            #nav-close:hover { 
                 background-color: var(--header-btn-hover);
             }
         } 
         
-        & .nav-options {
+        .nav-options {
             grid-area: options;
             padding: 0 24px 24px 24px;
             color: var(--nav-text);
@@ -73,5 +73,3 @@
     0% { transform: translateX(-100%) }
     100% { transform: translateX(0%) }
 }
-
-
