@@ -2,4 +2,13 @@
 
 #content {
     grid-area: content;
+    padding: 0 24px 24px 24px;
+    overflow: hidden;   // Required for task scrolling on overflow
+    display: grid;
+    grid-template-rows: max-content 1fr max-content;
+    gap: 24px;
+
+    > * {
+        width: 100%;
+    }
 }
