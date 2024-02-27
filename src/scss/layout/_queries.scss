@@ -1,5 +1,11 @@
 // Queries
 
+@media only screen and (max-width: 768px) {
+    #grid-container {
+        padding: 0;
+    }
+}
+
 @media only screen and (max-width: 500px) {
     header > .title > p {
         display: none;
