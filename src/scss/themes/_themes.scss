@@ -7,12 +7,16 @@ $light-theme: (
     'body-bg-gradient-bottom': #f4d7cf,
 
     // Header
-    'header-text': #2b2b2b,
+    'header-text': #202020,
     'header-btn-hover': rgba(0, 0, 0, 0.3),
 
     // Nav
     'nav-bg': #eeeeee,
-    'nav-text': #2b2b2b,
+    'nav-text': #202020,
+
+    // Content
+    'content-title-text': #202020,
+    'content-body-text': #3c3c3c,
 
     // Theme button colours
     'icon-sun': #997f44,
@@ -34,6 +38,10 @@ $dark-theme: (
     // Nav
     'nav-bg': #303030,
     'nav-text': #fff,
+    
+    // Content
+    'content-title-text': #fff,
+    'content-body-text': #3c3c3c,
 
     // Theme button colours
     'icon-sun': #b1b0b5,

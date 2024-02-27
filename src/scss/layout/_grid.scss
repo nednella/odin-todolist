@@ -11,6 +11,8 @@ body {
 
 #grid-container {
     height: 100%;
+    min-height: 100%;
+    min-width: 370px;
     background: linear-gradient(
         to bottom,
         var(--body-bg-gradient-top) 0%,

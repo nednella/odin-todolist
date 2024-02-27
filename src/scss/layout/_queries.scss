@@ -1,13 +1,13 @@
 // Queries
 
 @media only screen and (max-width: 500px) {
-
     header > .title > p {
         display: none;
     }
+}
 
+@media only screen and (max-width: 450px) {
     dialog#nav {
         width: 100%;
     }
-    
 }
