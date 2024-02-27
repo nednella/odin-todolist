@@ -1,14 +1,11 @@
-@import './reset.scss';
+// CSS reset file
+@import 'reset';
 
-@import './themes/_root.scss';
-@import './themes/_themes.scss';
+// Themes - 1st directory to correctly compile usage of global variables
+@import 'themes/__themes-dir'; 
 
-@import './layout/_queries.scss';
-@import './layout/_grid.scss';
-@import './layout/_header.scss';
-@import './layout/_footer.scss';
-@import './layout/_content.scss';
-@import './layout/_nav.scss';
+// Components
+@import 'components/__components-dir';
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
+// Layout
+@import 'layout/__layout-dir';

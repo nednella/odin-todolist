@@ -1,4 +1,5 @@
-@import './_themes.scss';
+// Credit for implementing SCSS themes: https://medium.com/@dmitriy.borodiy/easy-color-theming-with-scss-bc38fd5734d1
+@import 'themes';
 
 :root {
     $active-theme: $dark-theme;
