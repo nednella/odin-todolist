@@ -75,33 +75,53 @@
         <a href="https://github.com/nednella" target="_blank" class="github-link"><span class="fab fa-github"></span></a>
     </footer>
 </div>
-<dialog clas="modal" id="nav">
+<dialog class="modal" id="nav">
     <div>
         <div class="nav-header">
             <span id="nav-close" class="material-symbols-rounded">menu</span>
         </div>
-        <div class="nav-tasks">
-            <a href="" class="active">
-                <span class="material-symbols-rounded">clear_day</span>
-                <h3>My Day</h3>
+        <nav class="nav-links">
+            <a href="" class="nav-item active">
+                <span class="nav-item-left">
+                    <span class="material-symbols-rounded">clear_day</span>
+                    <h3>My Day</h3>
+                </span>
+                <span class="nav-item-right">
+                    <span class="my-day-count">2</span>
+                </span>
             </a>
-            <a href="" class="">
-                <span class="material-symbols-rounded">home</span>
-                <h3>All Tasks</h3>
+            <a href="" class="nav-item">
+                <span class="nav-item-left">
+                    <span class="material-symbols-rounded">home</span>
+                    <h3>All Tasks</h3>
+                </span>
+                <span class="nav-item-right">
+                    <span class="all-tasks-count">2</span>
+                </span>
             </a>
-        </div>
-        <hr>
-        <h1 class="projects-title">PROJECTS</h1>
-        <div class="nav-projects">
-            <a href="" class="">
-                <span class="material-symbols-rounded">menu</span>
-                <h3>2024 Goals</h3>
+            <hr>
+            <h1 class="projects-title">PROJECTS</h1>
+            <a href="" class="nav-item">
+                <span class="nav-item-left">
+                    <span class="material-symbols-rounded">menu</span>
+                        <h3>2024 Goals</h3>
+                </span>
+                <span class="nav-item-right">
+                    <span class="project-count">32</span>
+                    <span class="project-delete material-symbols-rounded">delete</span>
+                </span>
             </a>
-            <a href="" class="">
-                <span class="material-symbols-rounded">menu</span>
-                <h3>Shopping List</h3>
+            <a href="" class="nav-item">
+                <span  class="nav-item-left">
+                    <span class="material-symbols-rounded">menu</span>
+                    <h3>Shopping List</h3>
+                </span>
+                <span class="nav-item-right">
+                    <span class="project-count">2</span>
+                    <span class="project-delete material-symbols-rounded">delete</span>
+                </span>
             </a>
-        </div>
+        </nav>
         <div id="add-project">
             <span class="material-symbols-rounded">add</span>
             <input
