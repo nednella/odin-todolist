@@ -29,12 +29,13 @@
     }
 }
 
-#project-list-scroll {
+#project-tasks-scroll {
     overflow-y: hidden; // Required for task scrolling on overflow
 
-    #project-list {
+    #project-tasks {
         max-height: 100%; // Required for task scrolling on overflow
         overflow-y: auto; // Required for task scrolling on overflow
+        
         display: grid;
         grid-auto-rows: max-content;
         gap: 4px;
@@ -92,10 +93,10 @@
         }
 
     }
-    #project-list::-webkit-scrollbar {
+    #project-tasks::-webkit-scrollbar {
         width: 8px;
     }
-    #project-list::-webkit-scrollbar-thumb {
+    #project-tasks::-webkit-scrollbar-thumb {
         background-color: var(--content-title-text);
     }
 }

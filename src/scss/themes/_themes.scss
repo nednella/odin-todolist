@@ -15,6 +15,7 @@ $light-theme: (
     'nav-text': #202020,
     'nav-option-hover': rgb(220, 220, 220),
     'nav-input-text': #202020,
+    'nav-input-hover': rgba(255, 255, 255, 0.9),
 
     // Content
     'content-title-text': #202020,
@@ -42,6 +43,7 @@ $dark-theme: (
     'nav-text': #fff,
     'nav-option-hover': rgba(255, 255, 255, 0.3),
     'nav-input-text': #fff,
+    'nav-input-hover': rgba(255, 255, 255, 0.3),
     
     // Content
     'content-title-text': #fff,

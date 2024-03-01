@@ -1,23 +1,26 @@
 // Nav
 
+$nav-header-height: 70px;
+$nav-add-project-height: 60px;
+
 #nav {
     position: fixed;
     z-index: 1;
     top: 0%;
     left: 0%;
-    height: 100%;
-    min-height: 100%;
+    height: 100vh;
+    min-height: 100vh;
     width: 30%;
     min-width: 350px;
-    background-color: var(--nav-bg);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     animation: slide-in .2s ease, slide-out .2s ease;
 
-    > * {   
+    > * {
         height: 100%;   // Required for click outside of nav to close function
         width: 100%;    // Required for click outside of nav to close function
-        padding: 0 24px;
+        padding: 0 24px 24px 24px;
         user-select: none;
+        background-color: var(--nav-bg);
     }
 }
 
@@ -36,98 +39,121 @@
 }
 
 .nav-header {
-    height: 70px;
-
+    height: $nav-header-height;
     display: flex;
     align-items: center;
     
     #nav-close {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
         height: 40px;
         width: 40px;
         border-radius: 4px;
         font-size: 32px;
         color: var(--header-text);
         transition: $default-transition;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     #nav-close:hover { 
         background-color: var(--nav-option-hover);
     }
 }
 
-nav.nav-links {
-    margin-top: 24px;
+.nav-links {
+    max-height: calc(100% - $nav-header-height - $nav-add-project-height - 4px);
     display: grid;
-    grid-template-rows: repeat(2, 60px) repeat(2, max-content);
-    grid-auto-rows: 60px;
+    grid-template-rows: repeat(2, 60px) max-content 1fr;
     gap: 4px;
 
     > * {
         color: var(--nav-text);
         transition: $default-transition;
     }
-    .nav-item {
-        padding-left: 32px;
-        padding-right: 16px;
-        border-radius: 8px;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        > * {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-        }
-         .my-day-count,
-        .all-tasks-count,
-        .project-count {
-            height: 32px;
-            width: 32px;
-
-            border-radius: 50%;
-            background-color: var(--body-bg-gradient-top);
-            font-size: 1.17em;
-            font-weight: 400;
-            color: white;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .project-delete {
-            display: none;
-        }
-    }
-    .nav-item.active {
-        padding-left: 16px;
-        background-color: var(--nav-option-hover);
-    }
-    .nav-item:hover {
-        background-color: var(--nav-option-hover);
-
-        .project-delete {
-            display: block;
-        }
-    }
     hr {
-        margin-top: 24px;
+        margin: 24px 0;
         border: 1px solid rgb(220, 220, 220);  
     }
     .projects-title {
-        margin: 24px 0;
         font-family: "Paytone One", sans-serif;
         color: var(--nav-text);
+    }
+    .custom-projects-scroll {
+        overflow-y: hidden;    // Required for nav scrolling on overflow
+        display: flex;
+        flex-direction: column;
+
+        .custom-projects {
+            max-height: 100%;      // Required for nav scrolling on overflow
+            overflow-y: auto;      // Required for nav scrolling on overflow
+            display: grid;
+            grid-auto-rows: 60px;
+            gap: 4px;
+    
+            > * {
+                color: var(--nav-text);
+                transition: $default-transition;
+            }
+        }
+    }
+    .custom-projects::-webkit-scrollbar {
+        width: 8px;
+    }
+    .custom-projects::-webkit-scrollbar-thumb {
+        background-color: var(--content-title-text);
+    }
+}
+
+.nav-item {
+    padding-left: 32px;
+    padding-right: 16px;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > * {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+    }
+     .my-day-count,
+    .all-tasks-count,
+    .project-count {
+        height: 32px;
+        width: 32px;
+
+        border-radius: 50%;
+        background-color: var(--body-bg-gradient-top);
+        font-size: 1.17em;
+        font-weight: 400;
+        color: white;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .project-delete {
+        display: none;
+    }
+}
+.nav-item.active {
+    padding-left: 16px;
+    background-color: var(--nav-option-hover);
+}
+.nav-item:hover {
+    background-color: var(--nav-option-hover);
+
+    .project-delete {
+        display: block;
     }
 }
 
 #add-project {
-    height: 60px;
+    height: $nav-add-project-height;
     margin-top: 4px;
     padding-left: 32px;
     border-radius: 8px;
@@ -157,5 +183,5 @@ nav.nav-links {
 }
 
 #add-project:hover {
-    background-color: $background-hover;
+    background-color: var(--nav-input-hover);
 }
