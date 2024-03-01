@@ -1,6 +1,6 @@
 import '../scss/app.scss'
-import toggleTheme from './toggleTheme.js'
-import toggleNav from './toggleNav.js'
+import toggleTheme from './toggleTheme'
+import toggleNav from './toggleNav'
 
 // Theme toggle
 const themeToggle = document.getElementById('theme-toggle')
@@ -17,6 +17,45 @@ navClose.addEventListener('click', toggleNav)
 const nav = document.getElementById('nav')
 nav.addEventListener('click', (e) => {
     if (e.target.nodeName == 'DIALOG') {
-        nav.close()
+        nav.close()     // Close nav modal by clicking on backdrop
     }
 })
+nav.addEventListener('cancel', (e) => {
+    e.preventDefault()  // Prevent ESC from closing nav modal
+} )
+
+
+
+// 1. Implement add task/project input functionality
+// 2. Implement html constructor functions for producing tasks and projects
+
+
+// Add task/project
+const addTask = document.getElementById('add-task-input')
+const addProject = document.getElementById('add-project-input')
+
+window.addEventListener('keydown', (e) => {
+    // Esc key for input clear
+    if (e.key == 'Escape') {
+        if (document.activeElement == addTask) {
+            addTask.value = ''
+        }
+        if (document.activeElement == addProject) {
+            addProject.value = ''
+        }
+    }
+
+    // Enter key for input submission
+    if (e.key == 'Enter') {
+        if (document.activeElement == addTask && addTask.value !== '') {
+            createNewTask(addTask.value)
+            addTask.value = ''         
+        }
+        if (document.activeElement == addProject  && addProject.value !== '') {
+            createNewProject (addProject.value)
+            addProject.value = ''
+        }
+    }  
+})
+
+
