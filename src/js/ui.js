@@ -59,3 +59,36 @@ window.addEventListener('keydown', (e) => {
 })
 
 
+
+// HTML constructors for tasks/projects
+function createNewTask (value) {
+    console.log('add task')
+    const projectTasks = document.getElementById('project-tasks')
+    projectTasks.innerHTML += `
+        <div class="task">
+            <input 
+                class="task-checkbox"
+                type="checkbox"
+            >
+            <p class="task-content">${value}</p>
+            <div class="task-project">Tasks</div>
+        </div>`
+}
+
+function createNewProject (value) {
+    console.log('add project')
+    const navLinks = document.querySelector('.custom-projects')
+    navLinks.innerHTML += `
+        <a href="" class="nav-item" data-custom-project>
+            <span class="nav-item-left">
+                <span class="material-symbols-rounded">menu</span>
+                    <h3>${value}</h3>
+            </span>
+            <span class="nav-item-right">
+                <span class="project-count">0</span>
+                <span class="project-delete material-symbols-rounded">delete</span>
+            </span>
+        </a>`
+}
+
+
