@@ -1,13 +1,13 @@
 import '../scss/app.scss'
 
-
 const ui = (() => {
 
     // Buttons
     const themeToggle = document.getElementById('theme-toggle')
     const navOpen = document.getElementById('nav-open')
     const navClose = document.getElementById('nav-close')
-    const navOptions = document.querySelectorAll('.nav-item')
+    const navLinks = document.querySelector('.nav-links')
+    
 
     // Inputs
     const taskInput = document.getElementById('add-task-input')
@@ -38,6 +38,25 @@ const ui = (() => {
         }
     }
 
+    const navSetActive = (e) => {
+        navRemoveActive()
+        e.target.classList.add('active')
+        // toggleNav()
+    }
+
+    const navRemoveActive = () => {
+        const navOptions = document.querySelectorAll('.nav-item')
+        navOptions.forEach(option => {
+            if (option.classList.contains('active')) {
+                option.classList.remove('active')
+            }
+        })
+    }
+
+    const navDeleteProject = () => {
+
+    }
+
     const createNewTask = (value) => {
         const taskList = document.getElementById('project-tasks')
         taskList.innerHTML += `
@@ -54,7 +73,7 @@ const ui = (() => {
     const createNewProject = (value) => {
         const projectList = document.querySelector('.custom-projects')
         projectList.innerHTML += `
-            <a href="" class="nav-item" data-custom-project>
+            <span href="" class="nav-item" data-custom-project>
                 <span class="nav-item-left">
                     <span class="material-symbols-rounded">menu</span>
                         <h3>${value}</h3>
@@ -63,7 +82,7 @@ const ui = (() => {
                     <span class="project-count">0</span>
                     <span class="project-delete material-symbols-rounded">delete</span>
                 </span>
-            </a>`
+            </span>`
     }
 
 
@@ -72,6 +91,14 @@ const ui = (() => {
     themeToggle.addEventListener('click', () => toggleTheme())
     navOpen.addEventListener('click', () => toggleNav())
     navClose.addEventListener('click', () => toggleNav())
+    navLinks.addEventListener('click', (e) => {
+        if (e.target && e.target.classList.contains('nav-item')) {
+            navSetActive(e)         // Set/remove active class on nav links
+        }
+        if (e.target && e.target.classList.contains('project-delete')) {
+            console.log('delete project')   // Delete selected project
+        }
+    })
     nav.addEventListener('click', (e) => {
         if (e.target.nodeName == 'DIALOG') {
             nav.close()             // Close nav modal by clicking on backdrop

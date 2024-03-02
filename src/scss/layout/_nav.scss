@@ -119,6 +119,7 @@ $nav-add-project-height: 60px;
         align-items: center;
         justify-content: space-between;
         gap: 16px;
+        pointer-events: none;
     }
      .my-day-count,
     .all-tasks-count,
@@ -138,6 +139,7 @@ $nav-add-project-height: 60px;
     }
     .project-delete {
         display: none;
+        pointer-events: auto;
     }
 }
 .nav-item.active {
