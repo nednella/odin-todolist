@@ -8,7 +8,6 @@ const ui = (() => {
     const navClose = document.getElementById('nav-close')
     const navLinks = document.querySelector('.nav-links')
     
-
     // Inputs
     const taskInput = document.getElementById('add-task-input')
     const projectInput = document.getElementById('add-project-input')
@@ -20,7 +19,7 @@ const ui = (() => {
 
 
     // UI Functions
-    const toggleTheme = () => {
+    function toggleTheme() {
         const currentTheme = html.getAttribute('data-theme')
         if (currentTheme == 'light') {
             html.setAttribute('data-theme', 'dark')
@@ -29,35 +28,32 @@ const ui = (() => {
         }
     }
 
-    const toggleNav = () => {
+    function toggleNav() {
         if (nav.hasAttribute('open')) {
             nav.close()
-            projectInput.value = '' // Clear project input on modal close
+            projectInput.value = '' // Clear project input on nav close
         } else {
             nav.showModal()
         }
     }
 
-    const navSetActive = (e) => {
+    function navSetActive(e) {
         navRemoveActive()
         e.target.classList.add('active')
-        // toggleNav()
+        // toggleNav()                 // Close nav after selecting a nav link
     }
 
-    const navRemoveActive = () => {
+    function navRemoveActive() {
         const navOptions = document.querySelectorAll('.nav-item')
-        navOptions.forEach(option => {
-            if (option.classList.contains('active')) {
-                option.classList.remove('active')
-            }
-        })
+        navOptions.forEach(option => option.classList.remove('active'))
     }
 
-    const navDeleteProject = () => {
 
-    }
 
-    const createNewTask = (value) => {
+
+
+    // Create DOM Elements
+    function appendTask(value) {
         const taskList = document.getElementById('project-tasks')
         taskList.innerHTML += `
             <div class="task">
@@ -70,7 +66,7 @@ const ui = (() => {
             </div>`
     }
 
-    const createNewProject = (value) => {
+    function appendProject(value) {
         const projectList = document.querySelector('.custom-projects')
         projectList.innerHTML += `
             <span href="" class="nav-item" data-custom-project>
@@ -87,16 +83,30 @@ const ui = (() => {
 
 
 
+
+
+
+
     // Event Listeners
     themeToggle.addEventListener('click', () => toggleTheme())
     navOpen.addEventListener('click', () => toggleNav())
     navClose.addEventListener('click', () => toggleNav())
     navLinks.addEventListener('click', (e) => {
         if (e.target && e.target.classList.contains('nav-item')) {
-            navSetActive(e)         // Set/remove active class on nav links
+            navSetActive(e)         // Set selected nav link as active
+
+            // Set nav link as active
+            // Set selected project as active
+            // Reload UI
+
         }
         if (e.target && e.target.classList.contains('project-delete')) {
             console.log('delete project')   // Delete selected project
+
+            // If deleted project is active,
+                // Set X as new active project
+            // Reload UI
+
         }
     })
     nav.addEventListener('click', (e) => {
@@ -105,7 +115,7 @@ const ui = (() => {
         }
     })
     nav.addEventListener('cancel', (e) => {
-        e.preventDefault()          // Prevent ESC from closing nav modal
+        e.preventDefault()          // Prevent ESC from closing nav modal to allow for clearing project input on ESC
     })
     window.addEventListener('keydown', (e) => {
         if (e.key == 'Escape') {    // Clear input on ESC
@@ -118,11 +128,11 @@ const ui = (() => {
         }
         if (e.key == 'Enter') {     // Submit input on Enter
             if (document.activeElement == taskInput && taskInput.value !== '') {
-                createNewTask(taskInput.value)
+                appendTask(taskInput.value)
                 taskInput.value = ''         
             }
             if (document.activeElement == projectInput  && projectInput.value !== '') {
-                createNewProject (projectInput.value)
+                appendProject (projectInput.value)
                 projectInput.value = ''
             }
         }  
