@@ -29,10 +29,10 @@
     }
 }
 
-#project-tasks-scroll {
+#active-project-scroll {
     overflow-y: hidden; // Required for task scrolling on overflow
 
-    #project-tasks {
+    #active-project {
         max-height: 100%; // Required for task scrolling on overflow
         overflow-y: auto; // Required for task scrolling on overflow
         
