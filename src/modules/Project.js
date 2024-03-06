@@ -1,4 +1,4 @@
-import task from './task'
+import task from './Task'
 
 export default class project {
     constructor (title) {
