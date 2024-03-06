@@ -1,1 +1,4 @@
-import UI from './js/ui'
+import './scss/app.scss'
+import UI from './modules/UI'
+
+document.addEventListener('DOMContentLoaded', UI.init())
