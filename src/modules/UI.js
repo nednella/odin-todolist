@@ -1,4 +1,5 @@
 import toDoList from './toDoList'
+import { format } from 'date-fns'
 
 String.prototype.toTitleCase = function() {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -17,7 +18,6 @@ export default class UI {
 
         console.log('App Initialising...')
         
-        UI.app.setActiveProject('My Day')
         UI.app.getActiveProject().addTask('Test 1')
         UI.app.getActiveProject().addTask('Test 2')
         UI.app.getActiveProject().addTask('Test 3')
@@ -36,7 +36,7 @@ export default class UI {
         UI.clear()
         UI.app.getProjects().forEach((Project, index) => {
             index > 1
-                ? UI.appendProject(Project.getTitle().toTitleCase())
+                ? UI.appendProject(Project.getTitle())
                 : null
         })
         UI.loadProject(UI.app.getActiveProject())
@@ -69,9 +69,19 @@ export default class UI {
     }
 
     static loadProject(Project) {
-        console.log('Loading Project: ', Project)
         const projectTitle1 = document.getElementById('project-title-1')
+        const projectTitle2 = document.getElementById('project-title-2')
+
+        // Debugging
+        console.log('Loading Project: ', Project)
+
+        // Load project title
         projectTitle1.textContent = Project.getTitle().toUpperCase()
+
+        // If My Day, load current date
+        if (Project.getTitle() == 'My Day') projectTitle2.textContent = format(new Date(), "eeee, d MMM y").toUpperCase()
+
+        // Load project tasks
         Project.getTasks().forEach(Task => UI.appendTask(Task.getTitle()))
     }
 
@@ -110,10 +120,7 @@ export default class UI {
         if (e.target.nodeName == 'DIALOG' || e.target.id == 'nav-close') UI.toggleNav() 
 
         if (e.target.classList.contains('nav-item')) {
-            console.log('Loading selected project...')
-            // redirect
             const selectedProject = e.target.children[0].children[1].textContent
-            console.log(selectedProject)
             UI.app.setActiveProject(selectedProject)
             UI.toggleNav()
             UI.init()
@@ -149,14 +156,12 @@ export default class UI {
     }
 
     static createTask(Title) {
-        console.log('Creating Task...')
         UI.app.getActiveProject().addTask(Title)
         UI.appendTask(Title)
         return
     }
 
     static createProject(Title) {
-        console.log('Creating Project...')  
         UI.app.addProject(Title)
         UI.app.setActiveProject(Title)
         UI.toggleNav()
