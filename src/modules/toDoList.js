@@ -18,7 +18,9 @@ export default class toDoList {
         if (this.list.find((project) => project.getID() == projectTitle.toLowerCase())) return console.log('Project already exists.')
         else this.list.push(new Project(projectTitle))
 
-        // console.log('New Project: ' + JSON.stringify(this.list[(this.list.length - 1)]))
+        // Debugging
+        console.log('New Project: ', this.list[(this.list.length - 1)])
+
         // return this.list.push(new Project(projectTitle.toLowerCase()))
     }
     getProject (projectTitle) {
@@ -26,5 +28,16 @@ export default class toDoList {
     }
     getProjects () {
         return this.list
+    }
+    deleteProject (projectTitle) {
+        const selectedProject = this.list.find((project) => project.getID() == projectTitle.toLowerCase())
+        if (selectedProject == undefined) return
+
+        // Debugging
+        console.log('Deleting Project: ', selectedProject)
+
+        const index = this.list.indexOf(selectedProject)
+        this.list.splice(index, 1)
+        // else return this.list.splice(index, 1)
     }
 }

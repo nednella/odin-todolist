@@ -12,10 +12,13 @@ export default class UI {
         }
     }
 
-    static app = new toDoList()
+    static app = new toDoList()     // TODO: Implement 'Storage' module that:
+                                    // 1. Pulls stored toDoList() class from storage, or
+                                    // 2. Generates a new toDoList()
 
     static initApp() {
 
+        // Debugging
         console.log('App Initialising...')
         
         UI.app.getActiveProject().addTask('Test 1')
@@ -26,7 +29,8 @@ export default class UI {
         UI.app.getProject('All Tasks').addTask('Yep, Another')
         UI.app.addProject('2024 Goals')
 
-        console.log(UI.app.getProjects())
+        // Debugging
+        console.log('Stored Projects: ', UI.app.getProjects())
 
         UI.init()
         UI.initEventListeners()
@@ -53,27 +57,31 @@ export default class UI {
     }
 
     static clear() {
-        // Wipe the UI
-        const projectsList = document.querySelector('.custom-projects')
-        const projectTitle1 = document.getElementById('project-title-1')
-        const projectTitle2 = document.getElementById('project-title-2')
-        const projectDisplay = document.getElementById('active-project')
+        // Clear the active project
+        const navItems = document.querySelectorAll('.nav-item')
+        navItems.forEach(item => item.classList.remove('active'))
 
-        // Wipe custom projects
-        projectsList.innerHTML = ''
-        // Wipe active project title
-        projectTitle1.textContent = ''
-        projectTitle2.textContent = ''
-        // Wipe active project display
-        projectDisplay.innerHTML = ''
+        // Wipe the UI
+        document.querySelector('.custom-projects').textContent = ''
+        document.getElementById('project-title-1').textContent = ''
+        document.getElementById('project-title-2').textContent = ''
+        document.getElementById('active-project').textContent = ''
     }
 
     static loadProject(Project) {
         const projectTitle1 = document.getElementById('project-title-1')
         const projectTitle2 = document.getElementById('project-title-2')
+        const navItems = document.querySelectorAll('.nav-item')
 
         // Debugging
         console.log('Loading Project: ', Project)
+
+        // Set project as active in nav menu
+        navItems.forEach(item => {
+            if (item.children[0].children[1].textContent == Project.getTitle()) {
+                item.classList.add('active')
+            }
+        })
 
         // Load project title
         projectTitle1.textContent = Project.getTitle().toUpperCase()
@@ -127,8 +135,8 @@ export default class UI {
         }
 
         if (e.target.classList.contains('project-delete')) {
-            console.log('Deleting selected project...')
-            // delete
+            const selectedProject = e.target.parentElement.parentElement.children[0].children[1].textContent
+            UI.deleteProject(selectedProject)
         }
     }
 
@@ -161,10 +169,21 @@ export default class UI {
         return
     }
 
+    static deleteTask(Title) {
+        // TODO
+        return
+    }
+
     static createProject(Title) {
         UI.app.addProject(Title)
         UI.app.setActiveProject(Title)
         UI.toggleNav()
+        UI.init()
+    }
+    
+    static deleteProject(Title) {
+        if (UI.app.getActiveProject().getTitle() == Title) UI.app.setActiveProject('My Day')
+        UI.app.deleteProject(Title)
         UI.init()
     }
 
