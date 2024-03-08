@@ -43,6 +43,7 @@ export default class UI {
                 ? UI.appendProject(Project.getTitle())
                 : null
         })
+        UI.loadNavTaskCounters()
         UI.loadProject(UI.app.getActiveProject())
 
 
@@ -66,6 +67,15 @@ export default class UI {
         document.getElementById('project-title-1').textContent = ''
         document.getElementById('project-title-2').textContent = ''
         document.getElementById('active-project').textContent = ''
+    }
+
+    static loadNavTaskCounters() {
+        const navCounters = document.querySelectorAll('.project-task-count')
+        const Projects = UI.app.getProjects()
+
+        for (let i = 0; i < navCounters.length; i++) {
+            navCounters[i].textContent = Projects[i].taskCount()
+        }
     }
 
     static loadProject(Project) {
@@ -165,7 +175,7 @@ export default class UI {
 
     static createTask(Title) {
         UI.app.getActiveProject().addTask(Title)
-        UI.appendTask(Title)
+        UI.init()
         return
     }
 
@@ -203,13 +213,13 @@ export default class UI {
     static appendProject(Title) {
         const projectsList = document.querySelector('.custom-projects')
         projectsList.innerHTML += `
-        <span href="" class="nav-item" data-custom-project>
+        <span href="" class="nav-item">
             <span class="nav-item-left">
                 <span class="material-symbols-rounded">menu</span>
                     <h3>${Title}</h3>
             </span>
             <span class="nav-item-right">
-                <span class="project-count">0</span>
+                <span class="project-task-count">0</span>
                 <span class="project-delete material-symbols-rounded">delete</span>
             </span>
         </span>`

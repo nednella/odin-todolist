@@ -24,4 +24,7 @@ export default class project {
     getTasks () {
         return this.tasks
     }
+    taskCount () {
+        return this.tasks.length
+    }
 }
