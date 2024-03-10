@@ -6,8 +6,8 @@ export default class project {
         this.id = this.title.toLowerCase()
         this.tasks = []
     }
-    setTitle (title) {
-        this.title = title
+    setTitle (Title) {
+        this.title = Title
         // this.id = title.toLowerCase() // Change ID to reflect new title
     }
     getTitle () {
@@ -16,10 +16,13 @@ export default class project {
     getID () {
         return this.id
     }
-    addTask (title, dueDate) {
-        this.tasks.push(new task(title, dueDate))
+    addTask (Title, dueDate) {
+        this.tasks.push(new task(Title, dueDate))
         // console.log('New Task: ' + JSON.stringify(this.tasks[(this.tasks.length - 1)]))
         // return this.tasks.push(new task(title, dueDate))
+    }
+    getTask (taskTitle) {
+        return this.tasks.find((task) => task.getTitle() == taskTitle)
     }
     getTasks () {
         return this.tasks
