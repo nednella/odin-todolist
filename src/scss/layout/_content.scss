@@ -10,6 +10,7 @@
 
     > * {
         width: 100%;
+        user-select: none;
     }
 }
 
@@ -18,7 +19,6 @@
     font-family: "Paytone One", sans-serif;
     color: var(--content-title-text);
     transition: $default-transition;
-    user-select: none;
 
     &-1 {
         font-size: 40px;
@@ -29,85 +29,34 @@
     }
 }
 
-#active-project-scroll {
+#project-display-scroll {
     overflow-y: hidden; // Required for task scrolling on overflow
 
-    #active-project {
+    #project-display {
         max-height: 100%; // Required for task scrolling on overflow
         overflow-y: auto; // Required for task scrolling on overflow
         
-        display: grid;
-        grid-auto-rows: max-content;
-        gap: 4px;
-
-        .task {
-            min-height: 60px;
-            padding: 8px;
-            border-radius: 8px;
-            background-color: $background;
-        
+        #active-tasks,
+        #completed-tasks {
             display: grid;
-            grid-template-columns: 44px 1fr;
-            grid-template-areas:
-                "checkbox description"
-                "checkbox project";
-            gap: 8px;
-
-            > * {
-                pointer-events: none;
-            }
-            .task-checkbox {
-                grid-area: checkbox;
-                justify-self: center;
-                height: 28px;
-                width: 28px;
-                margin-top: 8px;
-                border-radius: 50%;
-                border: 3px solid grey;
-                background-color: white;
-                appearance: none;
-                -webkit-appearance: none;
-                cursor: pointer;
-                pointer-events: auto;
-            }
-            .task-checkbox:checked {
-                background-color: var(--body-bg-gradient-top);
-            }
-            .task-content {
-                grid-area: description;
-                align-self: center;
-                padding: 8px 44px 8px 0;
-                font-size: 20px;
-                font-weight: 400;
-                color: var(--content-body-text);
-                text-wrap: wrap;
-                overflow: auto;
-                cursor: default;
-            }
-            .task-project {
-                grid-area: project;
-                margin-top: -12px;
-                font-weight: 400;
-                color: grey;
-                text-decoration: none;
-            }
-        }
-        
-        .task:hover {
-            background-color: $background-hover;
+            grid-auto-rows: max-content;
+            gap: 4px;
         }
 
-        .task-complete > :nth-child(2)  {
-            color: grey;
-            text-decoration: line-through;
-            text-decoration-thickness: 1px;
+        #completed-tasks-title {
+            height: max-content;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            font-size: 24px;
+            font-family: "Paytone One", sans-serif;
+            color: var(--content-title-text);
+            transition: $default-transition;
         }
-
     }
-    #project-tasks::-webkit-scrollbar {
+    #project-display::-webkit-scrollbar {
         width: 8px;
     }
-    #project-tasks::-webkit-scrollbar-thumb {
+    #project-display::-webkit-scrollbar-thumb {
         background-color: var(--content-title-text);
     }
 }
@@ -118,7 +67,6 @@
     border-radius: 8px;
     background-color: $background;
     box-shadow: $background-shadow;
-    user-select: none;
 
     display: grid;
     grid-template-columns: 44px 1fr;
@@ -146,3 +94,70 @@
 #add-task:hover {
     background-color: $background-hover;
 }
+
+.task {
+    min-height: 60px;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: $background;
+    user-select: text;
+
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    grid-template-areas:
+        "checkbox description"
+        "checkbox project";
+    gap: 8px;
+
+    > * {
+        pointer-events: none;
+    }
+    .task-checkbox {
+        grid-area: checkbox;
+        justify-self: center;
+        height: 28px;
+        width: 28px;
+        margin-top: 8px;
+        border-radius: 50%;
+        border: 3px solid grey;
+        background-color: white;
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+        pointer-events: auto;
+    }
+    .task-checkbox:checked {
+        background-color: var(--body-bg-gradient-top);
+    }
+    .task-content {
+        grid-area: description;
+        align-self: center;
+        padding: 8px 44px 8px 0;
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--content-body-text);
+        text-wrap: wrap;
+        overflow: auto;
+        cursor: default;
+        
+    }
+    .task-project {
+        grid-area: project;
+        margin-top: -12px;
+        font-weight: 400;
+        color: grey;
+        text-decoration: none;
+    }
+}
+
+.task:hover {
+    background-color: $background-hover;
+}
+
+.task-complete > :nth-child(2)  {
+    color: grey;
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+}
+
+

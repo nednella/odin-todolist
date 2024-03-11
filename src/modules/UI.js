@@ -59,7 +59,9 @@ export default class UI {
         document.querySelector('.custom-projects').textContent = ''
         document.getElementById('project-title-1').textContent = ''
         document.getElementById('project-title-2').textContent = ''
-        document.getElementById('active-project').textContent = ''
+        document.getElementById('active-tasks').textContent = ''
+        document.getElementById('completed-tasks-title').style.display = 'none'
+        document.getElementById('completed-tasks').textContent = ''
     }
 
     static loadNavTaskCounters() {
@@ -100,7 +102,7 @@ export default class UI {
         const nav = document.getElementById('nav')
         const navOpen = document.getElementById('nav-open')
         const themeToggle = document.getElementById('theme-toggle')
-        const projectDisplay = document.getElementById('active-project')
+        const projectDisplay = document.getElementById('project-display')
         
         nav.addEventListener('click', (e) => UI.handleNavigationInput(e))
         nav.addEventListener('cancel', (e) => e.preventDefault())
@@ -125,7 +127,7 @@ export default class UI {
             const selectedTask = e.target.parentElement.children[1].textContent
 
             UI.app.getActiveProject().getTask(selectedTask).markComplete()
-            UI.toggleTaskComplete(e.target.parentElement)
+            UI.init()
 
             // Debugging
             console.log('Task Checked: ', UI.app.getActiveProject().getTask(selectedTask))     
@@ -224,9 +226,13 @@ export default class UI {
         const taskTitle = Task.getTitle()
         const taskComplete = Task.getStatus()
 
-        const projectDisplay = document.getElementById('active-project')
+        const activeTasks = document.getElementById('active-tasks')
+        const completedTasksTitle = document.getElementById('completed-tasks-title')
+        const completedTasks = document.getElementById('completed-tasks')
+
         if (taskComplete) {
-            projectDisplay.innerHTML += `
+            completedTasksTitle.style.display = 'block'
+            completedTasks.innerHTML += `
             <div class="task task-complete">
                 <input 
                     class="task-checkbox"
@@ -237,7 +243,7 @@ export default class UI {
                 <div class="task-project">Tasks</div>
             </div>`    
         } else {
-            projectDisplay.innerHTML += `
+            activeTasks.innerHTML += `
             <div class="task">
                 <input 
                     class="task-checkbox"
