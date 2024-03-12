@@ -9,7 +9,7 @@ String.prototype.toTitleCase = function() {
 export default class UI {
     constructor() {
         if (this instanceof UI) {
-            throw Error ('Error: static class, cannot be isntantiated.')
+            throw Error ('Error: static class, cannot be instantiated.')
         }
     }
 
@@ -43,7 +43,6 @@ export default class UI {
         UI.loadProject(UI.app.getActiveProject()) 
 
         Storage.saveApp(UI.app.getProjects())
-        // Storage.clear()
     }
 
     static clear() {
@@ -253,7 +252,7 @@ export default class UI {
     }
 
     static appendProject(Project) {
-        console.log('Append Project Argument: ', Project)
+        // console.log('Append Project Argument: ', Project)
         const projectTitle = Project.getTitle()
 
         const projectsList = document.querySelector('.custom-projects')

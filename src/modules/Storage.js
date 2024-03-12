@@ -1,9 +1,10 @@
-import Project from "./Project"
 import toDoList from "./toDoList"
 
 export default class Storage {
     constructor () {
-
+        if (this instanceof Storage) {
+            throw Error ('Error: static class, cannot be instantiated.')
+        }
     }
 
     static clear () {
@@ -19,63 +20,58 @@ export default class Storage {
     static loadApp () {
         // this.clear()
 
+        let projects = JSON.parse(localStorage.getItem('projects'))
+        let testJSON = JSON.parse(
+        `[
+            {
+                "title":"Shopping List",
+                "id":"my day",
+                "tasks": [
+                    {
+                        "title":"Bread"
+                    },
+                    {
+                        "title":"Cheese"
+                    },
+                    {
+                        "title":"Wine"
+                    }
+                ]
+            }
+        ]`)
+
         const app = new toDoList()
 
-        let projects = JSON.parse(localStorage.getItem('projects'))
-
-        if (projects == null) {
+        if (!projects) {
             console.log('No projects found.')
-            return this.populateNewApp(app)
+            return Storage.populateNewApp(app)
         } else {
             console.log('Projects found!')
-            console.log('Stored Projects: ', projects)
-            
-            
-            // TODO: Figure out how to import these stored projects and assign them the Project methods
-            // https://stackoverflow.com/questions/30584476/object-properties-are-undefined-after-localstorage
-
-
-
-
-            // I ALREADY HAVE THE APP AND THE PROJECTS
-            // I JUST NEED TO ASSIGN THE PROJECTS AS NEW PROJECTS
-            // AND THE TASKS INSIDE THE PROJECTS AS NEW TASKS
-            // THEN ASSIGN THE ENTIRE ARRAY INTO THE APP
-
-
-            
-            
-
-            // return app
+            app.importJSON(projects)
+            // app.importJSON(testJSON)
+            return app
         }
-        
-
-
-
-        // return this.populateNewApp(app)
-        // if (app == null) {
-        //     console.log('No app found.')
-        //     return this.populateNewApp(new toDoList())
-        // } else {
-        //     console.log('App found!')
-
-        //     app = Object.assign(new toDoList(), JSON.parse(app))
-        //     return app
-        // }
     }
 
     static populateNewApp (app) {
         // Testing
         console.log('Populating new app.')
+        console.log(app)
         app.getProject('My Day').addTask('Test 1')
         app.getProject('My Day').addTask('Test 2')
         app.getProject('My Day').addTask('Test 3')
         app.getProject('All Tasks').addTask('Another Test')
         app.getProject('All Tasks').addTask('And Another')
         app.getProject('All Tasks').addTask('Yep, Another')
-        app.addProject('2024 Goals')
-        app.getProject('2024 Goals').addTask('Complete this To Do List app!')
-        app.getActiveProject().getTask('Test 3').markComplete()
+        app.addProject('March 2024')
+        app.getProject('March 2024').addTask('Solve the localStorage problem')
+        app.getProject('March 2024').addTask('Add a task modal to edit task properties')
+        app.getProject('March 2024').addTask('Extend Task() class to include more properties')
+        app.getProject('March 2024').addTask('Add checklist to Task()')
+        app.getProject('March 2024').addTask('Refactor completed tasks as per notepad')
+        app.getProject('March 2024').addTask('Complete the To Do List app!')
+        app.getProject('March 2024').getTask('Solve the localStorage problem').markComplete()
+
         console.log('Stored Projects: ', app.getProjects())
 
         return app

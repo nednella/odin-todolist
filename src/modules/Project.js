@@ -3,12 +3,12 @@ import task from './Task'
 export default class project {
     constructor (title) {
         this.title = title
-        this.id = this.title.toLowerCase()
+        this.id = title.toLowerCase()
         this.tasks = []
     }
-    setTitle (Title) {
-        this.title = Title
-        // this.id = title.toLowerCase() // Change ID to reflect new title
+    setTitle (title) {
+        this.title = title
+        this.id = title.toLowerCase() // Change ID to reflect new title
     }
     getTitle () {
         return this.title
@@ -16,9 +16,9 @@ export default class project {
     getID () {
         return this.id
     }
-    addTask (Title, dueDate) {
-        this.tasks.push(new task(Title, dueDate))
-        // console.log('New Task: ' + JSON.stringify(this.tasks[(this.tasks.length - 1)]))
+    addTask (title, dueDate, isComplete) {
+        this.tasks.push(new task(title, dueDate, isComplete))
+        // console.log('New Task: ', this.tasks[(this.tasks.length - 1)])
         // return this.tasks.push(new task(title, dueDate))
     }
     getTask (taskTitle) {

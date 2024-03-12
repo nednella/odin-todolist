@@ -1,5 +1,4 @@
 import Project from './Project'
-import Task from './Task'
 
 export default class toDoList {
     constructor() {
@@ -23,15 +22,6 @@ export default class toDoList {
 
         // return this.list.push(new Project(projectTitle.toLowerCase()))
     }
-    getProject (projectTitle) {
-        return this.list.find((project) => project.getID() == projectTitle.toLowerCase())
-    }
-    getProjects () {
-        return this.list
-    }
-    setProjects (projects) {
-        this.list = projects
-    }
     deleteProject (projectTitle) {
         const selectedProject = this.list.find((project) => project.getID() == projectTitle.toLowerCase())
         if (selectedProject == undefined) return
@@ -42,5 +32,25 @@ export default class toDoList {
         const index = this.list.indexOf(selectedProject)
         this.list.splice(index, 1)
         // else return this.list.splice(index, 1)
+    }
+    getProject (projectTitle) {
+        return this.list.find((project) => project.getID() == projectTitle.toLowerCase())
+    }
+    getProjects () {
+        return this.list
+    }
+    importJSON (JSON) {
+        console.log('Import List: ', JSON)
+
+        JSON.forEach(project => {
+            console.log('Importing Project... ')
+            this.addProject(project.title)
+
+            console.log(`Importing Tasks into ${project.title}...`)
+            project.tasks.forEach(task => {     
+                this.getProject(project.title).addTask(task.title, task.dueDate, task.isComplete)
+            })
+            console.log('Tasks imported.')
+        })
     }
 }

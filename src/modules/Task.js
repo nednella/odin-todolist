@@ -1,8 +1,8 @@
 export default class task {
-    constructor (title, dueDate) {
+    constructor (title, dueDate, isComplete) {
         this.title = title
-        this.dueDate = dueDate
-        this.isComplete = false
+        this.dueDate = dueDate ?? ''
+        this.isComplete = isComplete ?? false
     }
     setTitle (title) {
         this.title = title
