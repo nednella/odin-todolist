@@ -94,14 +94,16 @@ export default class UI {
     }
 
     static initEventListeners() {
-        const nav = document.getElementById('nav')
+        const taskModal = document.getElementById('task')
+        const navModal = document.getElementById('nav')
         const navOpen = document.getElementById('nav-open')
         const themeToggle = document.getElementById('theme-toggle')
         const projectDisplay = document.getElementById('project-display')
         
-        nav.addEventListener('click', (e) => UI.handleNavigationInput(e))
-        nav.addEventListener('cancel', (e) => e.preventDefault())
-        navOpen.addEventListener('click', () => UI.toggleNav())
+        taskModal.addEventListener('click', (e) => UI.handleTaskModalInput(e))
+        navModal.addEventListener('click', (e) => UI.handleNavigationInput(e))
+        navModal.addEventListener('cancel', (e) => e.preventDefault())
+        navOpen.addEventListener('click', () => UI.toggleNavModal())
         themeToggle.addEventListener('click', () => UI.toggleTheme())
         projectDisplay.addEventListener('click', (e) => UI.handleTaskInput(e))
         window.addEventListener('keydown', (e) => UI.handleKeyboardInput(e))
@@ -112,10 +114,11 @@ export default class UI {
             const selectedTask = e.target.children[1].textContent
 
             // TODO: Implement a dialog#task modal to expand on task details and edit them as required
+            UI.toggleTaskModal()
+            UI.populateTaskModal(UI.app.getActiveProject().getTask(selectedTask))
 
             // Debugging
-            console.log('Task Clicked: ', UI.app.getActiveProject().getTask(selectedTask))
-        
+            // console.log('Task Clicked: ', UI.app.getActiveProject().getTask(selectedTask))
         }
 
         if (e.target.classList.contains('task-checkbox')) {
@@ -125,17 +128,22 @@ export default class UI {
             UI.init()
 
             // Debugging
-            console.log('Task Checked: ', UI.app.getActiveProject().getTask(selectedTask))     
+            // console.log('Task Checked: ', UI.app.getActiveProject().getTask(selectedTask))     
         }
     }
 
+    static handleTaskModalInput(e) {
+        if (e.target.nodeName == 'DIALOG' || e.target.id == 'task-close') UI.toggleTaskModal()
+        
+    }
+
     static handleNavigationInput(e) {
-        if (e.target.nodeName == 'DIALOG' || e.target.id == 'nav-close') UI.toggleNav() 
+        if (e.target.nodeName == 'DIALOG' || e.target.id == 'nav-close') UI.toggleNavModal() 
 
         if (e.target.classList.contains('nav-item')) {
             const selectedProject = e.target.children[0].children[1].textContent
             UI.app.setActiveProject(selectedProject)
-            UI.toggleNav()
+            UI.toggleNavModal()
             UI.init()
         }
 
@@ -177,7 +185,7 @@ export default class UI {
             : html.setAttribute('data-theme', 'light')
     }
 
-    static toggleNav() {
+    static toggleNavModal() {
         const nav = document.getElementById('nav')
         const projectInput = document.getElementById('add-project-input')
 
@@ -185,6 +193,27 @@ export default class UI {
         nav.hasAttribute('open')
             ? nav.close()
             : nav.showModal()
+    }
+
+    static toggleTaskModal() {
+        const task = document.getElementById('task')
+
+        task.hasAttribute('open')
+            ? task.close()
+            : task.showModal()
+    }
+
+    static populateTaskModal(Task) {
+        
+        console.log(Task)
+
+        // TODO
+        // Take Task info and populate the modal with it
+
+
+
+
+
     }
 
     static toggleTaskComplete(Task) {
@@ -207,7 +236,7 @@ export default class UI {
     static createProject(Title) {
         UI.app.addProject(Title)
         UI.app.setActiveProject(Title)
-        UI.toggleNav()
+        UI.toggleNavModal()
         UI.init()
     }
     

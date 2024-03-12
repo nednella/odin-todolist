@@ -1,0 +1,74 @@
+// Task Modal
+
+$task-header-height: 70px;
+$task-footer-height: 70px;
+
+#task {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: calc(100% - 475px);
+    height: 100vh;
+    min-height: 100vh;
+    width: 475px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    animation: task-slide-in .2s ease;
+
+    > * {
+        height: 100%;   // Required for click outside of nav to close function
+        width: 100%;    // Required for click outside of nav to close function
+        padding: 0 24px 24px 24px;
+        user-select: none;
+        color: var(--modal-text);
+        background-color: var(--modal-bg);
+
+        display: grid;
+        grid-template-rows: $task-header-height 1fr $task-footer-height;
+        gap: 24px;
+    }
+}
+
+.task-header {
+    height: $nav-header-height;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    
+    #task-close {
+        height: 40px;
+        width: 40px;
+        border-radius: 4px;
+        font-size: 32px;
+        transition: $default-transition;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #task-close:hover { 
+        background-color: var(--modal-option-hover);
+    }
+}
+
+.task-info {
+    
+}
+
+.task-footer {
+    
+}
+
+#task:modal {
+    max-height: 100vh;
+    max-width: 100vh;
+}
+
+#task::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+@keyframes task-slide-in {
+    0% { transform: translateX(100%) }
+    100% { transform: translateX(0%) }
+}
