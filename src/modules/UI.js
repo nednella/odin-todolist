@@ -1,5 +1,5 @@
-import task from './Task';
 import toDoList from './toDoList'
+import Storage from './Storage'
 import { format } from 'date-fns'
 
 String.prototype.toTitleCase = function() {
@@ -13,7 +13,7 @@ export default class UI {
         }
     }
 
-    static app = new toDoList()     // TODO: Implement 'Storage' module that:
+    static app = Storage.loadApp()  // TODO: Implement 'Storage' module that:
                                     // 1. Pulls stored toDoList() class from storage, or
                                     // 2. Generates a new toDoList()
 
@@ -21,19 +21,12 @@ export default class UI {
 
         // Debugging
         console.log('App Initialising...')
-        
-        // Testing
-        UI.app.getActiveProject().addTask('Test 1')
-        UI.app.getActiveProject().addTask('Test 2')
-        UI.app.getActiveProject().addTask('Test 3')
-        UI.app.getProject('All Tasks').addTask('Another Test')
-        UI.app.getProject('All Tasks').addTask('And Another')
-        UI.app.getProject('All Tasks').addTask('Yep, Another')
-        UI.app.addProject('2024 Goals')
-        UI.app.getActiveProject().getTask('Test 1').markComplete()
+        console.log('UI - app: ', UI.app)
 
         // Debugging
         console.log('Stored Projects: ', UI.app.getProjects())
+        console.log('Active Project', UI.app.getActiveProject())
+
 
         UI.init()
         UI.initEventListeners()
@@ -48,6 +41,9 @@ export default class UI {
         })
         UI.loadNavTaskCounters()
         UI.loadProject(UI.app.getActiveProject()) 
+
+        Storage.saveApp(UI.app.getProjects())
+        // Storage.clear()
     }
 
     static clear() {
@@ -257,6 +253,7 @@ export default class UI {
     }
 
     static appendProject(Project) {
+        console.log('Append Project Argument: ', Project)
         const projectTitle = Project.getTitle()
 
         const projectsList = document.querySelector('.custom-projects')

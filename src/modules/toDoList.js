@@ -29,6 +29,9 @@ export default class toDoList {
     getProjects () {
         return this.list
     }
+    setProjects (projects) {
+        this.list = projects
+    }
     deleteProject (projectTitle) {
         const selectedProject = this.list.find((project) => project.getID() == projectTitle.toLowerCase())
         if (selectedProject == undefined) return
