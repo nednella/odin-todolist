@@ -1,4 +1,4 @@
-// Nav
+// Nav Modal
 
 $nav-header-height: 70px;
 $nav-add-project-height: 60px;
@@ -12,14 +12,15 @@ $nav-add-project-height: 60px;
     min-height: 100vh;
     width: 375px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-    animation: slide-in .2s ease, slide-out .2s ease;
+    animation: nav-slide-in .2s ease;
 
     > * {
         height: 100%;   // Required for click outside of nav to close function
         width: 100%;    // Required for click outside of nav to close function
         padding: 0 24px 24px 24px;
         user-select: none;
-        background-color: var(--nav-bg);
+        color: var(--modal-text);
+        background-color: var(--modal-bg);
     }
 }
 
@@ -32,7 +33,7 @@ $nav-add-project-height: 60px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-@keyframes slide-in {
+@keyframes nav-slide-in {
     0% { transform: translateX(-100%) }
     100% { transform: translateX(0%) }
 }
@@ -47,7 +48,6 @@ $nav-add-project-height: 60px;
         width: 40px;
         border-radius: 4px;
         font-size: 32px;
-        color: var(--header-text);
         transition: $default-transition;
         cursor: pointer;
 
@@ -56,7 +56,7 @@ $nav-add-project-height: 60px;
         justify-content: center;
     }
     #nav-close:hover { 
-        background-color: var(--nav-option-hover);
+        background-color: var(--modal-option-hover);
     }
 }
 
@@ -67,7 +67,6 @@ $nav-add-project-height: 60px;
     gap: 4px;
 
     > * {
-        color: var(--nav-text);
         transition: $default-transition;
     }
     hr {
@@ -76,7 +75,6 @@ $nav-add-project-height: 60px;
     }
     .projects-title {
         font-family: "Paytone One", sans-serif;
-        color: var(--nav-text);
     }
     .custom-projects-scroll {
         overflow-y: hidden;    // Required for nav scrolling on overflow
@@ -91,7 +89,6 @@ $nav-add-project-height: 60px;
             gap: 4px;
     
             > * {
-                color: var(--nav-text);
                 transition: $default-transition;
             }
         }
@@ -128,7 +125,6 @@ $nav-add-project-height: 60px;
         background-color: var(--body-bg-gradient-top);
         font-size: 1.17em;
         font-weight: 400;
-        color: white;
 
         display: flex;
         align-items: center;
@@ -141,10 +137,10 @@ $nav-add-project-height: 60px;
 }
 .nav-item.active {
     padding-left: 16px;
-    background-color: var(--nav-option-hover);
+    background-color: var(--modal-option-hover);
 }
 .nav-item:hover {
-    background-color: var(--nav-option-hover);
+    background-color: var(--modal-option-hover);
 
     .project-delete {
         display: block;
@@ -169,7 +165,6 @@ $nav-add-project-height: 60px;
     span {
         font-size: 24px;
         font-weight: 300;
-        color: var(--nav-input-text);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -177,10 +172,10 @@ $nav-add-project-height: 60px;
     &-input {
         font-size: 1.17em;
         font-weight: 400;
-        color: var(--nav-input-text);
+        color: var(--modal-input-text);
     }
 }
 
 #add-project:hover {
-    background-color: var(--nav-input-hover);
+    background-color: var(--modal-input-hover);
 }
