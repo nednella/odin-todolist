@@ -5,6 +5,16 @@ export default class project {
         this.title = title
         this.id = title.toLowerCase()
         this.tasks = []
+        this.activeTask = undefined
+    }
+    setActiveTask (taskTitle) {
+        return this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
+    }
+    removeActiveTask () {
+        return this.activeTask = undefined
+    }
+    getActiveTask () {
+        return this.activeTask
     }
     setTitle (title) {
         this.title = title
