@@ -21,4 +21,7 @@ export default class task {
     getStatus () {
         return this.isComplete
     }
+    getCreationDate() {
+        return this.creationDate
+    }
 }
