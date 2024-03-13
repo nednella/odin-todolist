@@ -1,4 +1,3 @@
-import toDoList from './toDoList'
 import Storage from './Storage'
 import { format } from 'date-fns'
 
@@ -13,20 +12,13 @@ export default class UI {
         }
     }
 
-    static app = Storage.loadApp()  // TODO: Implement 'Storage' module that:
-                                    // 1. Pulls stored toDoList() class from storage, or
-                                    // 2. Generates a new toDoList()
+    static app = Storage.loadApp()
 
     static initApp() {
+        console.log('UI: App initialising...')
 
         // Debugging
-        console.log('App Initialising...')
-        console.log('UI - app: ', UI.app)
-
-        // Debugging
-        console.log('Stored Projects: ', UI.app.getProjects())
-        console.log('Active Project', UI.app.getActiveProject())
-
+        console.log('UI - App: ', UI.app)
 
         UI.init()
         UI.initEventListeners()
@@ -74,7 +66,7 @@ export default class UI {
         const navItems = document.querySelectorAll('.nav-item')
         
         // Debugging
-        console.log('Loading Project: ', Project)
+        console.log('UI: Loading Project, ', Project)
 
         // Set project as active in nav menu
         navItems.forEach(item => {
@@ -101,7 +93,7 @@ export default class UI {
         const projectDisplay = document.getElementById('project-display')
         
         taskModal.addEventListener('click', (e) => UI.handleTaskModalInput(e))
-        navModal.addEventListener('click', (e) => UI.handleNavigationInput(e))
+        navModal.addEventListener('click', (e) => UI.handleNavModalInput(e))
         navModal.addEventListener('cancel', (e) => e.preventDefault())
         navOpen.addEventListener('click', () => UI.toggleNavModal())
         themeToggle.addEventListener('click', () => UI.toggleTheme())
@@ -113,31 +105,27 @@ export default class UI {
         if (e.target.classList.contains('task')) {
             const selectedTask = e.target.children[1].textContent
 
-            // TODO: Implement a dialog#task modal to expand on task details and edit them as required
             UI.toggleTaskModal()
             UI.populateTaskModal(UI.app.getActiveProject().getTask(selectedTask))
-
-            // Debugging
-            // console.log('Task Clicked: ', UI.app.getActiveProject().getTask(selectedTask))
         }
 
         if (e.target.classList.contains('task-checkbox')) {
             const selectedTask = e.target.parentElement.children[1].textContent
 
             UI.app.getActiveProject().getTask(selectedTask).markComplete()
-            UI.init()
-
-            // Debugging
-            // console.log('Task Checked: ', UI.app.getActiveProject().getTask(selectedTask))     
+            UI.init() 
         }
     }
 
     static handleTaskModalInput(e) {
         if (e.target.nodeName == 'DIALOG' || e.target.id == 'task-close') UI.toggleTaskModal()
         
+        // TODO
+
+        return
     }
 
-    static handleNavigationInput(e) {
+    static handleNavModalInput(e) {
         if (e.target.nodeName == 'DIALOG' || e.target.id == 'nav-close') UI.toggleNavModal() 
 
         if (e.target.classList.contains('nav-item')) {
@@ -204,7 +192,7 @@ export default class UI {
     }
 
     static populateTaskModal(Task) {
-        
+
         console.log(Task)
 
         // TODO
@@ -213,7 +201,7 @@ export default class UI {
 
 
 
-
+        return 
     }
 
     static toggleTaskComplete(Task) {
@@ -230,6 +218,8 @@ export default class UI {
 
     static deleteTask(Title) {
         // TODO
+
+
         return
     }
 

@@ -12,7 +12,7 @@ export default class Storage {
     }
 
     static saveApp (projects) {
-        console.log('Saving Projects...')
+        console.log('STORAGE: Projects saved.')
         Storage.clear()
         return localStorage.setItem('projects', JSON.stringify(projects))
     }
@@ -43,10 +43,10 @@ export default class Storage {
         const app = new toDoList()
 
         if (!projects) {
-            console.log('No projects found.')
+            console.log('STORAGE: No projects found.')
             return Storage.populateNewApp(app)
         } else {
-            console.log('Projects found!')
+            console.log('STORAGE: Projects found!')
             app.importJSON(projects)
             // app.importJSON(testJSON)
             return app
@@ -55,7 +55,7 @@ export default class Storage {
 
     static populateNewApp (app) {
         // Testing
-        console.log('Populating new app.')
+        console.log('STORAGE: Populating new app with placeholder content.')
         console.log(app)
         app.getProject('My Day').addTask('Test 1')
         app.getProject('My Day').addTask('Test 2')

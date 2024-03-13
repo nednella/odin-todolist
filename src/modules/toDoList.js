@@ -14,11 +14,11 @@ export default class toDoList {
         return this.activeProject
     }
     addProject (projectTitle) {
-        if (this.list.find((project) => project.getID() == projectTitle.toLowerCase())) return console.log('Project already exists.')
+        if (this.list.find((project) => project.getID() == projectTitle.toLowerCase())) return console.log(`${projectTitle} already exists.`)
         else this.list.push(new Project(projectTitle))
 
         // Debugging
-        console.log('New Project: ', this.list[(this.list.length - 1)])
+        console.log('APP: New Project, ', this.list[(this.list.length - 1)])
 
         // return this.list.push(new Project(projectTitle.toLowerCase()))
     }
@@ -27,7 +27,7 @@ export default class toDoList {
         if (selectedProject == undefined) return
 
         // Debugging
-        console.log('Deleting Project: ', selectedProject)
+        console.log('APP: Deleting Project, ', selectedProject)
 
         const index = this.list.indexOf(selectedProject)
         this.list.splice(index, 1)
@@ -40,17 +40,14 @@ export default class toDoList {
         return this.list
     }
     importJSON (JSON) {
-        console.log('Import List: ', JSON)
-
+        console.log('APP: Importing Projects... ')
+        console.log(JSON)
         JSON.forEach(project => {
-            console.log('Importing Project... ')
             this.addProject(project.title)
-
-            console.log(`Importing Tasks into ${project.title}...`)
+            // console.log(`APP: Importing Tasks into ${project.title}...`)
             project.tasks.forEach(task => {     
-                this.getProject(project.title).addTask(task.title, task.dueDate, task.isComplete)
+                this.getProject(project.title).addTask(task.title, task.dueDate, task.isComplete, task.creationDate)
             })
-            console.log('Tasks imported.')
         })
     }
 }
