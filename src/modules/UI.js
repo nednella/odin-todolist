@@ -119,7 +119,13 @@ export default class UI {
 
     static handleTaskModalInput(e) {
         if (e.target.nodeName == 'DIALOG' || e.target.id == 'task-close') UI.toggleTaskModal()
-        
+
+        if (e.target.classList.contains('task-checkbox')) {
+            const selectedTask = e.target.parentElement.children[1].textContent
+
+            UI.app.getActiveProject().getTask(selectedTask).markComplete()
+            UI.init() 
+        }
         // TODO
 
         return
@@ -192,16 +198,40 @@ export default class UI {
     }
 
     static populateTaskModal(Task) {
+        const taskCheckbox = document.getElementById('task-checkbox')
+        const taskTitle = document.getElementById('task-title')
+        const taskNote = document.getElementById('task-note')
+        const taskCreation = document.getElementById('task-creation')
 
         console.log(Task)
 
-        // TODO
-        // Take Task info and populate the modal with it
+        // Task Status
+        if (Task.getStatus()) {
+            taskCheckbox.checked = true
+            taskTitle.classList.add('task-complete')
+        } else {
+            taskCheckbox.checked = false
+            taskTitle.classList.remove('task-complete')
+        }
 
+        // Checkbox
 
+        // Title
+        taskTitle.textContent = Task.getTitle()
 
+        // Steps/List
+        // TODO - Implement a steps method on the Task() class
 
-        return 
+        // Note
+        // TODO - Implement a note method on the Task() class
+
+        // Creation date
+        taskCreation.textContent = `Created on ${Task.getCreationDate()}`
+
+        // Task Delete
+        // TODO - assign something to the button so when its pressed,
+        //        it is associated with the loaded task
+
     }
 
     static toggleTaskComplete(Task) {
