@@ -38,11 +38,10 @@ export default class UI {
     }
 
     static clear() {
-        // Clear the active project
+        // Remove the active project
         const navItems = document.querySelectorAll('.nav-item')
         navItems.forEach(item => item.classList.remove('active'))
 
-        // Wipe the UI
         document.querySelector('.custom-projects').textContent = ''
         document.getElementById('project-title-1').textContent = ''
         document.getElementById('project-title-2').textContent = ''
@@ -64,9 +63,6 @@ export default class UI {
         const projectTitle1 = document.getElementById('project-title-1')
         const projectTitle2 = document.getElementById('project-title-2')
         const navItems = document.querySelectorAll('.nav-item')
-        
-        // Debugging
-        console.log('UI: Loading Project, ', Project)
 
         // Set project as active in nav menu
         navItems.forEach(item => {
@@ -104,31 +100,39 @@ export default class UI {
     static handleTaskInput(e) {
         if (e.target.classList.contains('task')) {
             const selectedTask = e.target.children[1].textContent
-
             UI.toggleTaskModal()
             UI.populateTaskModal(UI.app.getActiveProject().getTask(selectedTask))
         }
 
         if (e.target.classList.contains('task-checkbox')) {
             const selectedTask = e.target.parentElement.children[1].textContent
-
             UI.app.getActiveProject().getTask(selectedTask).toggleComplete()
             UI.init() 
         }
     }
 
     static handleTaskModalInput(e) {
-        if (e.target.nodeName == 'DIALOG' || e.target.id == 'task-close') UI.toggleTaskModal()
+        if (e.target.nodeName == 'DIALOG'
+        || e.target.id == 'task-close'
+        || e.target.id == 'task-delete') UI.toggleTaskModal()
+
 
         if (e.target.classList.contains('task-checkbox')) {
-            const selectedTask = e.target.parentElement.children[1].textContent
+            // Toggle task-complete class on navModal task title
+            const selectedTaskElement = e.target.parentElement.children[1]
+            selectedTaskElement.classList.contains('task-complete')
+                ? selectedTaskElement.classList.remove('task-complete')
+                : selectedTaskElement.classList.add('task-complete')
 
+            const selectedTask = selectedTaskElement.textContent
             UI.app.getActiveProject().getTask(selectedTask).toggleComplete()
             UI.init() 
         }
-        // TODO
-
-        return
+        
+        if (e.target.classList.contains('task-delete')) {
+            const selectedTask = UI.app.getActiveProject().getTask(e.target.getAttribute('task'))
+            UI.deleteTask(selectedTask)
+        }
     }
 
     static handleNavModalInput(e) {
@@ -202,8 +206,10 @@ export default class UI {
         const taskTitle = document.getElementById('task-title')
         const taskNote = document.getElementById('task-note')
         const taskCreation = document.getElementById('task-creation')
+        const taskDelete = document.getElementById('task-delete')
 
-        console.log(Task)
+        // Debugging
+        // console.log(Task)
 
         // Task Status
         if (Task.complete()) {
@@ -213,8 +219,6 @@ export default class UI {
             taskCheckbox.checked = false
             taskTitle.classList.remove('task-complete')
         }
-
-        // Checkbox
 
         // Title
         taskTitle.textContent = Task.getTitle()
@@ -229,9 +233,7 @@ export default class UI {
         taskCreation.textContent = `Created on ${Task.getCreationDate()}`
 
         // Task Delete
-        // TODO - assign something to the button so when its pressed,
-        //        it is associated with the loaded task
-
+        taskDelete.setAttribute('task', Task.getTitle())
     }
 
     // static toggleTaskComplete(Task) {
@@ -243,14 +245,11 @@ export default class UI {
     static createTask(Title) {
         UI.app.getActiveProject().addTask(Title)
         UI.init()
-        return
     }
 
-    static deleteTask(Title) {
-        // TODO
-
-
-        return
+    static deleteTask(Task) {
+        UI.app.getActiveProject().deleteTask(Task.getTitle())
+        UI.init()    
     }
 
     static createProject(Title) {
@@ -301,7 +300,6 @@ export default class UI {
     }
 
     static appendProject(Project) {
-        // console.log('Append Project Argument: ', Project)
         const projectTitle = Project.getTitle()
 
         const projectsList = document.querySelector('.custom-projects')

@@ -1,4 +1,4 @@
-import task from './Task'
+import Task from './Task'
 
 export default class project {
     constructor (title) {
@@ -17,7 +17,23 @@ export default class project {
         return this.id
     }
     addTask (title, dueDate, isComplete, creationDate) {
-        return this.tasks.push(new task(title, dueDate, isComplete, creationDate))
+        if (this.tasks.find((task) => task.getTitle() == title)) return console.log(`${title} already exists.`)
+        else this.tasks.push(new Task(title, dueDate, isComplete, creationDate))
+
+        // Debugging
+        // console.log('APP: New Task, ', this.tasks[(this.tasks.length - 1)])
+
+        // else return this.tasks.push(new Task(title, dueDate, isComplete, creationDate))
+    }
+    deleteTask (taskTitle) {
+        const selectedTask = this.tasks.find((task) => task.getTitle() == taskTitle)
+        if (!selectedTask) return
+
+        // Debugging
+        console.log('Deleting Task, ', selectedTask)
+
+        const index = this.tasks.indexOf(selectedTask)
+        return this.tasks.splice(index, 1)
     }
     getTask (taskTitle) {
         return this.tasks.find((task) => task.getTitle() == taskTitle)
