@@ -20,17 +20,17 @@ export default class toDoList {
         // Debugging
         console.log('APP: New Project, ', this.list[(this.list.length - 1)])
 
-        // return this.list.push(new Project(projectTitle.toLowerCase()))
+        // else return this.list.push(new Project(projectTitle.toLowerCase()))
     }
     deleteProject (projectTitle) {
         const selectedProject = this.list.find((project) => project.getID() == projectTitle.toLowerCase())
-        if (selectedProject == undefined) return
+        if (!selectedProject) return
 
         // Debugging
         console.log('APP: Deleting Project, ', selectedProject)
 
         const index = this.list.indexOf(selectedProject)
-        this.list.splice(index, 1)
+        return this.list.splice(index, 1)
         // else return this.list.splice(index, 1)
     }
     getProject (projectTitle) {
