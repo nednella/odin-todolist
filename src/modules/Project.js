@@ -16,10 +16,8 @@ export default class project {
     getID () {
         return this.id
     }
-    addTask (title, dueDate, isComplete) {
-        this.tasks.push(new task(title, dueDate, isComplete))
-        // console.log('New Task: ', this.tasks[(this.tasks.length - 1)])
-        // return this.tasks.push(new task(title, dueDate))
+    addTask (title, dueDate, isComplete, creationDate) {
+        return this.tasks.push(new task(title, dueDate, isComplete, creationDate))
     }
     getTask (taskTitle) {
         return this.tasks.find((task) => task.getTitle() == taskTitle)
