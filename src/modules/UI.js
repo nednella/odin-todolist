@@ -112,7 +112,7 @@ export default class UI {
         if (e.target.classList.contains('task-checkbox')) {
             const selectedTask = e.target.parentElement.children[1].textContent
 
-            UI.app.getActiveProject().getTask(selectedTask).markComplete()
+            UI.app.getActiveProject().getTask(selectedTask).toggleComplete()
             UI.init() 
         }
     }
@@ -123,7 +123,7 @@ export default class UI {
         if (e.target.classList.contains('task-checkbox')) {
             const selectedTask = e.target.parentElement.children[1].textContent
 
-            UI.app.getActiveProject().getTask(selectedTask).markComplete()
+            UI.app.getActiveProject().getTask(selectedTask).toggleComplete()
             UI.init() 
         }
         // TODO
@@ -206,7 +206,7 @@ export default class UI {
         console.log(Task)
 
         // Task Status
-        if (Task.getStatus()) {
+        if (Task.complete()) {
             taskCheckbox.checked = true
             taskTitle.classList.add('task-complete')
         } else {
@@ -234,11 +234,11 @@ export default class UI {
 
     }
 
-    static toggleTaskComplete(Task) {
-        Task.classList.contains('task-complete')
-            ? Task.classList.remove('task-complete')
-            : Task.classList.add('task-complete')
-    }
+    // static toggleTaskComplete(Task) {
+    //     Task.classList.contains('task-complete')
+    //         ? Task.classList.remove('task-complete')
+    //         : Task.classList.add('task-complete')
+    // }
 
     static createTask(Title) {
         UI.app.getActiveProject().addTask(Title)
@@ -268,7 +268,7 @@ export default class UI {
 
     static appendTask(Task) {
         const taskTitle = Task.getTitle()
-        const taskComplete = Task.getStatus()
+        const taskComplete = Task.complete()
 
         const activeTasks = document.getElementById('active-tasks')
         const completedTasksTitle = document.getElementById('completed-tasks-title')

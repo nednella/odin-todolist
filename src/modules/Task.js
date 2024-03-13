@@ -13,12 +13,12 @@ export default class task {
     getTitle () {
         return this.title
     }
-    markComplete () {
+    toggleComplete () {
         this.isComplete == false
             ? this.isComplete = true
             : this.isComplete = false
     }
-    getStatus () {
+    complete () {
         return this.isComplete
     }
     getCreationDate() {
