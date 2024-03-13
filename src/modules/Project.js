@@ -8,10 +8,20 @@ export default class project {
         this.activeTask = undefined
     }
     setActiveTask (taskTitle) {
-        return this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
+        this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
+
+        // Debugging
+        console.log('Active Task: ', this.activeTask)
+
+        // return this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
     }
     removeActiveTask () {
-        return this.activeTask = undefined
+        this.activeTask = undefined
+
+        // Debugging
+        console.log('Active Task: ', this.activeTask)
+
+        //return this.activeTask = undefined
     }
     getActiveTask () {
         return this.activeTask
