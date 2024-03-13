@@ -17,19 +17,19 @@ $task-footer-height: 70px;
     > * {
         height: 100%;   // Required for click outside of nav to close function
         width: 100%;    // Required for click outside of nav to close function
-        padding: 0 24px 24px 24px;
+        padding: 0 24px;
         user-select: none;
         color: var(--modal-text);
-        background-color: var(--modal-bg);
+        background-color: var(--modal-bg-2);
 
         display: grid;
         grid-template-rows: $task-header-height 1fr $task-footer-height;
-        gap: 24px;
     }
 }
 
-.task-header {
+.taskModal-header {
     height: $nav-header-height;
+
     display: flex;
     align-items: center;
     justify-content: end;
@@ -51,12 +51,115 @@ $task-footer-height: 70px;
     }
 }
 
-.task-info {
+
+
+
+
+.taskModal-content {
+    display: grid;
+    grid-template-rows: minmax(70px, max-content) 1fr minmax(140px, max-content);
+    grid-auto-rows: max-content;
+    gap: 24px;
+    grid-template-areas:
+        "title"
+        "info"
+        "note";
+
+    > * {
+        padding: 12px;
+        border-radius: 4px;
+        background-color: var(--modal-bg);
+    }
+    .title {
+        grid-area: title;
+
+        display: grid;
+        grid-template-columns: 44px 1fr;
+        gap: 8px;
+        grid-template-areas:
+            "checkbox title";
+
+        #task-checkbox {
+            grid-area: checkbox;
+            justify-self: center;
+            height: 28px;
+            width: 28px;
+            margin-top: 8px;
+            border-radius: 50%;
+            border: 3px solid grey;
+            background-color: white;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        #task-checkbox:checked {
+            background-color: var(--body-bg-gradient-top);
+        }
+        #task-title {
+            grid-area: title;
+            align-self: center;
+            text-wrap: wrap;
+            overflow: auto;
+        }
+        #task-title.task-complete {
+            color: grey;
+            text-decoration: line-through;
+            text-decoration-thickness: 1px;
+        }
+    }
+    .info {
+        grid-area: info;
+    }
+    #task-note {
+        grid-area: note;
+        resize: none;
+        font-size: 1.17em;
+        font-weight: 400;
+        color: var(--modal-input-text);
+    }
+    #task-note::-webkit-scrollbar {
+        width: 8px;
+    }
+    #task-note::-webkit-scrollbar-thumb {
+        background-color: var(--modal-input-text);
+    }
+
+    
     
 }
 
-.task-footer {
-    
+
+
+
+
+.taskModal-footer {
+    display: grid;
+    grid-template-columns: 1fr 44px;
+
+    > * {
+        align-self: center;
+        justify-self: center;
+    }
+    #task-creation {
+        font-size: 18px;
+
+    }
+    #task-delete {
+        height: 40px;
+        width: 40px;
+        border-radius: 4px;
+        font-size: 32px;
+        transition: $default-transition;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #task-delete:hover { 
+        background-color: var(--modal-option-hover);
+    }
 }
 
 #task:modal {
