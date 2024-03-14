@@ -98,27 +98,34 @@
         <div class="taskModal-header">
             <span id="task-close" class="material-symbols-rounded">close</span>
         </div>
-        <div class="taskModal-content">
-            
-            <div class="title">
-                <input 
-                    id="task-checkbox"
-                    class="task-checkbox"
-                    type="checkbox"
-                    checked
-                >
-                <h3 id="task-title"></h3>    
+        <div class="taskModal-content-scroll">
+            <div class="taskModal-content">
+                <div class="title">
+                    <input 
+                        id="task-checkbox"
+                        class="task-checkbox"
+                        type="checkbox"
+                    >
+                    <h3 id="task-title" 
+                        class="task-editable" 
+                        contenteditable="true" 
+                        spellcheck="false"
+                    ></h3>
+                </div>
+
+                <div class="info">
+
+                </div>
+
+                <div class="note">
+                    <textarea 
+                        id="task-note"
+                        placeholder="Add a note"
+                        class="task-editable"
+                        spellcheck="false"
+                    ></textarea>
+                </div>
             </div>
-
-            <div class="info">
-
-            </div>
-
-            <textarea 
-                id="task-note"
-                placeholder="Add a note"
-            ></textarea>
-
         </div>
         <div class="taskModal-footer">
             <span id="task-creation"></span>

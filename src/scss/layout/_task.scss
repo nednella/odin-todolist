@@ -3,6 +3,15 @@
 $task-header-height: 70px;
 $task-footer-height: 70px;
 
+.task-editable {
+    border-radius: 4px;
+    padding: 8px 16px;
+    background-color: transparent;
+}
+.task-editable:hover {
+    background-color: var(--modal-option-hover);
+}
+
 #task {
     position: fixed;
     z-index: 1;
@@ -26,6 +35,8 @@ $task-footer-height: 70px;
         grid-template-rows: $task-header-height 1fr $task-footer-height;
     }
 }
+
+
 
 .taskModal-header {
     height: $nav-header-height;
@@ -51,87 +62,92 @@ $task-footer-height: 70px;
     }
 }
 
+.taskModal-content-scroll {
+    overflow-y: hidden; // Required for task scrolling on overflow
 
-
-
-
-.taskModal-content {
-    display: grid;
-    grid-template-rows: minmax(70px, max-content) 1fr minmax(140px, max-content);
-    grid-auto-rows: max-content;
-    gap: 24px;
-    grid-template-areas:
-        "title"
-        "info"
-        "note";
-
-    > * {
-        padding: 12px;
-        border-radius: 4px;
-        background-color: var(--modal-bg);
-    }
-    .title {
-        grid-area: title;
-
+    .taskModal-content {
+        max-height: 100%; // Required for task scrolling on overflow
+        overflow-y: auto; // Required for task scrolling on overflow
+    
         display: grid;
-        grid-template-columns: 44px 1fr;
-        gap: 8px;
+        grid-template-rows: minmax(70px, max-content) 1fr minmax(140px, max-content);
+        grid-auto-rows: max-content;
+        gap: 24px;
         grid-template-areas:
-            "checkbox title";
+            "title"
+            "info"
+            "note";
 
-        #task-checkbox {
-            grid-area: checkbox;
-            justify-self: center;
-            height: 28px;
-            width: 28px;
-            margin-top: 8px;
-            border-radius: 50%;
-            border: 3px solid grey;
-            background-color: white;
-            appearance: none;
-            -webkit-appearance: none;
-            cursor: pointer;
-            pointer-events: auto;
+        > * {
+            padding: 12px;
+            border-radius: 4px;
+            background-color: var(--modal-bg);
         }
-        #task-checkbox:checked {
-            background-color: var(--body-bg-gradient-top);
-        }
-        #task-title {
+        .title {
             grid-area: title;
-            align-self: center;
-            text-wrap: wrap;
-            overflow: auto;
+
+            display: grid;
+            grid-template-columns: 44px 1fr;
+            gap: 8px;
+            grid-template-areas:
+                "checkbox title";
+    
+            #task-checkbox {
+                grid-area: checkbox;
+                justify-self: center;
+                height: 28px;
+                width: 28px;
+                margin-top: 8px;
+                border-radius: 50%;
+                border: 3px solid grey;
+                background-color: white;
+                appearance: none;
+                -webkit-appearance: none;
+                cursor: pointer;
+                pointer-events: auto;
+            }
+            #task-checkbox:checked {
+                background-color: var(--body-bg-gradient-top);
+            }
+            #task-title {
+                grid-area: title;
+                align-self: center;
+                text-wrap: wrap;
+                overflow: auto;       
+            }
+            #task-title.task-complete {
+                color: grey;
+                text-decoration: line-through;
+                text-decoration-thickness: 1px;
+            }
+
         }
-        #task-title.task-complete {
-            color: grey;
-            text-decoration: line-through;
-            text-decoration-thickness: 1px;
+        .info {
+            grid-area: info;
+
+
+        }
+        .note {
+            grid-area: note;
+
+            #task-note {
+                resize: none;
+                height: 100%;
+                width: 100%;
+                font-size: 1.17em;
+                font-weight: 400;
+                color: var(--modal-input-text);
+            }
+
         }
     }
-    .info {
-        grid-area: info;
-    }
-    #task-note {
-        grid-area: note;
-        resize: none;
-        font-size: 1.17em;
-        font-weight: 400;
-        color: var(--modal-input-text);
-    }
-    #task-note::-webkit-scrollbar {
+    .taskModal-content::-webkit-scrollbar {
         width: 8px;
     }
-    #task-note::-webkit-scrollbar-thumb {
-        background-color: var(--modal-input-text);
+    .taskModal-content::-webkit-scrollbar-thumb {
+        background-color: var(--content-title-text);
     }
-
-    
-    
 }
-
-
-
-
 
 .taskModal-footer {
     display: grid;
