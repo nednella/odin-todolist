@@ -1,9 +1,10 @@
 import { format } from 'date-fns'
 
 export default class task {
-    constructor (title, dueDate, isComplete, creationDate) {
+    constructor (title, dueDate, note, isComplete, creationDate) {
         this.title = title
         this.dueDate = dueDate ?? ''
+        this.note = note ?? ''
         this.isComplete = isComplete ?? false
         this.creationDate = creationDate ?? format(new Date(),  "eee d MMM y, HH:mm").toString()
     }
@@ -12,6 +13,12 @@ export default class task {
     }
     getTitle () {
         return this.title
+    }
+    setNote (note) {
+        return this.note = note
+    }
+    getNote () {
+        return this.note
     }
     toggleComplete () {
         this.isComplete == false

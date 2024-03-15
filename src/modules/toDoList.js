@@ -46,7 +46,7 @@ export default class toDoList {
             this.addProject(project.title)
             // console.log(`APP: Importing Tasks into ${project.title}...`)
             project.tasks.forEach(task => {     
-                this.getProject(project.title).addTask(task.title, task.dueDate, task.isComplete, task.creationDate)
+                this.getProject(project.title).addTask(task.title, task.dueDate, task.note, task.isComplete, task.creationDate)
             })
         })
     }

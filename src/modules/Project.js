@@ -36,9 +36,9 @@ export default class project {
     getID () {
         return this.id
     }
-    addTask (title, dueDate, isComplete, creationDate) {
+    addTask (title, dueDate, note, isComplete, creationDate) {
         if (this.tasks.find((task) => task.getTitle() == title)) return console.log(`${title} already exists.`)
-        else this.tasks.push(new Task(title, dueDate, isComplete, creationDate))
+        else this.tasks.push(new Task(title, dueDate, note, isComplete, creationDate))
 
         // Debugging
         // console.log('APP: New Task, ', this.tasks[(this.tasks.length - 1)])
