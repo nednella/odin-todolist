@@ -288,12 +288,6 @@ export default class UI {
         UI.init()
     }
 
-    // static toggleTaskComplete(Task) {
-    //     Task.classList.contains('task-complete')
-    //         ? Task.classList.remove('task-complete')
-    //         : Task.classList.add('task-complete')
-    // }
-
     static createTask(Title) {
         UI.app.getActiveProject().addTask(Title)
         UI.init()
