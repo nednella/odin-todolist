@@ -4,12 +4,14 @@
     #grid-container {
         padding: 0;
     }
-    dialog#nav,
-    dialog#task {
+    dialog#nav{
         width: 350px;
     }
+}
+@media only screen and (max-width: 525px) {
     dialog#task {
-        left: calc(100% - 350px);
+        width: 100%;
+        left: 0;
     }
 }
 

@@ -16,10 +16,10 @@ $task-footer-height: 70px;
     position: fixed;
     z-index: 1;
     top: 0;
-    left: calc(100% - 475px);
+    left: calc(100% - 425px);
     height: 100vh;
     min-height: 100vh;
-    width: 475px;
+    width: 425px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     animation: task-slide-in .2s ease;
 
@@ -120,7 +120,6 @@ $task-footer-height: 70px;
                 text-decoration: line-through;
                 text-decoration-thickness: 1px;
             }
-
         }
         .info {
             grid-area: info;
@@ -138,7 +137,10 @@ $task-footer-height: 70px;
                 font-weight: 400;
                 color: var(--modal-input-text);
             }
-
+            #task-note.placeholder:empty::before {
+                content: attr(placeholder);
+                color: grey;
+            }
         }
     }
     .taskModal-content::-webkit-scrollbar {
