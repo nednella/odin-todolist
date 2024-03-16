@@ -82,12 +82,12 @@ export default class UI {
     }
 
     static initEventListeners() {
-        const taskModal = document.getElementById('task')
-        const navModal = document.getElementById('nav')
-        const navOpen = document.getElementById('nav-open')
-        const themeToggle = document.getElementById('theme-toggle')
-        const projectDisplay = document.getElementById('project-display')
-        
+        const taskModal = document.getElementById('task'),
+              navModal = document.getElementById('nav'),
+              navOpen = document.getElementById('nav-open'),
+              themeToggle = document.getElementById('theme-toggle'),
+              projectDisplay = document.getElementById('project-display')
+
         taskModal.addEventListener('click', (e) => UI.handleTaskModalInput(e))
         navModal.addEventListener('click', (e) => UI.handleNavModalInput(e))
         navModal.addEventListener('cancel', (e) => e.preventDefault())
@@ -100,8 +100,8 @@ export default class UI {
     static handleTaskInput(e) {
         if (e.target.classList.contains('task')) {
             const selectedTask = e.target.children[1].textContent
+            UI.app.getActiveProject().setActiveTask(selectedTask)
             UI.toggleTaskModal()
-            UI.populateTaskModal(UI.app.getActiveProject().getTask(selectedTask))
         }
 
         if (e.target.classList.contains('task-checkbox')) {
@@ -112,26 +112,26 @@ export default class UI {
     }
 
     static handleTaskModalInput(e) {
-        if (e.target.nodeName == 'DIALOG'
-        || e.target.id == 'task-close'
-        || e.target.id == 'task-delete') UI.toggleTaskModal()
-
-
         if (e.target.classList.contains('task-checkbox')) {
             // Toggle task-complete class on navModal task title
-            const selectedTaskElement = e.target.parentElement.children[1]
-            selectedTaskElement.classList.contains('task-complete')
-                ? selectedTaskElement.classList.remove('task-complete')
-                : selectedTaskElement.classList.add('task-complete')
+            const activeTaskTitleElement = e.target.parentElement.children[1]
+            activeTaskTitleElement.classList.contains('task-complete')
+                ? activeTaskTitleElement.classList.remove('task-complete')
+                : activeTaskTitleElement.classList.add('task-complete')
 
-            const selectedTask = selectedTaskElement.textContent
-            UI.app.getActiveProject().getTask(selectedTask).toggleComplete()
+            UI.app.getActiveProject().getActiveTask().toggleComplete()
             UI.init() 
         }
         
         if (e.target.classList.contains('task-delete')) {
-            const selectedTask = UI.app.getActiveProject().getTask(e.target.getAttribute('task'))
+            const selectedTask = UI.app.getActiveProject().getActiveTask()
             UI.deleteTask(selectedTask)
+        }
+
+        if (e.target.nodeName == 'DIALOG'
+        || e.target.id == 'task-close'
+        || e.target.id == 'task-delete') {
+            UI.toggleTaskModal()
         }
     }
 
@@ -196,23 +196,35 @@ export default class UI {
     static toggleTaskModal() {
         const task = document.getElementById('task')
 
-        task.hasAttribute('open')
-            ? task.close()
-            : task.showModal()
+        if (task.hasAttribute('open')) {
+            task.close()
+            UI.checkModal()                                 // Check for task changes on modal close
+            UI.app.getActiveProject().removeActiveTask()    // Remove active task on modal close
+        } else {
+            task.showModal()
+            UI.populateTaskModal()
+        }
     }
 
-    static populateTaskModal(Task) {
-        const taskCheckbox = document.getElementById('task-checkbox')
-        const taskTitle = document.getElementById('task-title')
-        const taskNote = document.getElementById('task-note')
-        const taskCreation = document.getElementById('task-creation')
-        const taskDelete = document.getElementById('task-delete')
+    static populateTaskModal() {
+        console.log('Populating task modal...')
+        // Get modal elements
+        const taskCheckbox = document.getElementById('task-checkbox'),
+              taskTitle = document.getElementById('task-title'),
+              taskNote = document.getElementById('task-note'),
+              taskCreation = document.getElementById('task-creation')
 
-        // Debugging
-        // console.log(Task)
+        // Wipe modal elements to remove any persisting bugs with the placeholder feature
+        taskTitle.textContent = ''
+        taskNote.textContent = ''
+        taskCreation.textContent = ''
+        
+        // Get active task
+        const activeTask = UI.app.getActiveProject().getActiveTask()
 
-        // Task Status
-        if (Task.complete()) {
+        // Populate modal elements
+        taskTitle.textContent = activeTask.getTitle()
+        if (activeTask.complete()) {
             taskCheckbox.checked = true
             taskTitle.classList.add('task-complete')
         } else {
@@ -220,20 +232,60 @@ export default class UI {
             taskTitle.classList.remove('task-complete')
         }
 
-        // Title
-        taskTitle.textContent = Task.getTitle()
+        if (activeTask.getNote()) {
+            taskNote.classList.remove('placeholder')
+            taskNote.textContent = activeTask.getNote()
+        } else taskNote.classList.add('placeholder')
+        
+        taskCreation.textContent = `Created on ${activeTask.getCreationDate()}`    
+    }
 
-        // Steps/List
-        // TODO - Implement a steps method on the Task() class
+    static checkModal() {
+        
+        // Get active task values
+        const task = UI.app.getActiveProject().getActiveTask()
+        const taskVals = [
+            task.getTitle(),
+            // task.getDueDate(),
+            task.getNote()
+        ]
 
-        // Note
-        // TODO - Implement a note method on the Task() class
+        // Get modal values
+        const modalVals = [
+            document.getElementById('task-title').textContent,
+            document.getElementById('task-note').textContent
+        ]
 
-        // Creation date
-        taskCreation.textContent = `Created on ${Task.getCreationDate()}`
+        // Check for changes
+        console.log('Checking for task changes...')
+        for (let i = 0; i < 2; i++) {
+            // console.log(taskVals[i])
+            // console.log(modalVals[i])
+            taskVals[i] !== modalVals[i]
+                ? UI.updateTask(task, modalVals[i], i)
+                : console.log('No change.')
+        }
+    }
 
-        // Task Delete
-        taskDelete.setAttribute('task', Task.getTitle())
+    static updateTask(task, value, i) {
+        console.log('Change detected.')
+        switch(i) {
+            case 0:
+                if (value == '') return
+                console.log('Updating title.')
+                task.setTitle(value)
+                break
+
+            case 1:
+                console.log('Updating Note.')
+                task.setNote(value)
+                break
+
+            case 2:
+
+                break
+        }
+        UI.init()
     }
 
     // static toggleTaskComplete(Task) {
