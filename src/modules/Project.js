@@ -1,35 +1,17 @@
 import Task from './Task'
 
 export default class project {
-    constructor (title, isDefault) {
+    constructor (title, isDefault, icon) {
         this.title = title
-        this.default = isDefault ?? false
         this.id = title.toLowerCase()
+        this.default = isDefault ?? false
+        this.icon = icon ?? 'menu'
         this.tasks = []
         this.activeTask = undefined
     }
-    setActiveTask (taskTitle) {
-        this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
-
-        // Debugging
-        console.log('Active Task: ', this.activeTask)
-
-        // return this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
-    }
-    removeActiveTask () {
-        this.activeTask = undefined
-
-        // Debugging
-        console.log('Active Task: ', this.activeTask)
-
-        //return this.activeTask = undefined
-    }
-    getActiveTask () {
-        return this.activeTask
-    }
     setTitle (title) {
         this.title = title
-        this.id = title.toLowerCase() // Change ID to reflect new title
+        this.id = title.toLowerCase() // Change ID to reflect updated title
     }
     getTitle () {
         return this.title
@@ -39,6 +21,9 @@ export default class project {
     }
     isDefault () {
         return this.default
+    }
+    getIcon () {
+        return this.icon
     }
     addTask (title, dueDate, note, isComplete, creationDate) {
         if (this.tasks.find((task) => task.getTitle() == title)) return console.log(`${title} already exists.`)
@@ -67,5 +52,24 @@ export default class project {
     }
     taskCount () {
         return this.tasks.length
+    }
+    setActiveTask (taskTitle) {
+        this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
+
+        // Debugging
+        console.log('Active Task: ', this.activeTask)
+
+        // return this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
+    }
+    removeActiveTask () {
+        this.activeTask = undefined
+
+        // Debugging
+        console.log('Active Task: ', this.activeTask)
+
+        //return this.activeTask = undefined
+    }
+    getActiveTask () {
+        return this.activeTask
     }
 }
