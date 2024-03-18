@@ -43,8 +43,8 @@ export default class UI {
         navItems.forEach(item => item.classList.remove('active'))
 
         document.querySelector('.custom-projects').textContent = ''
-        document.getElementById('project-title-1').textContent = ''
-        document.getElementById('project-title-2').textContent = ''
+        // document.getElementById('project-title-1').textContent = ''
+        // document.getElementById('project-title-2').textContent = ''
         document.getElementById('active-tasks').textContent = ''
         document.getElementById('completed-tasks-title').style.display = 'none'
         document.getElementById('completed-tasks').textContent = ''
@@ -60,11 +60,29 @@ export default class UI {
     }
 
     static loadProject(Project) {
-        const projectTitle1 = document.getElementById('project-title-1')
-        const projectTitle2 = document.getElementById('project-title-2')
-        const navItems = document.querySelectorAll('.nav-item')
+        console.log('Loading Project: ', Project)
+        const h1 = () => document.createElement('h1')
+        const h3 = () => document.createElement('h3')
+
+        const projectTitle = document.getElementById('project-title')
+        projectTitle.innerHTML = ''
+
+        // Create title elements
+        projectTitle.appendChild(h1()).id = 'project-title-1'
+        if (Project.getTitle() == 'My Day') projectTitle.appendChild(h3()).id = 'project-title-2'
+
+        // If project not default, enable title edit
+        if (!Project.isDefault()) {
+            console.log('Project is not default.')
+            const projectTitle1 = document.getElementById('project-title-1')
+            projectTitle1.classList.add('title-editable')
+            projectTitle1.contentEditable = true
+            projectTitle1.spellcheck = false
+            projectTitle1.addEventListener('focusout', (e) => UI.updateProjectTitle(e.target.textContent))
+        }    
 
         // Set project as active in nav menu
+        const navItems = document.querySelectorAll('.nav-item')
         navItems.forEach(item => {
             if (item.children[0].children[1].textContent == Project.getTitle()) {
                 item.classList.add('active')
@@ -72,11 +90,11 @@ export default class UI {
         })
 
         // Load project title
-        projectTitle1.textContent = Project.getTitle().toUpperCase()
+        document.getElementById('project-title-1').textContent = Project.getTitle()
 
         // If My Day, load current date
-        if (Project.getTitle() == 'My Day') projectTitle2.textContent = format(new Date(), "eeee, d MMM y").toUpperCase()
-
+        if (Project.getTitle() == 'My Day') document.getElementById('project-title-2').textContent = format(new Date(), "eeee, d MMM y").toUpperCase()
+         
         // Load project tasks
         Project.getTasks().forEach(Task => UI.appendTask(Task))
     }
@@ -276,7 +294,7 @@ export default class UI {
         console.log('Change detected.')
         switch(i) {
             case 0:
-                if (value == '') return console.log('Cannot have a blank project title.')
+                if (value == '') return console.log('ERROR: Cannot have a blank task title.')
                 console.log('Updating title.')
                 task.setTitle(value)
                 break
@@ -302,6 +320,22 @@ export default class UI {
     static deleteTask(Task) {
         UI.app.getActiveProject().deleteTask(Task.getTitle())
         UI.init()    
+    }
+
+    static updateProjectTitle(Title) {
+        console.log('Title: ', Title)
+        if (Title == undefined || Title == null || Title == '') {
+            console.log('ERROR: Cannot have a blank project title.')
+            return UI.init()
+        }
+        else if (UI.app.getActiveProject().isDefault()) {
+            console.log('ERROR: Cannot edit a default project title.')
+            return UI.init()
+        } else {
+            console.log('Updating project title.')
+            UI.app.getActiveProject().setTitle(Title)
+            return UI.init()
+        }
     }
 
     static createProject(Title) {
@@ -362,7 +396,7 @@ export default class UI {
                     <h3>${projectTitle}</h3>
             </span>
             <span class="nav-item-right">
-                <span class="project-task-count">0</span>
+                <span class="project-task-count">${Project.taskCount()}</span>
                 <span class="project-delete material-symbols-rounded">delete</span>
             </span>
         </span>`

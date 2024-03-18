@@ -1,5 +1,10 @@
 // Content
 
+.title-editable:hover,
+.title-editable:focus {
+    background-color: var(--modal-input-hover);
+}
+
 #content {
     grid-area: content;
     padding: 0 24px 24px 24px;
@@ -16,16 +21,21 @@
 
 #project-title {
     height: max-content;
-    font-family: "Paytone One", sans-serif;
+    // font-family: "Paytone One", sans-serif;
     color: var(--content-title-text);
     transition: $default-transition;
 
+    > * {
+        width: max-content;
+        border-radius: 8px;
+        padding: 4px 12px;
+    }
     &-1 {
         font-size: 40px;
     }
     &-2 {
         margin-top: -12px;
-        font-size: 24px;
+        font-size: 20px;
     }
 }
 
