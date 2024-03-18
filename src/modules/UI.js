@@ -152,8 +152,8 @@ export default class UI {
     }
 
     static handleKeyboardInput(e) {
-        const taskInput = document.getElementById('add-task-input')
-        const projectInput = document.getElementById('add-project-input')
+        const taskInput = document.getElementById('add-task-input'),
+              projectInput = document.getElementById('add-project-input')
 
         switch(document.activeElement) {
             case taskInput:
@@ -175,8 +175,8 @@ export default class UI {
     }
 
     static toggleTheme() {
-        const html = document.querySelector('html')
-        const currentTheme = html.getAttribute('data-theme')
+        const html = document.querySelector('html'),
+              currentTheme = html.getAttribute('data-theme')
 
         currentTheme == 'light'
             ? html.setAttribute('data-theme', 'dark')
@@ -184,10 +184,10 @@ export default class UI {
     }
 
     static toggleNavModal() {
-        const nav = document.getElementById('nav')
-        const projectInput = document.getElementById('add-project-input')
+        const nav = document.getElementById('nav'),
+              projectInput = document.getElementById('add-project-input')
 
-        projectInput.value = ''
+        projectInput.value = ''                             // Clear input on close
         nav.hasAttribute('open')
             ? nav.close()
             : nav.showModal()
@@ -211,11 +211,13 @@ export default class UI {
         // Get modal elements
         const taskCheckbox = document.getElementById('task-checkbox'),
               taskTitle = document.getElementById('task-title'),
+              taskDue = document.getElementById('task-due'),
               taskNote = document.getElementById('task-note'),
               taskCreation = document.getElementById('task-creation')
 
         // Wipe modal elements to remove any persisting bugs with the placeholder feature
         taskTitle.textContent = ''
+        taskDue.value = ''
         taskNote.textContent = ''
         taskCreation.textContent = ''
         
@@ -232,6 +234,8 @@ export default class UI {
             taskTitle.classList.remove('task-complete')
         }
 
+        taskDue.value = activeTask.getDueDate()
+
         if (activeTask.getNote()) {
             taskNote.classList.remove('placeholder')
             taskNote.textContent = activeTask.getNote()
@@ -246,19 +250,20 @@ export default class UI {
         const task = UI.app.getActiveProject().getActiveTask()
         const taskVals = [
             task.getTitle(),
-            // task.getDueDate(),
+            task.getDueDate(),
             task.getNote()
         ]
 
         // Get modal values
         const modalVals = [
             document.getElementById('task-title').textContent,
+            document.getElementById('task-due').value,
             document.getElementById('task-note').textContent
         ]
 
         // Check for changes
         console.log('Checking for task changes...')
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             // console.log(taskVals[i])
             // console.log(modalVals[i])
             taskVals[i] !== modalVals[i]
@@ -271,18 +276,19 @@ export default class UI {
         console.log('Change detected.')
         switch(i) {
             case 0:
-                if (value == '') return
+                if (value == '') return console.log('Cannot have a blank project title.')
                 console.log('Updating title.')
                 task.setTitle(value)
                 break
 
             case 1:
-                console.log('Updating Note.')
-                task.setNote(value)
+                console.log('Updating due date.')
+                task.setDueDate(value)
                 break
 
             case 2:
-
+                console.log('Updating note.')
+                task.setNote(value)
                 break
         }
         UI.init()

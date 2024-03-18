@@ -20,6 +20,12 @@ export default class task {
     getNote () {
         return this.note
     }
+    setDueDate (date) {
+        return this.dueDate = date
+    }
+    getDueDate () {
+        return this.dueDate
+    }
     toggleComplete () {
         this.isComplete == false
             ? this.isComplete = true
