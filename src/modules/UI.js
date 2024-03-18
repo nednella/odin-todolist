@@ -27,9 +27,7 @@ export default class UI {
     static init() {
         UI.clear()
         UI.app.getProjects().forEach(Project => UI.appendProject(Project))
-        // UI.loadNavTaskCounters()
         UI.loadProject(UI.app.getActiveProject()) 
-
         Storage.saveApp(UI.app.getProjects())
     }
 
@@ -40,15 +38,6 @@ export default class UI {
         document.getElementById('active-tasks').textContent = ''
         document.getElementById('completed-tasks-title').style.display = 'none'
         document.getElementById('completed-tasks').textContent = ''
-    }
-
-    static loadNavTaskCounters() {
-        // const navCounters = document.querySelectorAll('.project-task-count')
-        // const Projects = UI.app.getProjects()
-
-        // for (let i = 0; i < navCounters.length; i++) {
-        //     navCounters[i].textContent = Projects[i].taskCount()
-        // }
     }
 
     static loadProject(Project) {
