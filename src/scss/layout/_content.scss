@@ -11,7 +11,7 @@
     overflow: hidden;   // Required for task scrolling on overflow
     display: grid;
     grid-template-rows: max-content 1fr max-content;
-    gap: 24px;
+    gap: 16px;
 
     > * {
         width: 100%;
