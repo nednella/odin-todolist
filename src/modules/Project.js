@@ -1,8 +1,9 @@
 import Task from './Task'
 
 export default class project {
-    constructor (title) {
+    constructor (title, isDefault) {
         this.title = title
+        this.default = isDefault ?? false
         this.id = title.toLowerCase()
         this.tasks = []
         this.activeTask = undefined
@@ -35,6 +36,9 @@ export default class project {
     }
     getID () {
         return this.id
+    }
+    isDefault () {
+        return this.default
     }
     addTask (title, dueDate, note, isComplete, creationDate) {
         if (this.tasks.find((task) => task.getTitle() == title)) return console.log(`${title} already exists.`)

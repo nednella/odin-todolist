@@ -3,8 +3,8 @@ import Project from './Project'
 export default class toDoList {
     constructor() {
         this.list = []
-        this.list.push(new Project('My Day'))
-        this.list.push(new Project('All Tasks'))
+        this.list.push(new Project('My Day', true))
+        this.list.push(new Project('All Tasks', true))
         this.activeProject = this.list[0]
     }
     setActiveProject (projectTitle) {
