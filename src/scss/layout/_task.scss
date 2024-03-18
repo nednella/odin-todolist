@@ -70,11 +70,12 @@ $task-footer-height: 70px;
         overflow-y: auto; // Required for task scrolling on overflow
     
         display: grid;
-        grid-template-rows: max-content max-content minmax(120px, max-content);
+        grid-template-rows: max-content max-content max-content minmax(120px, max-content);
         grid-auto-rows: max-content;
         gap: 24px;
         grid-template-areas:
             "title"
+            "my-day"
             "due"
             "note";
 
@@ -121,6 +122,16 @@ $task-footer-height: 70px;
                 text-decoration-thickness: 1px;
             }
         }
+        .my-day {
+            grid-area: my-day;
+            cursor: pointer;
+            color: inherit;
+            font-size: 1.17em;
+
+        }
+        .my-day:active {
+            background-color: var(--modal-option-hover);
+        }
         .due {
             grid-area: due;
 
@@ -155,7 +166,7 @@ $task-footer-height: 70px;
                 font-size: 1.17em;
                 font-weight: 300;
                 color: var(--modal-input-text);
-                white-space: wrap;
+                white-space: pre-wrap;
             }
             #task-note.placeholder:empty::before {
                 content: attr(placeholder);
