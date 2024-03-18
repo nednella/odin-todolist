@@ -26,60 +26,72 @@ export default class UI {
 
     static init() {
         UI.clear()
-        UI.app.getProjects().forEach((Project, index) => {
-            index > 1
-                ? UI.appendProject(Project)
-                : null
-        })
-        UI.loadNavTaskCounters()
+        UI.app.getProjects().forEach(Project => UI.appendProject(Project))
+        // UI.loadNavTaskCounters()
         UI.loadProject(UI.app.getActiveProject()) 
 
         Storage.saveApp(UI.app.getProjects())
     }
 
     static clear() {
-        // Remove the active project
-        const navItems = document.querySelectorAll('.nav-item')
-        navItems.forEach(item => item.classList.remove('active'))
-
+        document.querySelector('.default-projects').textContent = ''
         document.querySelector('.custom-projects').textContent = ''
-        // document.getElementById('project-title-1').textContent = ''
-        // document.getElementById('project-title-2').textContent = ''
+        document.getElementById('project-title').textContent = ''
         document.getElementById('active-tasks').textContent = ''
         document.getElementById('completed-tasks-title').style.display = 'none'
         document.getElementById('completed-tasks').textContent = ''
     }
 
     static loadNavTaskCounters() {
-        const navCounters = document.querySelectorAll('.project-task-count')
-        const Projects = UI.app.getProjects()
+        // const navCounters = document.querySelectorAll('.project-task-count')
+        // const Projects = UI.app.getProjects()
 
-        for (let i = 0; i < navCounters.length; i++) {
-            navCounters[i].textContent = Projects[i].taskCount()
-        }
+        // for (let i = 0; i < navCounters.length; i++) {
+        //     navCounters[i].textContent = Projects[i].taskCount()
+        // }
     }
 
     static loadProject(Project) {
-        console.log('Loading Project: ', Project)
         const h1 = () => document.createElement('h1')
         const h3 = () => document.createElement('h3')
 
+        // Grab title container
         const projectTitle = document.getElementById('project-title')
-        projectTitle.innerHTML = ''
 
-        // Create title elements
-        projectTitle.appendChild(h1()).id = 'project-title-1'
-        if (Project.getTitle() == 'My Day') projectTitle.appendChild(h3()).id = 'project-title-2'
+        // Create and populate title elements
+        projectTitle.appendChild(
+            Object.assign(h1(),
+                {
+                    id: 'project-title-1',
+                    textContent: `${Project.getTitle()}`
+                }
+            )
+        )
+
+        // If project is 'My Day', create secondary element for the current date
+        if (Project.getTitle() == 'My Day') {
+            projectTitle.appendChild(
+                Object.assign(h3(),
+                    {
+                        id: 'project-title-2',
+                        textContent: `${format(new Date(), "eeee, d MMM y").toUpperCase()}`
+                    }
+                )
+            )
+        }
 
         // If project not default, enable title edit
         if (!Project.isDefault()) {
-            console.log('Project is not default.')
-            const projectTitle1 = document.getElementById('project-title-1')
-            projectTitle1.classList.add('title-editable')
-            projectTitle1.contentEditable = true
-            projectTitle1.spellcheck = false
-            projectTitle1.addEventListener('focusout', (e) => UI.updateProjectTitle(e.target.textContent))
-        }    
+            const titleElement = document.getElementById('project-title-1')
+            Object.assign(titleElement, 
+                {
+                    classList: 'title-editable',
+                    contentEditable: true,
+                    spellcheck: false
+                }
+            )
+            titleElement.addEventListener('focusout', (e) => UI.updateProjectTitle(e.target.textContent))
+        }  
 
         // Set project as active in nav menu
         const navItems = document.querySelectorAll('.nav-item')
@@ -88,12 +100,6 @@ export default class UI {
                 item.classList.add('active')
             }
         })
-
-        // Load project title
-        document.getElementById('project-title-1').textContent = Project.getTitle()
-
-        // If My Day, load current date
-        if (Project.getTitle() == 'My Day') document.getElementById('project-title-2').textContent = format(new Date(), "eeee, d MMM y").toUpperCase()
          
         // Load project tasks
         Project.getTasks().forEach(Task => UI.appendTask(Task))
@@ -386,19 +392,33 @@ export default class UI {
     }
 
     static appendProject(Project) {
-        const projectTitle = Project.getTitle()
+        const defaultProjects = document.querySelector('.default-projects'),
+              customprojects = document.querySelector('.custom-projects')
 
-        const projectsList = document.querySelector('.custom-projects')
-        projectsList.innerHTML += `
-        <span href="" class="nav-item">
-            <span class="nav-item-left">
-                <span class="material-symbols-rounded">menu</span>
-                    <h3>${projectTitle}</h3>
-            </span>
-            <span class="nav-item-right">
-                <span class="project-task-count">${Project.taskCount()}</span>
-                <span class="project-delete material-symbols-rounded">delete</span>
-            </span>
-        </span>`
+        if (Project.isDefault()) {
+            defaultProjects.innerHTML += `
+                <span href="" class="nav-item">
+                    <span class="nav-item-left">
+                        <span class="material-symbols-rounded">${Project.getIcon()}</span>
+                            <h3>${Project.getTitle()}</h3>
+                    </span>
+                    <span class="nav-item-right">
+                        <span class="project-task-count">${Project.taskCount()}</span>
+                        <span class="project-delete material-symbols-rounded">delete</span>
+                    </span>
+                </span>`
+        } else {
+            customprojects.innerHTML += `
+                <span href="" class="nav-item">
+                    <span class="nav-item-left">
+                        <span class="material-symbols-rounded">${Project.getIcon()}</span>
+                            <h3>${Project.getTitle()}</h3>
+                    </span>
+                    <span class="nav-item-right">
+                        <span class="project-task-count">${Project.taskCount()}</span>
+                        <span class="project-delete material-symbols-rounded">delete</span>
+                    </span>
+                </span>`
+        }
     }
 }

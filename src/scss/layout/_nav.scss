@@ -63,11 +63,16 @@ $nav-add-project-height: 60px;
 .nav-links {
     max-height: calc(100% - $nav-header-height - $nav-add-project-height - 4px);
     display: grid;
-    grid-template-rows: repeat(2, 60px) max-content 1fr;
+    grid-template-rows: repeat(2, max-content) 1fr;
     gap: 4px;
 
     > * {
         transition: $default-transition;
+    }
+    .default-projects {
+        display: grid;
+        grid-auto-rows: 60px;
+        gap: 4px;
     }
     hr {
         margin: 24px 0;
