@@ -114,12 +114,12 @@ export default class UI {
 
         // Task modal listeners
         const taskModal = document.getElementById('task'),
-              taskmodalTitle = document.getElementById('task-title'),
+              taskModalTitle = document.getElementById('task-title'),
               taskModalNote = document.getElementById('task-note')
-        
+
         taskModal.addEventListener('click', (e) => UI.handleTaskModalInput(e))
-        taskmodalTitle.addEventListener('focusout', (e) => UI.checkModal())
-        taskModalNote.addEventListener('focusout', (e) => UI.checkModal())
+        taskModalTitle.addEventListener('focusout', (e) => UI.checkTaskModal())
+        taskModalNote.addEventListener('focusout', (e) => UI.checkTaskModal())
     }
 
     static handleTaskInput(e) {
@@ -140,9 +140,9 @@ export default class UI {
 
     static handleTaskModalInput(e) {
         const target = e.target
-
+        
         if (target.id == 'task-checkbox') {
-            UI.app.getActiveProject().getActiveTask().toggleComplete()
+            UI.app.getActiveProject().getActiveTask().toggleComplete() 
             UI.populateTaskModal()  // Push changes to the UI
             UI.init()               // Push changes to the UI
         }
@@ -170,20 +170,20 @@ export default class UI {
                   activeTask = UI.app.getActiveProject().getActiveTask()
 
             if (classList.contains('today')) {
-                activeTask.setDueDate(format(new Date(), "yyyy-MM-dd"))
+                activeTask.setDueDate(format(new Date(), "yyyy-MM-dd"))    
             }
             if (classList.contains('tomorrow')) {
                 activeTask.setDueDate(format(add(new Date(), {days: 1}), "yyyy-MM-dd"))
             }
             if (classList.contains('pick')) {
-                console.log('Due date menu - pick clicked')         // Placeholder
-
+                console.log('Due date menu - pick clicked')     // Placeholder
                 // format date 'yyyy-MM-dd' -> supported by JS and most browsers
             }
 
+            UI.toggleDueDateMenu()  // Close the menu after option selected
             UI.populateTaskModal()  // Push changes to the UI
             UI.init()               // Push changes to the UI
-        }
+        } 
 
         if (target.id !== 'add-due' && !target.classList.contains('menu-option')) {
             if (!document.getElementById('due-menu').classList.contains('hidden')) {
@@ -266,7 +266,6 @@ export default class UI {
 
         if (task.hasAttribute('open')) {
             task.close()
-            UI.checkModal()                                 // Check for task changes on modal close
             UI.app.getActiveProject().removeActiveTask()    // Remove active task on modal close
         } else {
             task.showModal()
@@ -302,9 +301,8 @@ export default class UI {
               removeMyDay = document.getElementById('remove-my-day'),
               addDue = document.getElementById('add-due'),
               removeDue = document.getElementById('remove-due')
-
-        // Populate text-editable modal elements
-
+              
+        // Populate modal elements
         // Title
         title.textContent = activeTask.getTitle()
 
@@ -316,7 +314,7 @@ export default class UI {
             checkbox.checked = false
             title.classList.remove('task-complete')
         }
-
+        
         // My day
         const addMyDayChildren = Array.from(addMyDay.children)
 
@@ -359,7 +357,7 @@ export default class UI {
 
         // Due date menu options
         UI.populateDueDateMenu()
-
+        
         // Note
         if (activeTask.getNote()) {
             note.classList.remove('placeholder')
@@ -367,7 +365,7 @@ export default class UI {
         } else note.classList.add('placeholder')
         
         // Creation date
-        creation.textContent = `Created on ${activeTask.getCreationDate()}`  
+        creation.textContent = `Created on ${activeTask.getCreationDate()}`   
     }
 
     static populateDueDateMenu() {
@@ -398,16 +396,41 @@ export default class UI {
         })
     }
 
-    static checkModal() {
+    static checkTaskModal() {
+        // Get current stored task values
+        const task = UI.app.getActiveProject().getActiveTask()
+        const taskVals = [
+            task.getTitle(),
+            task.getNote()
+        ]
 
-        // TODO: Refactor function
+        // Get current task modal values
+        const modalVals = [
+            document.getElementById('task-title').textContent,
+            document.getElementById('task-note').textContent
+        ]
+
+        // Check for changes
+        modalVals.forEach((element, i) => {
+            taskVals[i] !== element
+                ? UI.updateTask(task, element, i)
+                : null
+        })
         
     }
 
     static updateTask(task, value, i) {
-        
-        // TODO: Refactor function
-
+        if (i == 0) {   // Title element
+            if (value == '') return console.log('ERROR: Cannot have a blank task title.')
+            console.log('Updating title.')
+            task.setTitle(value)
+        }
+        if (i == 1) {   // Note element
+            console.log('Updating note.')
+            task.setNote(value)
+        }
+        UI.populateTaskModal()  // Push changes to the UI
+        UI.init()               // Push changes to the UI
     }
 
     static createTask(Title) {
@@ -421,15 +444,16 @@ export default class UI {
     }
 
     static updateProjectTitle(Title) {
-        console.log('Title: ', Title)
         if (Title == undefined || Title == null || Title == '') {
             console.log('ERROR: Cannot have a blank project title.')
             return UI.init()
         }
+        else if (UI.app.getActiveProject().getTitle() == Title) return
         else if (UI.app.getActiveProject().isDefault()) {
             console.log('ERROR: Cannot edit a default project title.')
             return UI.init()
-        } else {
+        }
+        else {
             console.log('Updating project title.')
             UI.app.getActiveProject().setTitle(Title)
             return UI.init()
