@@ -95,55 +95,100 @@ export default class UI {
     }
 
     static initEventListeners() {
-        const taskModal = document.getElementById('task'),
-              navModal = document.getElementById('nav'),
-              navOpen = document.getElementById('nav-open'),
+        // Page listeners
+        const navOpen = document.getElementById('nav-open'),
               themeToggle = document.getElementById('theme-toggle'),
               projectDisplay = document.getElementById('project-display')
 
-        taskModal.addEventListener('click', (e) => UI.handleTaskModalInput(e))
-        navModal.addEventListener('click', (e) => UI.handleNavModalInput(e))
-        navModal.addEventListener('cancel', (e) => e.preventDefault())
         navOpen.addEventListener('click', () => UI.toggleNavModal())
         themeToggle.addEventListener('click', () => UI.toggleTheme())
         projectDisplay.addEventListener('click', (e) => UI.handleTaskInput(e))
         window.addEventListener('keydown', (e) => UI.handleKeyboardInput(e))
+
+        // Nav modal listeners
+        const navModal = document.getElementById('nav')
+
+        navModal.addEventListener('click', (e) => UI.handleNavModalInput(e))
+        navModal.addEventListener('cancel', (e) => e.preventDefault())
+
+        // Task modal listeners
+        const taskModal = document.getElementById('task'),
+              taskmodalTitle = document.getElementById('task-title'),
+              taskModalNote = document.getElementById('task-note')
+        
+        taskModal.addEventListener('click', (e) => UI.handleTaskModalInput(e))
+        taskmodalTitle.addEventListener('focusout', (e) => UI.checkModal())
+        taskModalNote.addEventListener('focusout', (e) => UI.checkModal())
     }
 
     static handleTaskInput(e) {
-        if (e.target.classList.contains('task')) {
-            const selectedTask = e.target.children[1].textContent
+        const target = e.target
+
+        if (target.classList.contains('task')) {
+            const selectedTask = target.children[1].textContent
             UI.app.getActiveProject().setActiveTask(selectedTask)
             UI.toggleTaskModal()
         }
 
-        if (e.target.classList.contains('task-checkbox')) {
-            const selectedTask = e.target.parentElement.children[1].textContent
+        if (target.classList.contains('task-checkbox')) {
+            const selectedTask = target.parentElement.children[1].textContent
             UI.app.getActiveProject().getTask(selectedTask).toggleComplete()
             UI.init() 
         }
     }
 
     static handleTaskModalInput(e) {
-        if (e.target.classList.contains('task-checkbox')) {
-            // Toggle task-complete class on navModal task title
-            const activeTaskTitleElement = e.target.parentElement.children[1]
-            activeTaskTitleElement.classList.contains('task-complete')
-                ? activeTaskTitleElement.classList.remove('task-complete')
-                : activeTaskTitleElement.classList.add('task-complete')
+        const target = e.target
 
+        if (target.id == 'task-checkbox') {
             UI.app.getActiveProject().getActiveTask().toggleComplete()
-            UI.init() 
+            UI.populateTaskModal()  // Push changes to the UI
+            UI.init()               // Push changes to the UI
+        }
+
+        if (target.id == 'add-my-day') {
+            console.log('Add to My Day clicked')                // Placeholder
+        }
+
+        if (target.id == 'remove-my-day') {
+            console.log('Remove from My Day clicked')           // Placeholder
+        }
+
+        if (target.id == 'add-due') {
+            console.log('Add due date clicked')                 // Placeholder
+        }
+
+        if (target.id == 'remove-due') {
+            console.log('Remove due date clicked')              // Placeholder
+        }
+
+        if (target.classList.contains('menu-option')) {
+            const classList = target.classList,
+                  activeTask = UI.app.getActiveProject().getActiveTask()
+
+            if (classList.contains('today')) {
+                console.log('Due date menu - today clicked')        // Placeholder
+            }
+            if (classList.contains('tomorrow')) {
+                console.log('Due date menu - tomorrow clicked')     // Placeholder
+            }
+            if (classList.contains('pick')) {
+                console.log('Due date menu - pick clicked')         // Placeholder
+                
+            }
+
+            UI.populateTaskModal()  // Push changes to the UI
+            UI.init()               // Push changes to the UI
         }
         
-        if (e.target.classList.contains('task-delete')) {
+        if (target.id == 'task-delete') {
             const selectedTask = UI.app.getActiveProject().getActiveTask()
             UI.deleteTask(selectedTask)
         }
 
-        if (e.target.nodeName == 'DIALOG'
-        || e.target.id == 'task-close'
-        || e.target.id == 'task-delete') {
+        if (target.nodeName == 'DIALOG'
+        || target.id == 'task-close'
+        || target.id == 'task-delete') {
             UI.toggleTaskModal()
         }
     }
@@ -220,91 +265,48 @@ export default class UI {
     }
 
     static populateTaskModal() {
-        console.log('Populating task modal...')
-        // Get modal elements
-        const taskCheckbox = document.getElementById('task-checkbox'),
-              taskTitle = document.getElementById('task-title'),
-              taskDue = document.getElementById('task-due'),
-              taskNote = document.getElementById('task-note'),
-              taskCreation = document.getElementById('task-creation')
 
-        // Wipe modal elements to remove any persisting bugs with the placeholder feature
-        taskTitle.textContent = ''
-        taskDue.value = ''
-        taskNote.textContent = ''
-        taskCreation.textContent = ''
-        
+        // TODO: Refactor function
+
+
+
+        // Placeholder task information
         // Get active task
         const activeTask = UI.app.getActiveProject().getActiveTask()
 
-        // Populate modal elements
-        taskTitle.textContent = activeTask.getTitle()
-        if (activeTask.complete()) {
-            taskCheckbox.checked = true
-            taskTitle.classList.add('task-complete')
-        } else {
-            taskCheckbox.checked = false
-            taskTitle.classList.remove('task-complete')
-        }
+        // Get text-editable elements
+        const title = document.getElementById('task-title'),
+              note = document.getElementById('task-note'),
+              creation = document.getElementById('task-creation')
 
-        taskDue.value = activeTask.getDueDate()
+        // Wipe text-editable modal elements to remove any persisting bugs
+        title.textContent = ''
+        note.textContent = ''
+        creation.textContent = ''
 
+        // Title
+        title.textContent = activeTask.getTitle()
+
+        // Note
         if (activeTask.getNote()) {
-            taskNote.classList.remove('placeholder')
-            taskNote.textContent = activeTask.getNote()
-        } else taskNote.classList.add('placeholder')
+            note.classList.remove('placeholder')
+            note.textContent = activeTask.getNote()
+        } else note.classList.add('placeholder')
         
-        taskCreation.textContent = `Created on ${activeTask.getCreationDate()}`    
+        // Creation date
+        creation.textContent = `Created on ${activeTask.getCreationDate()}`  
     }
 
     static checkModal() {
+
+        // TODO: Refactor function
         
-        // Get active task values
-        const task = UI.app.getActiveProject().getActiveTask()
-        const taskVals = [
-            task.getTitle(),
-            task.getDueDate(),
-            task.getNote()
-        ]
-
-        // Get modal values
-        const modalVals = [
-            document.getElementById('task-title').textContent,
-            document.getElementById('task-due').value,
-            document.getElementById('task-note').textContent
-        ]
-
-        // Check for changes
-        console.log('Checking for task changes...')
-        for (let i = 0; i < 3; i++) {
-            // console.log(taskVals[i])
-            // console.log(modalVals[i])
-            taskVals[i] !== modalVals[i]
-                ? UI.updateTask(task, modalVals[i], i)
-                : console.log('No change.')
-        }
     }
 
     static updateTask(task, value, i) {
-        console.log('Change detected.')
-        switch(i) {
-            case 0:
-                if (value == '') return console.log('ERROR: Cannot have a blank task title.')
-                console.log('Updating title.')
-                task.setTitle(value)
-                break
+        
+        // TODO: Refactor function
 
-            case 1:
-                console.log('Updating due date.')
-                task.setDueDate(value)
-                break
-
-            case 2:
-                console.log('Updating note.')
-                task.setNote(value)
-                break
-        }
-        UI.init()
     }
 
     static createTask(Title) {
