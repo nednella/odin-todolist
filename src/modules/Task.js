@@ -26,6 +26,9 @@ export default class task {
     getDueDate () {
         return this.dueDate
     }
+    removeDueDate () {
+        return this.dueDate = ''
+    }
     toggleComplete () {
         this.isComplete == false
             ? this.isComplete = true
