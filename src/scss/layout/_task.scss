@@ -1,4 +1,3 @@
-// Task Modal
 
 $task-header-height: 70px;
 $task-footer-height: 70px;
@@ -12,6 +11,7 @@ $task-footer-height: 70px;
     background-color: var(--modal-option-hover);
 }
 
+// Task Modal
 #task {
     position: fixed;
     z-index: 1;
@@ -36,15 +36,13 @@ $task-footer-height: 70px;
     }
 }
 
-
-
-.taskModal-header {
+.task-header {
     height: $nav-header-height;
 
     display: flex;
     align-items: center;
     justify-content: end;
-    
+
     #task-close {
         height: 40px;
         width: 40px;
@@ -52,7 +50,7 @@ $task-footer-height: 70px;
         font-size: 32px;
         transition: $default-transition;
         cursor: pointer;
-
+    
         display: flex;
         align-items: center;
         justify-content: center;
@@ -62,24 +60,69 @@ $task-footer-height: 70px;
     }
 }
 
-.taskModal-content-scroll {
+
+
+
+
+
+
+
+
+
+
+// .due {
+//     grid-area: due;
+
+//     input[type="date"] {
+//         width: 100%;
+//         background-color: transparent;
+//         color: inherit;
+//         text-align: center;
+//         text-transform: uppercase;
+//         letter-spacing: 1px;
+//     }
+//     input[type="date"]::-webkit-calendar-picker-indicator {
+//         cursor: pointer;
+//         filter: invert(1);
+//         transform: scale(1.5);
+//         border-radius: 4px;
+//         margin-right: 2px;
+//         opacity: 0.7;
+//     }
+//     input[type="date"]::-webkit-calendar-picker-indicator:hover {
+//         opacity: 1
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+.task-content-scroll {
     overflow-y: hidden; // Required for task scrolling on overflow
 
-    .taskModal-content {
+    .task-content {
+        min-height: 100%;
         max-height: 100%; // Required for task scrolling on overflow
         overflow-y: auto; // Required for task scrolling on overflow
     
         display: grid;
-        grid-template-rows: max-content max-content max-content minmax(120px, max-content);
+        grid-template-rows: max-content max-content minmax(120px, max-content);
         grid-auto-rows: max-content;
         gap: 24px;
         grid-template-areas:
             "title"
-            "my-day"
-            "due"
+            "options"
             "note";
 
-        > * {
+        > *:not(.options) {
             padding: 8px;
             border-radius: 4px;
             background-color: var(--modal-bg);
@@ -92,67 +135,122 @@ $task-footer-height: 70px;
             gap: 8px;
             grid-template-areas:
                 "checkbox title";
-    
-            #task-checkbox {
-                grid-area: checkbox;
-                justify-self: center;
-                height: 28px;
-                width: 28px;
-                margin-top: 4px;
-                border-radius: 50%;
-                border: 3px solid grey;
-                background-color: white;
-                appearance: none;
-                -webkit-appearance: none;
-                cursor: pointer;
-                pointer-events: auto;
-            }
-            #task-checkbox:checked {
-                background-color: var(--body-bg-gradient-top);
-            }
-            #task-title {
-                grid-area: title;
-                font-size: 20px;
-                white-space: wrap;
-                overflow: auto;       
-            }
-            #task-title.task-complete {
-                color: grey;
-                text-decoration: line-through;
-                text-decoration-thickness: 1px;
-            }
-        }
-        .my-day {
-            grid-area: my-day;
-            cursor: pointer;
-            color: inherit;
-            font-size: 1.17em;
 
+                #task-checkbox {
+                    grid-area: checkbox;
+                    justify-self: center;
+                    height: 28px;
+                    width: 28px;
+                    margin-top: 4px;
+                    border-radius: 50%;
+                    border: 3px solid grey;
+                    background-color: white;
+                    appearance: none;
+                    -webkit-appearance: none;
+                    cursor: pointer;
+                    pointer-events: auto;
+                }
+                #task-checkbox:checked {
+                    background-color: var(--body-bg-gradient-top);
+                }
+                #task-title {
+                    grid-area: title;
+                    font-size: 20px;
+                    white-space: wrap;
+                    overflow: auto;       
+                }
+                #task-title.task-complete {
+                    color: grey;
+                    text-decoration: line-through;
+                    text-decoration-thickness: 1px;
+                }
         }
-        .my-day:active {
-            background-color: var(--modal-option-hover);
-        }
-        .due {
-            grid-area: due;
+        .options {
+            grid-area: options;
+            display: grid;
+            grid-auto-rows: max-content;
+            gap: 8px;
 
-            input[type="date"] {
-                width: 100%;
-                background-color: transparent;
-                color: inherit;
-                text-align: center;
-                text-transform: uppercase;
-                letter-spacing: 1px;
+            > * {
+                position: relative;
+                height: 100%;
+                width: 100%;   
             }
-            input[type="date"]::-webkit-calendar-picker-indicator {
+            .my-day,
+            .due-date {
                 cursor: pointer;
-                filter: invert(1);
-                transform: scale(1.5);
-                border-radius: 4px;
-                margin-right: 2px;
-                opacity: 0.7;
+                background-color: var(--modal-bg);
+
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-auto-flow: column;
+                grid-auto-columns: 60px;
+
+                > :nth-child(2) {
+                    align-self: center;
+                    justify-self: center;
+                    font-size: 24px;
+                    color: var(--modal-text);
+                }
             }
-            input[type="date"]::-webkit-calendar-picker-indicator:hover {
-                opacity: 1
+            #add-my-day,
+            #add-due {
+                padding: 8px;
+
+                display: grid;
+                grid-template-columns: 44px 1fr;
+                gap: 8px;
+
+                > * {
+                    pointer-events: none;   // force pointer event to bubble to parent element
+                }
+                > :first-child {
+                    align-self: center;
+                    justify-self: center;
+                    font-size: 24px;
+                }
+                > :nth-child(2) {
+                    margin-top: 3px;
+                    padding: 4px 8px;
+                    font-size: 18px;
+                }
+            }
+            #due-menu {
+                position: absolute;
+                top: 60px;
+                left: calc(377px / 2);
+                transform: translateX(-50%);
+            
+                height: max-content;
+                width: 280px;
+                color: var(--modal-text);
+                background-color: var(--modal-bg);
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+
+                > .menu-option {
+                    cursor: pointer;
+                    height: 60px;
+                    padding: 8px;
+            
+                    display: grid;
+                    grid-template-columns: 44px 1fr 44px;
+                    gap: 8px;
+            
+                    > * {
+                        pointer-events: none; // force pointer event to bubble to parent element
+                        align-self: center;
+                    }
+            
+                    > :first-child {
+                        justify-self: center;
+                    }
+                }
+                > .menu-option:hover {
+                    background-color: var(--modal-option-hover);
+                }
+            }
+            #due-menu.hidden {
+                display: none;
             }
         }
         .note {
@@ -163,7 +261,7 @@ $task-footer-height: 70px;
                 resize: none;
                 height: 100%;
                 width: 100%;
-                font-size: 1.17em;
+                font-size: 18px;
                 font-weight: 300;
                 color: var(--modal-input-text);
                 white-space: pre-wrap;
@@ -174,15 +272,15 @@ $task-footer-height: 70px;
             }
         }
     }
-    .taskModal-content::-webkit-scrollbar {
+    .task-content::-webkit-scrollbar {
         width: 8px;
     }
-    .taskModal-content::-webkit-scrollbar-thumb {
+    .task-content::-webkit-scrollbar-thumb {
         background-color: var(--content-title-text);
     }
 }
 
-.taskModal-footer {
+.task-footer {
     display: grid;
     grid-template-columns: 1fr 44px;
 

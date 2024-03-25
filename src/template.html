@@ -75,15 +75,17 @@
 </dialog>
 <dialog class="modal" id="task">
     <div>
-        <div class="taskModal-header">
+        <div class="task-header">
             <span id="task-close" class="material-symbols-rounded">close</span>
         </div>
-        <div class="taskModal-content-scroll">
-            <div class="taskModal-content">
+        <div class="task-content-scroll">
+
+
+
+            <div class="task-content">
                 <div class="title">
                     <input 
                         id="task-checkbox"
-                        class="task-checkbox"
                         type="checkbox"
                     >
                     <h3 id="task-title" 
@@ -92,18 +94,32 @@
                         spellcheck="false"
                     ></h3>
                 </div>
-                
-                <button
-                        id="task-my-day"
-                        class="my-day"
-                    >Add to My Day</button>
 
-                <div class="due">
-                    <input 
-                        id="task-due"
-                        type="date"
-                    >
+                <div class="options">
+
+                    <div class="my-day">
+                        <div id="add-my-day">
+                            <span class="material-symbols-rounded">clear_day</span>
+                            <span></span>
+                        </div>
+                        <span id="remove-my-day" class="material-symbols-rounded">close</span>
+                    </div>
+
+
+                    <div class="due-date">
+                        <div id="add-due">
+                            <span class="material-symbols-rounded">calendar_month</span>
+                            <span></span>
+                        </div>
+                        <span id="remove-due" class="material-symbols-rounded">close</span>
+                        <div id="due-menu" class="hidden">
+                            <div class="menu-option today"></div>
+                            <div class="menu-option tomorrow"></div>
+                            <div class="menu-option pick"></div>
+                        </div>
+                    </div>
                 </div>
+                
 
                 <div class="note">
                     <div
@@ -116,10 +132,13 @@
                 </div>
 
             </div>
+
+
+
         </div>
-        <div class="taskModal-footer">
+        <div class="task-footer">
             <span id="task-creation"></span>
-            <span id="task-delete" class="task-delete material-symbols-rounded">delete</span>
+            <span id="task-delete" class="material-symbols-rounded">delete</span>
         </div>
     </div>
 </dialog>
