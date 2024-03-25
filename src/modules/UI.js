@@ -1,5 +1,6 @@
 import Storage from './Storage'
 import { format, add } from 'date-fns'
+import { parseDueDate } from './Utilities'
 
 String.prototype.toTitleCase = function() {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -159,7 +160,9 @@ export default class UI {
         }
 
         if (target.id == 'remove-due') {
-            console.log('Remove due date clicked')              // Placeholder
+            UI.app.getActiveProject().getActiveTask().removeDueDate()
+            UI.populateTaskModal()  // Push changes to the UI
+            UI.init()               // Push changes to the UI
         }
 
         if (target.classList.contains('menu-option')) {
@@ -167,14 +170,15 @@ export default class UI {
                   activeTask = UI.app.getActiveProject().getActiveTask()
 
             if (classList.contains('today')) {
-                console.log('Due date menu - today clicked')        // Placeholder
+                activeTask.setDueDate(format(new Date(), "yyyy-MM-dd"))
             }
             if (classList.contains('tomorrow')) {
-                console.log('Due date menu - tomorrow clicked')     // Placeholder
+                activeTask.setDueDate(format(add(new Date(), {days: 1}), "yyyy-MM-dd"))
             }
             if (classList.contains('pick')) {
                 console.log('Due date menu - pick clicked')         // Placeholder
-                
+
+                // format date 'yyyy-MM-dd' -> supported by JS and most browsers
             }
 
             UI.populateTaskModal()  // Push changes to the UI
@@ -279,16 +283,10 @@ export default class UI {
     }
 
     static populateTaskModal() {
-
-        // TODO: Refactor function
-
-
-
-        // Placeholder task information
         // Get active task
         const activeTask = UI.app.getActiveProject().getActiveTask()
 
-        // Get text-editable elements
+        // Get text-editable modal elements
         const title = document.getElementById('task-title'),
               note = document.getElementById('task-note'),
               creation = document.getElementById('task-creation')
@@ -298,8 +296,66 @@ export default class UI {
         note.textContent = ''
         creation.textContent = ''
 
+        // Get modal elements
+        const checkbox = document.getElementById('task-checkbox'),
+              addMyDay = document.getElementById('add-my-day'),
+              removeMyDay = document.getElementById('remove-my-day'),
+              addDue = document.getElementById('add-due'),
+              removeDue = document.getElementById('remove-due')
+
+        // Populate text-editable modal elements
+
         // Title
         title.textContent = activeTask.getTitle()
+
+        // Checkbox
+        if (activeTask.complete()) {
+            checkbox.checked = true
+            title.classList.add('task-complete')
+        } else {
+            checkbox.checked = false
+            title.classList.remove('task-complete')
+        }
+
+        // My day
+        const addMyDayChildren = Array.from(addMyDay.children)
+
+        if (1 !== 1) {  // if app.getProject('My Day').contains('activeTask.getTitle())
+            addMyDayChildren.forEach(child => child.style.color = 'var(--modal-option-active')
+            addMyDay.children[1].textContent = 'Added to My Day'
+            removeMyDay.style.display = 'block'
+        } else {
+            addMyDayChildren.forEach(child => child.style.color = 'grey')
+            addMyDay.children[1].textContent = 'Add task to My Day'
+            removeMyDay.style.display = 'none'
+        }
+
+        // Due date
+        const addDueChildren = Array.from(addDue.children)
+
+        if (activeTask.getDueDate()) {
+            addDueChildren.forEach(child => child.style.color = 'var(--modal-option-active')
+            removeDue.style.display = 'block'
+
+            const dueDate = activeTask.getDueDate(),
+                  todayDate = format(new Date(), "yyyy-MM-dd"),
+                  tomorrowDate = format(add(new Date(), {days: 1}), "yyyy-MM-dd")
+            
+            if (new Date(dueDate) < new Date(todayDate)) {
+                addDueChildren.forEach(child => child.style.color = 'red')
+                addDue.children[1].textContent = `Overdue ${parseDueDate(dueDate)}`
+            } else if (dueDate == todayDate) {
+                addDue.children[1].textContent = 'Due Today'
+            } else if (dueDate == tomorrowDate) {
+                addDue.children[1].textContent = 'Due Tomorrow'
+            } else {
+                addDue.children[1].textContent = `Due ${parseDueDate(dueDate)}`
+            }
+        } else {
+            addDueChildren.forEach(child => child.style.color = 'grey')
+            addDue.children[1].textContent = `Add a due date`  
+            removeDue.style.display = 'none'
+        }
 
         // Due date menu options
         UI.populateDueDateMenu()
