@@ -1,5 +1,5 @@
 import Storage from './Storage'
-import { format } from 'date-fns'
+import { format, add } from 'date-fns'
 
 String.prototype.toTitleCase = function() {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -155,7 +155,7 @@ export default class UI {
         }
 
         if (target.id == 'add-due') {
-            console.log('Add due date clicked')                 // Placeholder
+            UI.toggleDueDateMenu()
         }
 
         if (target.id == 'remove-due') {
@@ -179,6 +179,12 @@ export default class UI {
 
             UI.populateTaskModal()  // Push changes to the UI
             UI.init()               // Push changes to the UI
+        }
+
+        if (target.id !== 'add-due' && !target.classList.contains('menu-option')) {
+            if (!document.getElementById('due-menu').classList.contains('hidden')) {
+                UI.toggleDueDateMenu()  // If a click is outside of the due date menu when it's open, close
+            }
         }
         
         if (target.id == 'task-delete') {
@@ -264,6 +270,14 @@ export default class UI {
         }
     }
 
+    static toggleDueDateMenu() {
+        const dueMenu = document.getElementById('due-menu')
+
+        dueMenu.classList.contains('hidden')
+            ? dueMenu.classList.remove('hidden')
+            : dueMenu.classList.add('hidden')
+    }
+
     static populateTaskModal() {
 
         // TODO: Refactor function
@@ -287,6 +301,9 @@ export default class UI {
         // Title
         title.textContent = activeTask.getTitle()
 
+        // Due date menu options
+        UI.populateDueDateMenu()
+
         // Note
         if (activeTask.getNote()) {
             note.classList.remove('placeholder')
@@ -295,6 +312,34 @@ export default class UI {
         
         // Creation date
         creation.textContent = `Created on ${activeTask.getCreationDate()}`  
+    }
+
+    static populateDueDateMenu() {
+        const span = () => document.createElement('span')
+        const menuOptions = document.querySelectorAll('.menu-option')
+
+        menuOptions.forEach(option => {
+            option.textContent = '' // Wipe element to prevent duplicates
+            option.appendChild(
+                Object.assign(span(),
+                    {
+                        classList: 'material-symbols-rounded',
+                        textContent: 'calendar_month'
+                    }
+                )
+            )
+            if (option.classList.contains('today')) {
+                option.appendChild(span()).textContent = `Today`
+                option.appendChild(span()).textContent = `${format(new Date(), "eee")}`
+            }
+            if (option.classList.contains('tomorrow')) {
+                option.appendChild(span()).textContent = `Tomorrow`
+                option.appendChild(span()).textContent = `${format(add(new Date(), {days: 1}), "eee")}`
+            }
+            if (option.classList.contains('pick')) {
+                option.appendChild(span()).textContent = `Pick a date`
+            }
+        })
     }
 
     static checkModal() {
