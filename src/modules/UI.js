@@ -434,7 +434,40 @@ export default class UI {
     }
 
     static createTask(Title) {
-        UI.app.getActiveProject().addTask(Title)
+
+        // if current project isDEFAULT,
+            // if current project isMYDAY
+                // add the task to ALL TASKS with addToMyDay = true flag
+            // if current project isIMPORTANT
+                // add the task to ALL TASKS with addToImportant = true flag
+        // else 
+            // getActiveProject.addTask(title)
+
+        // ...
+
+        // Get active project
+        const activeProject = UI.app.getActiveProject()
+
+        // if default project, assign flag based on what project the task was added to
+        if (activeProject.isDefault()) {
+            const allTasks = UI.app.getProject('All Tasks')
+
+            switch (activeProject.getTitle()) {
+                case 'My Day':
+                    allTasks.addTask(Title, true, null)
+                    break
+
+                case 'Important':
+                    allTasks.addTask(Title, null, true)
+                    break
+                
+                case 'All Tasks':
+                    allTasks.addTask(Title)
+                    break
+            }
+        } else {
+            activeProject.addTask(Title)
+        }
         UI.init()
     }
 
