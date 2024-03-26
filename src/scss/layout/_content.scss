@@ -58,8 +58,9 @@
             height: max-content;
             margin-top: 24px;
             margin-bottom: 8px;
+            padding: 4px 12px;
             font-size: 24px;
-            font-family: "Paytone One", sans-serif;
+            // font-family: "Paytone One", sans-serif;
             color: var(--content-title-text);
             transition: $default-transition;
         }
