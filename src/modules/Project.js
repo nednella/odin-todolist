@@ -26,21 +26,16 @@ export default class project {
     getIcon () {
         return this.icon
     }
-    importTask (title, myDay, important, complete, dueDate, note, creationDate) {
-        if (this.tasks.find((task) => task.getTitle() == title)) return console.log(`${title} already exists.`)
-        else this.tasks.push(new Task(title, this.title, myDay, important, complete, dueDate, note, creationDate))
-        // else return
-
-        // Debugging
-        // console.log('APP: New Task, ', this.tasks[(this.tasks.length - 1)])
-    }
     addTask (title, myDay, important) {
         if (this.tasks.find((task) => task.getTitle() == title)) return console.log(`${title} already exists.`)
         else this.tasks.push(new Task(title, this.title, myDay, important, null, null, null, null))
-        // else return
-
-        // Debugging
-        // console.log('APP: New Task, ', this.tasks[(this.tasks.length - 1)])
+    }
+    importTask (title, myDay, important, complete, dueDate, note, creationDate) {
+        if (this.tasks.find((task) => task.getTitle() == title)) return console.log(`${title} already exists.`)
+        else return this.tasks.push(new Task(title, this.title, myDay, important, complete, dueDate, note, creationDate))
+    }
+    pushTask (task) {
+        return this.tasks.push(task)
     }
     deleteTask (taskTitle) {
         const selectedTask = this.tasks.find((task) => task.getTitle() == taskTitle)
@@ -51,6 +46,9 @@ export default class project {
 
         const index = this.tasks.indexOf(selectedTask)
         return this.tasks.splice(index, 1)
+    }
+    clearTasks () {
+        return this.tasks = []
     }
     getTask (taskTitle) {
         return this.tasks.find((task) => task.getTitle() == taskTitle)

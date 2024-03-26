@@ -26,10 +26,12 @@ export default class UI {
     }
 
     static init() {
+        Storage.saveApp(UI.app.getProjects())
         UI.clear()
+        UI.app.populateMyDay()
+        UI.app.populateImportant()
         UI.app.getProjects().forEach(Project => UI.appendProject(Project))
         UI.loadProject(UI.app.getActiveProject()) 
-        Storage.saveApp(UI.app.getProjects())
     }
 
     static clear() {
@@ -139,20 +141,19 @@ export default class UI {
     }
 
     static handleTaskModalInput(e) {
-        const target = e.target
+        const target = e.target,
+              activeTask = UI.app.getActiveProject().getActiveTask()
         
         if (target.id == 'task-checkbox') {
-            UI.app.getActiveProject().getActiveTask().toggleComplete() 
+            activeTask.toggleComplete() 
             UI.populateTaskModal()  // Push changes to the UI
             UI.init()               // Push changes to the UI
         }
 
-        if (target.id == 'add-my-day') {
-            console.log('Add to My Day clicked')                // Placeholder
-        }
-
-        if (target.id == 'remove-my-day') {
-            console.log('Remove from My Day clicked')           // Placeholder
+        if (target.id == 'add-my-day' || target.id == 'remove-my-day') {
+            activeTask.toggleMyDay()
+            UI.populateTaskModal()  // Push changes to the UI
+            UI.init()               // Push changes to the UI
         }
 
         if (target.id == 'add-due') {
@@ -166,8 +167,7 @@ export default class UI {
         }
 
         if (target.classList.contains('menu-option')) {
-            const classList = target.classList,
-                  activeTask = UI.app.getActiveProject().getActiveTask()
+            const classList = target.classList
 
             if (classList.contains('today')) {
                 activeTask.setDueDate(format(new Date(), "yyyy-MM-dd"))    
@@ -192,8 +192,7 @@ export default class UI {
         }
         
         if (target.id == 'task-delete') {
-            const selectedTask = UI.app.getActiveProject().getActiveTask()
-            UI.deleteTask(selectedTask)
+            UI.deleteTask(activeTask)
         }
 
         if (target.nodeName == 'DIALOG'
@@ -318,7 +317,7 @@ export default class UI {
         // My day
         const addMyDayChildren = Array.from(addMyDay.children)
 
-        if (1 !== 1) {  // if app.getProject('My Day').contains('activeTask.getTitle())
+        if (activeTask.isMyDay()) {
             addMyDayChildren.forEach(child => child.style.color = 'var(--modal-option-active')
             addMyDay.children[1].textContent = 'Added to My Day'
             removeMyDay.style.display = 'block'
@@ -434,17 +433,6 @@ export default class UI {
     }
 
     static createTask(Title) {
-
-        // if current project isDEFAULT,
-            // if current project isMYDAY
-                // add the task to ALL TASKS with addToMyDay = true flag
-            // if current project isIMPORTANT
-                // add the task to ALL TASKS with addToImportant = true flag
-        // else 
-            // getActiveProject.addTask(title)
-
-        // ...
-
         // Get active project
         const activeProject = UI.app.getActiveProject()
 

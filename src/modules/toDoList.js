@@ -46,9 +46,6 @@ export default class toDoList {
         JSON.forEach(project => {
             this.addProject(project.title)
 
-            // Debugging
-            // console.log(`APP: Importing Tasks into ${project.title}...`)
-
             project.tasks.forEach(task => {     
                 this.getProject(project.title)
                     .importTask(task.title, task.myDay, task.important, task.complete, task.dueDate, task.note, task.creationDate)
@@ -56,11 +53,45 @@ export default class toDoList {
         })
     }
     populateMyDay () {
-        // TODO
+        console.log('Populating My Day...')
+        const myDay = this.list[0]
+        myDay.clearTasks()
 
+        this.list.forEach(project => {
+            if (project.getTitle() !== 'My Day' && project.getTitle() !== 'Important') {
+                // Debugging
+                // console.log('Searching: ', project)
+
+                project.getTasks().forEach(task => {
+                    if (task.isMyDay()) {
+                        // Debugging
+                        // console.log('Adding task to My Day: ', task)
+
+                        myDay.pushTask(task)        // Push instead of copy to retain pointer to the original
+                    }
+                })
+            }   
+        }) 
     }
     populateImportant () {
-        // TODO
+        console.log('Populating Important...')
+        const important = this.list[1]
+        important.clearTasks()
 
+        this.list.forEach(project => {
+            if (project.getTitle() !== 'My Day' && project.getTitle() !== 'Important') {
+                // Debugging
+                // console.log('Searching: ', project)
+
+                project.getTasks().forEach(task => {
+                    if (task.isImportant()) {
+                        // Debugging
+                        // console.log('Adding task to Important: ', task)
+    
+                        important.pushTask(task)    // Push instead of copy to retain pointer to the original
+                    }
+                })
+            }
+        }) 
     }
 }
