@@ -57,7 +57,9 @@ export default class project {
         return this.tasks
     }
     taskCount () {
-        return this.tasks.length
+        let i = 0
+        this.tasks.forEach(task => !task.isComplete() ? i++ : null)
+        return i
     }
     setActiveTask (taskTitle) {
         this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
