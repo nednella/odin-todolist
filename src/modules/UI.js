@@ -307,7 +307,7 @@ export default class UI {
         title.textContent = activeTask.getTitle()
 
         // Checkbox
-        if (activeTask.complete()) {
+        if (activeTask.isComplete()) {
             checkbox.checked = true
             title.classList.add('task-complete')
         } else {
@@ -474,14 +474,11 @@ export default class UI {
     }
 
     static appendTask(Task) {
-        const taskTitle = Task.getTitle()
-        const taskComplete = Task.complete()
-
         const activeTasks = document.getElementById('active-tasks')
         const completedTasksTitle = document.getElementById('completed-tasks-title')
         const completedTasks = document.getElementById('completed-tasks')
 
-        if (taskComplete) {
+        if (Task.isComplete()) {
             completedTasksTitle.style.display = 'block'
             completedTasks.innerHTML += `
             <div class="task task-complete">
@@ -490,8 +487,8 @@ export default class UI {
                     type="checkbox"
                     checked
                 >
-                <p class="task-content">${taskTitle}</p>
-                <div class="task-project">Tasks</div>
+                <p class="task-content">${Task.getTitle()}</p>
+                <div class="task-project">${Task.getParent()}</div>
             </div>`    
         } else {
             activeTasks.innerHTML += `
@@ -500,8 +497,8 @@ export default class UI {
                     class="task-checkbox"
                     type="checkbox"
                 >
-                <p class="task-content">${taskTitle}</p>
-                <div class="task-project">Tasks</div>
+                <p class="task-content">${Task.getTitle()}</p>
+                <div class="task-project">${Task.getParent()}</div>
             </div>` 
         }
         

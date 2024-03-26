@@ -11,7 +11,8 @@ export default class project {
     }
     setTitle (title) {
         this.title = title
-        this.id = title.toLowerCase() // Change ID to reflect updated title
+        this.id = title.toLowerCase()
+        this.tasks.forEach(task => task.setParent(title))
     }
     getTitle () {
         return this.title
@@ -25,14 +26,21 @@ export default class project {
     getIcon () {
         return this.icon
     }
-    addTask (title, dueDate, note, isComplete, creationDate) {
+    importTask (title, myDay, important, complete, dueDate, note, creationDate) {
         if (this.tasks.find((task) => task.getTitle() == title)) return console.log(`${title} already exists.`)
-        else this.tasks.push(new Task(title, dueDate, note, isComplete, creationDate))
+        else this.tasks.push(new Task(title, this.title, myDay, important, complete, dueDate, note, creationDate))
+        // else return
 
         // Debugging
         // console.log('APP: New Task, ', this.tasks[(this.tasks.length - 1)])
+    }
+    addTask (title, myDay, important) {
+        if (this.tasks.find((task) => task.getTitle() == title)) return console.log(`${title} already exists.`)
+        else this.tasks.push(new Task(title, this.title, myDay, important, null, null, null, null))
+        // else return
 
-        // else return this.tasks.push(new Task(title, dueDate, isComplete, creationDate))
+        // Debugging
+        // console.log('APP: New Task, ', this.tasks[(this.tasks.length - 1)])
     }
     deleteTask (taskTitle) {
         const selectedTask = this.tasks.find((task) => task.getTitle() == taskTitle)
@@ -65,7 +73,7 @@ export default class project {
         this.activeTask = undefined
 
         // Debugging
-        console.log('Active Task: ', this.activeTask)
+        // console.log('Active Task: ', this.activeTask)
 
         //return this.activeTask = undefined
     }

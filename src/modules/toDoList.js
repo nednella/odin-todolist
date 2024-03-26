@@ -4,6 +4,7 @@ export default class toDoList {
     constructor() {
         this.list = []
         this.list.push(new Project('My Day', true, 'clear_day'))
+        this.list.push(new Project('Important', true, 'priority_high'))
         this.list.push(new Project('All Tasks', true, 'home'))
         this.activeProject = this.list[0]
     }
@@ -44,10 +45,22 @@ export default class toDoList {
         console.log(JSON)
         JSON.forEach(project => {
             this.addProject(project.title)
+
+            // Debugging
             // console.log(`APP: Importing Tasks into ${project.title}...`)
+
             project.tasks.forEach(task => {     
-                this.getProject(project.title).addTask(task.title, task.dueDate, task.note, task.isComplete, task.creationDate)
+                this.getProject(project.title)
+                    .importTask(task.title, task.myDay, task.important, task.complete, task.dueDate, task.note, task.creationDate)
             })
         })
+    }
+    populateMyDay () {
+        // TODO
+
+    }
+    populateImportant () {
+        // TODO
+
     }
 }
