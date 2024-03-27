@@ -53,7 +53,9 @@ export default class toDoList {
         })
     }
     populateMyDay () {
-        console.log('Populating My Day...')
+        // Debugging
+        // console.log('Populating My Day...')
+
         const myDay = this.list[0]
         myDay.clearTasks()
 
@@ -74,7 +76,9 @@ export default class toDoList {
         }) 
     }
     populateImportant () {
-        console.log('Populating Important...')
+        // Debugging
+        // console.log('Populating Important...')
+        
         const important = this.list[1]
         important.clearTasks()
 
