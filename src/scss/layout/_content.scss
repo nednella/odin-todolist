@@ -108,7 +108,6 @@
 }
 
 .task {
-    min-height: 60px;
     padding: 8px;
     border-radius: 8px;
     background-color: $background;
@@ -118,47 +117,51 @@
     grid-template-columns: 44px 1fr;
     grid-template-areas:
         "checkbox description"
-        "checkbox project";
-    gap: 8px;
+        "checkbox info";
+    column-gap: 8px;
 
-    > * {
+    > *:not(:first-child) {  // Allow pointer events on checkbox only
         pointer-events: none;
     }
     .task-checkbox {
         grid-area: checkbox;
         justify-self: center;
-        height: 28px;
-        width: 28px;
-        margin-top: 8px;
+        height: 24px;
+        width: 24px;
+        margin-top: 6px;
         border-radius: 50%;
-        border: 3px solid grey;
+        border: 2px solid grey;
         background-color: white;
         appearance: none;
         -webkit-appearance: none;
         cursor: pointer;
-        pointer-events: auto;
     }
     .task-checkbox:checked {
         background-color: var(--body-bg-gradient-top);
     }
     .task-content {
         grid-area: description;
-        align-self: center;
-        padding: 8px 44px 8px 0;
+        padding: 4px 0;
         font-size: 20px;
         font-weight: 400;
         color: var(--content-body-text);
         text-wrap: wrap;
         overflow: auto;
         cursor: default;
-        
     }
-    .task-project {
-        grid-area: project;
-        margin-top: -12px;
+    .task-info {
+        grid-area: info;
         font-weight: 400;
         color: grey;
         text-decoration: none;
+
+        display: flex;
+        gap: 12px;
+        align-items: center;
+
+        > *:not(:first-child) {
+            font-size: 20px;  
+        }
     }
 }
 
@@ -166,7 +169,7 @@
     background-color: $background-hover;
 }
 
-.task-complete > :nth-child(2) {
+.task-complete > :nth-child(3) {
     color: grey;
     text-decoration: line-through;
     text-decoration-thickness: 1px;

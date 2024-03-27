@@ -499,30 +499,29 @@ export default class UI {
         const completedTasksTitle = document.getElementById('completed-tasks-title')
         const completedTasks = document.getElementById('completed-tasks')
 
+        const taskHTML = `
+            <div class="${Task.isComplete() ? 'task task-complete' : 'task'}">
+                <input 
+                    class="task-checkbox"
+                    type="checkbox"
+                    ${Task.isComplete() ? 'checked' : ''}
+                >
+                <p class="task-content">${Task.getTitle()}</p>
+                <div class="task-info">
+                    <span class="task-parent">${Task.getParent()}</span>
+                    ${Task.isMyDay() ? '<span class="material-symbols-rounded">clear_day</span>' : ''}
+                    ${Task.isImportant() ? '<span class="material-symbols-rounded">priority_high</span>' : ''}
+                    ${Task.getDueDate() ? '<span class="material-symbols-rounded">calendar_month</span>' : ''}
+                    ${Task.getNote() ? '<span class="material-symbols-rounded">sticky_note_2</span>' : ''}
+                </div>
+            </div>`
+
         if (Task.isComplete()) {
             completedTasksTitle.style.display = 'block'
-            completedTasks.innerHTML += `
-            <div class="task task-complete">
-                <input 
-                    class="task-checkbox"
-                    type="checkbox"
-                    checked
-                >
-                <p class="task-content">${Task.getTitle()}</p>
-                <div class="task-project">${Task.getParent()}</div>
-            </div>`    
+            completedTasks.innerHTML += taskHTML
         } else {
-            activeTasks.innerHTML += `
-            <div class="task">
-                <input 
-                    class="task-checkbox"
-                    type="checkbox"
-                >
-                <p class="task-content">${Task.getTitle()}</p>
-                <div class="task-project">${Task.getParent()}</div>
-            </div>` 
-        }
-        
+            activeTasks.innerHTML += taskHTML
+        }  
     }
 
     static appendProject(Project) {
