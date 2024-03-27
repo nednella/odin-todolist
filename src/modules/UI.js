@@ -163,6 +163,9 @@ export default class UI {
         }
 
         if (target.id == 'add-due') {
+            if (!document.getElementById('date-picker').classList.contains('hidden')) {
+                UI.toggleDatePicker()   // If date picker is open, close it
+            }
             UI.toggleDueDateMenu()
         }
 
@@ -182,8 +185,7 @@ export default class UI {
                 activeTask.setDueDate(format(add(new Date(), {days: 1}), "yyyy-MM-dd"))
             }
             if (classList.contains('pick')) {
-                console.log('Due date menu - pick clicked')     // Placeholder
-                // format date 'yyyy-MM-dd' -> supported by JS and most browsers
+                UI.toggleDatePicker()
             }
 
             UI.toggleDueDateMenu()  // Close the menu after option selected
@@ -191,9 +193,15 @@ export default class UI {
             UI.init()               // Push changes to the UI
         } 
 
-        if (target.id !== 'add-due' && !target.classList.contains('menu-option')) {
+        if (target.id !== 'add-due' && !target.classList.contains('menu-option') 
+         && target.id !== 'date-picker'
+         && !target.parentElement.classList.contains('month-selector')
+         && !target.parentElement.classList.contains('calendar')) {
             if (!document.getElementById('due-menu').classList.contains('hidden')) {
                 UI.toggleDueDateMenu()  // If a click is outside of the due date menu when it's open, close
+            }
+            if (!document.getElementById('date-picker').classList.contains('hidden')) {
+                UI.toggleDatePicker()   // If a click is outside of the date picker when it's open, close
             }
         }
         
@@ -284,6 +292,14 @@ export default class UI {
         dueMenu.classList.contains('hidden')
             ? dueMenu.classList.remove('hidden')
             : dueMenu.classList.add('hidden')
+    }
+
+    static toggleDatePicker() {
+        const datePicker = document.getElementById('date-picker')
+
+        datePicker.classList.contains('hidden')
+            ? datePicker.classList.remove('hidden')
+            : datePicker.classList.add('hidden')
     }
 
     static populateTaskModal() {

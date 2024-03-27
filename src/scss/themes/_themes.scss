@@ -19,6 +19,16 @@ $light-theme: (
     'modal-input-text': #202020,
     'modal-input-hover': rgba(255, 255, 255, 0.9),
 
+    // Calendar
+    'calendar-bg': #eeeeee,
+    'calendar-bg-2': #e4e4e4,
+    'day-text': #777777,
+    'date-text': #000,
+    'date-faded-bg': #bbbbbb,
+    'date-faded-text': #fff,
+    'date-current-bg': rgb(40, 40, 255),
+    'date-current-text': #fff,
+
     // Content
     'content-title-text': #202020,
     'content-body-text': #3c3c3c,
@@ -48,6 +58,16 @@ $dark-theme: (
     'modal-option-hover': rgba(255, 255, 255, 0.3),
     'modal-input-text': #fff,
     'modal-input-hover': rgba(255, 255, 255, 0.3),
+
+    // Calendar
+    'calendar-bg': #292929,
+    'calendar-bg-2': #303030,
+    'day-text': #aaaaaa,
+    'date-text': #fff,
+    'date-faded-bg': #181818,
+    'date-faded-text': #888888,
+    'date-current-bg': #c4c4c4,
+    'date-current-text': #000,
     
     // Content
     'content-title-text': #fff,

@@ -173,43 +173,6 @@ $task-footer-height: 70px;
                     font-size: 18px;
                 }
             }
-            #due-menu {
-                position: absolute;
-                top: 60px;
-                left: calc(377px / 2);
-                transform: translateX(-50%);
-            
-                height: max-content;
-                width: 280px;
-                color: var(--modal-text);
-                background-color: var(--modal-bg);
-                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-
-                > .menu-option {
-                    cursor: pointer;
-                    height: 60px;
-                    padding: 8px;
-            
-                    display: grid;
-                    grid-template-columns: 44px 1fr 44px;
-                    gap: 8px;
-            
-                    > * {
-                        pointer-events: none; // force pointer event to bubble to parent element
-                        align-self: center;
-                    }
-            
-                    > :first-child {
-                        justify-self: center;
-                    }
-                }
-                > .menu-option:hover {
-                    background-color: var(--modal-option-hover);
-                }
-            }
-            #due-menu.hidden {
-                display: none;
-            }
         }
         .note {
             grid-area: note;
@@ -279,4 +242,116 @@ $task-footer-height: 70px;
 @keyframes task-slide-in {
     0% { transform: translateX(100%) }
     100% { transform: translateX(0%) }
+}
+
+#due-menu {
+    position: absolute;
+    top: 60px;
+    left: calc(377px / 2);
+    transform: translateX(-50%);
+
+    height: max-content;
+    width: 280px;
+    color: var(--modal-text);
+    background-color: var(--modal-bg);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+
+    > .menu-option {
+        cursor: pointer;
+        height: 60px;
+        padding: 8px;
+
+        display: grid;
+        grid-template-columns: 44px 1fr 44px;
+        gap: 8px;
+
+        > * {
+            pointer-events: none; // force pointer event to bubble to parent element
+            align-self: center;
+        }
+
+        > :first-child {
+            justify-self: center;
+        }
+    }
+    > .menu-option:hover {
+        background-color: var(--modal-option-hover);
+    }
+}
+#due-menu.hidden {
+    display: none;
+}
+#date-picker {
+    cursor: default;
+    position: absolute;
+    top: 60px;
+    left: calc(377px / 2);
+    transform: translateX(-50%);
+    height: max-content;
+    width: 300px;
+    padding: 16px 8px;
+    color: var(--modal-text);
+    background-color: var(--calendar-bg);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    > * {
+        width: 100%;
+    }
+    > .month-selector {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        
+        > .current-month {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        > button {
+            cursor: pointer;
+            height: 32px;
+            width: 32px;
+            font-size: 32px;
+            border-radius: 4px;
+            color: var(--modal-text);
+            background-color: var(--calendar-bg-2);
+        }
+    }
+    > .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-row-gap: 8px;
+
+        .day,
+        .date {
+            justify-self: center;
+            background-color: transparent;         
+        }
+        .day {
+            color: var(--day-text);
+            font-weight: 400;
+        }
+        .date {
+            cursor: pointer;
+            height: 32px;
+            width: 100%;
+            color: var(--date-text);
+            font-weight: 600;
+        }
+        .date.faded {
+            color: var(--date-faded-text);
+            background-color: var(--date-faded-bg);
+        }
+        .date.current {
+            color: var(--date-current-text);
+            background-color: var(--date-current-bg); 
+        }
+    }
+}
+#date-picker.hidden {
+    display: none;
 }
