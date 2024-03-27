@@ -156,6 +156,12 @@ export default class UI {
             UI.init()               // Push changes to the UI
         }
 
+        if (target.id == 'add-important' || target.id == 'remove-important') {
+            activeTask.toggleImportant()
+            UI.populateTaskModal()  // Push changes to the UI
+            UI.init()               // Push changes to the UI
+        }
+
         if (target.id == 'add-due') {
             UI.toggleDueDateMenu()
         }
@@ -298,6 +304,8 @@ export default class UI {
         const checkbox = document.getElementById('task-checkbox'),
               addMyDay = document.getElementById('add-my-day'),
               removeMyDay = document.getElementById('remove-my-day'),
+              addImportant = document.getElementById('add-important'),
+              removeImportant = document.getElementById('remove-important'),
               addDue = document.getElementById('add-due'),
               removeDue = document.getElementById('remove-due')
               
@@ -325,6 +333,19 @@ export default class UI {
             addMyDayChildren.forEach(child => child.style.color = 'grey')
             addMyDay.children[1].textContent = 'Add task to My Day'
             removeMyDay.style.display = 'none'
+        }
+
+        // Important
+        const addImportantChildren = Array.from(addImportant.children)
+
+        if (activeTask.isImportant()) {
+            addImportantChildren.forEach(child => child.style.color = 'var(--modal-option-active')
+            addImportant.children[1].textContent = 'Marked as Important'
+            removeImportant.style.display = 'block'
+        } else {
+            addImportantChildren.forEach(child => child.style.color = 'grey')
+            addImportant.children[1].textContent = 'Mark as Important'
+            removeImportant.style.display = 'none'
         }
 
         // Due date
