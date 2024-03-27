@@ -481,7 +481,7 @@ export default class UI {
     }
 
     static deleteTask(Task) {
-        UI.app.getActiveProject().deleteTask(Task.getTitle())
+        UI.app.getProject(Task.getParent()).deleteTask(Task.getTitle())
         UI.init()    
     }
 
