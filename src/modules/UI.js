@@ -549,30 +549,22 @@ export default class UI {
         const defaultProjects = document.querySelector('.default-projects'),
               customprojects = document.querySelector('.custom-projects')
 
+        const projectHTML = `
+            <span href="" class="nav-item">
+                <span class="nav-item-left">
+                    <span class="material-symbols-rounded">${Project.getIcon()}</span>
+                        <h3>${Project.getTitle()}</h3>
+                </span>
+                <span class="nav-item-right">
+                    <span class="project-task-count">${Project.taskCount()}</span>
+                    <span class="project-delete material-symbols-rounded">delete</span>
+                </span>
+            </span>`
+
         if (Project.isDefault()) {
-            defaultProjects.innerHTML += `
-                <span href="" class="nav-item">
-                    <span class="nav-item-left">
-                        <span class="material-symbols-rounded">${Project.getIcon()}</span>
-                            <h3>${Project.getTitle()}</h3>
-                    </span>
-                    <span class="nav-item-right">
-                        <span class="project-task-count">${Project.taskCount()}</span>
-                        <span class="project-delete material-symbols-rounded">delete</span>
-                    </span>
-                </span>`
+            defaultProjects.innerHTML += projectHTML
         } else {
-            customprojects.innerHTML += `
-                <span href="" class="nav-item">
-                    <span class="nav-item-left">
-                        <span class="material-symbols-rounded">${Project.getIcon()}</span>
-                            <h3>${Project.getTitle()}</h3>
-                    </span>
-                    <span class="nav-item-right">
-                        <span class="project-task-count">${Project.taskCount()}</span>
-                        <span class="project-delete material-symbols-rounded">delete</span>
-                    </span>
-                </span>`
+            customprojects.innerHTML += projectHTML
         }
     }
 }
