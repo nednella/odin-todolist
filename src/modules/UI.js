@@ -117,11 +117,13 @@ export default class UI {
         // Task modal listeners
         const taskModal = document.getElementById('task'),
               taskModalTitle = document.getElementById('task-title'),
-              taskModalNote = document.getElementById('task-note')
+              taskModalNote = document.getElementById('task-note'),
+              datePicker = document.getElementById('date-picker')
 
         taskModal.addEventListener('click', (e) => UI.handleTaskModalInput(e))
         taskModalTitle.addEventListener('focusout', (e) => UI.checkTaskModal())
         taskModalNote.addEventListener('focusout', (e) => UI.checkTaskModal())
+        datePicker.addEventListener('click', (e) => UI.handleDatePickerInput(e))
     }
 
     static handleTaskInput(e) {
@@ -252,6 +254,31 @@ export default class UI {
                     projectInput.value = ''
                 }
                 break
+        }
+    }
+
+    static handleDatePickerInput(e) {
+        const target = e.target
+
+        if(target.id == 'month-left') {
+            // Debugging
+            console.log('Month left button clicked')
+
+            // TODO: Handle month left and right buttons
+        }
+
+        if(target.id == 'month-right') {
+            // Debugging
+            console.log('Month right button clicked')
+
+            // TODO: Handle month left and right buttons
+        }
+
+        if (target.parentElement.classList.contains('calendar')) {
+            // Debugging
+            console.log('calendar clicked')
+
+            // TODO: Handle date buttons
         }
     }
 
@@ -393,6 +420,9 @@ export default class UI {
 
         // Due date menu options
         UI.populateDueDateMenu()
+
+        // Due date picker
+        UI.populateDatePicker()
         
         // Note
         if (activeTask.getNote()) {
@@ -430,6 +460,14 @@ export default class UI {
                 option.appendChild(span()).textContent = `Pick a date`
             }
         })
+    }
+
+    static populateDatePicker() {
+        // Get date picker containers
+        const currentMonth = document.querySelector('.month-selector > .currentMonth'),
+              calendar = document.querySelector('#date-picker > .calendar')
+        
+        //TODO: Populate containers with relevant month
     }
 
     static checkTaskModal() {
