@@ -190,6 +190,7 @@ export default class UI {
             }
             if (classList.contains('pick')) {
                 UI.toggleDatePicker()
+                UI.datePicker.displayDateReset()    // Reset displayed month to current month
             }
 
             UI.toggleDueDateMenu()  // Close the menu after option selected
@@ -265,15 +266,17 @@ export default class UI {
         if(target.id == 'month-left') {
             // Debugging
             console.log('Month left button clicked')
-            
-            // TODO: Handle month left and right buttons
+
+            UI.datePicker.displayDatePrevMonth()
+            UI.populateDatePicker()
         }
 
         if(target.id == 'month-right') {
             // Debugging
             console.log('Month right button clicked')
 
-            // TODO: Handle month left and right buttons
+            UI.datePicker.displayDateNextMonth()
+            UI.populateDatePicker()
         }
 
         if (target.parentElement.classList.contains('calendar')) {

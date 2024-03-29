@@ -128,4 +128,13 @@ export default class datePicker {
         
         return calendar
     }
+    displayDateNextMonth () {
+        return this.displayedDate = add(this.displayedDate, {months: 1})
+    }
+    displayDatePrevMonth () {
+        return this.displayedDate = sub(this.displayedDate, {months: 1})
+    }
+    displayDateReset () {
+        return this.displayedDate = this.defaultDate
+    }
 }
