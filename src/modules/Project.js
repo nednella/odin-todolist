@@ -10,6 +10,8 @@ export default class project {
         this.activeTask = undefined
     }
     setTitle (title) {
+        if (this.isDefault()) return
+
         this.title = title
         this.id = title.toLowerCase()
         this.tasks.forEach(task => task.setParent(title))
