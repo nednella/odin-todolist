@@ -25,14 +25,14 @@ export default class toDoList {
     }
     deleteProject (projectTitle) {
         const selectedProject = this.list.find((project) => project.getID() == projectTitle.toLowerCase())
-        if (!selectedProject) return
+        if (!selectedProject || selectedProject.isDefault()) return
+        // else return this.list.splice(this.list.indexOf(selectedProject), 1)
 
         // Debugging
         console.log('APP: Deleting Project, ', selectedProject)
 
         const index = this.list.indexOf(selectedProject)
         return this.list.splice(index, 1)
-        // else return this.list.splice(index, 1)
     }
     getProject (projectTitle) {
         return this.list.find((project) => project.getID() == projectTitle.toLowerCase())
