@@ -20,7 +20,7 @@ export default class Storage {
     
     static loadApp () {
         // Debugging
-        this.clear()
+        // this.clear()
 
         const app = new toDoList()
 
