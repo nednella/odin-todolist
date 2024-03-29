@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 export function parseDueDate(date) {
     // Take format of '2024-01-01'
     // Return format of '01 Jan 24'
-    // Do not include the year if it is equal to the current year
+    // Do not return the year if it is equal to the current year
 
     const currentYear = format(new Date(), "yyyy"),
           months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
