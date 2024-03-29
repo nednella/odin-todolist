@@ -16,7 +16,7 @@ export default class toDoList {
     }
     addProject (projectTitle) {
         if (this.list.find((project) => project.getID() == projectTitle.toLowerCase())) return console.log(`${projectTitle} already exists.`)
-        else return this.list.push(new Project(projectTitle.toLowerCase()))
+        else return this.list.push(new Project(projectTitle))
     }
     deleteProject (projectTitle) {
         const selectedProject = this.list.find((project) => project.getID() == projectTitle.toLowerCase())
