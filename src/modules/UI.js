@@ -1,4 +1,5 @@
 import Storage from './Storage'
+import datePicker from './datePicker';
 import { format, add } from 'date-fns'
 import { parseDueDate } from './Utilities'
 
@@ -14,6 +15,7 @@ export default class UI {
     }
 
     static app = Storage.loadApp()
+    static datePicker = new datePicker()
 
     static initApp() {
         console.log('UI: App initialising...')
@@ -263,7 +265,7 @@ export default class UI {
         if(target.id == 'month-left') {
             // Debugging
             console.log('Month left button clicked')
-
+            
             // TODO: Handle month left and right buttons
         }
 
@@ -463,11 +465,15 @@ export default class UI {
     }
 
     static populateDatePicker() {
-        // Get date picker containers
-        const currentMonth = document.querySelector('.month-selector > .currentMonth'),
-              calendar = document.querySelector('#date-picker > .calendar')
-        
-        //TODO: Populate containers with relevant month
+        // Get date picker container
+        const datePicker = document.getElementById('date-picker')
+
+        // Wipe container to prevent duplication
+        datePicker.textContent = ''
+
+        // Create and append elements
+        const elements = UI.datePicker.createHTML()
+        elements.forEach(element => datePicker.appendChild(element))
     }
 
     static checkTaskModal() {
