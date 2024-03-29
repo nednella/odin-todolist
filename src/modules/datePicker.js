@@ -2,7 +2,7 @@ import { format, add, sub, getMonth, getYear, startOfMonth, lastDayOfMonth, prev
 
 export default class datePicker {
     constructor() {
-        this.currentDate = format(new Date(), "yyyy-MM-dd") // format(add(new Date(), {months: 7}), "yyyy-MM-dd")
+        this.currentDate = format(new Date(), "yyyy-MM-dd")
         this.defaultDate = this.currentDate
         this.displayedDate = this.defaultDate
     }
@@ -88,10 +88,6 @@ export default class datePicker {
             endDay = lastOfMonth
         }
 
-        // Debugging
-        // console.log('Starting day for current month: ', startDay)
-        // console.log('Ending day for current month: ', endDay)
-
         // Loop over days to create
         let loopedDay = startDay
 
@@ -108,17 +104,11 @@ export default class datePicker {
 
             // Flag today
             if (this.currentDate == formattedLoopedDay) {
-                // Debugging
-                // console.log('Looped Day is todays date!')
-
                 newElement.classList.add('current')
             }
 
             // Flag days not in current month
             if (loopedDay < firstOfMonth || loopedDay > lastOfMonth) {
-                // Debugging
-                // console.log('This day is not in the current month: ', loopedDay)
-                
                 newElement.classList.add('faded')
             }
 

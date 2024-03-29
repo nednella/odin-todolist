@@ -11,7 +11,6 @@ export default class project {
     }
     setTitle (title) {
         if (this.isDefault()) return
-
         this.title = title
         this.id = title.toLowerCase()
         this.tasks.forEach(task => task.setParent(title))
@@ -42,12 +41,7 @@ export default class project {
     deleteTask (taskTitle) {
         const selectedTask = this.tasks.find((task) => task.getTitle() == taskTitle)
         if (!selectedTask) return
-
-        // Debugging
-        console.log('Deleting Task, ', selectedTask)
-
-        const index = this.tasks.indexOf(selectedTask)
-        return this.tasks.splice(index, 1)
+        else return this.tasks.splice(this.tasks.indexOf(selectedTask), 1)
     }
     clearTasks () {
         return this.tasks = []
@@ -64,20 +58,10 @@ export default class project {
         return i
     }
     setActiveTask (taskTitle) {
-        this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
-
-        // Debugging
-        console.log('Active Task: ', this.activeTask)
-
-        // return this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
+        return this.activeTask = this.tasks.find((task) => task.getTitle() == taskTitle)
     }
     removeActiveTask () {
-        this.activeTask = undefined
-
-        // Debugging
-        // console.log('Active Task: ', this.activeTask)
-
-        //return this.activeTask = undefined
+        return this.activeTask = undefined
     }
     getActiveTask () {
         return this.activeTask

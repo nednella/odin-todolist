@@ -16,23 +16,12 @@ export default class toDoList {
     }
     addProject (projectTitle) {
         if (this.list.find((project) => project.getID() == projectTitle.toLowerCase())) return console.log(`${projectTitle} already exists.`)
-        else this.list.push(new Project(projectTitle))
-
-        // Debugging
-        console.log('APP: New Project, ', this.list[(this.list.length - 1)])
-
-        // else return this.list.push(new Project(projectTitle.toLowerCase()))
+        else return this.list.push(new Project(projectTitle.toLowerCase()))
     }
     deleteProject (projectTitle) {
         const selectedProject = this.list.find((project) => project.getID() == projectTitle.toLowerCase())
         if (!selectedProject || selectedProject.isDefault()) return
-        // else return this.list.splice(this.list.indexOf(selectedProject), 1)
-
-        // Debugging
-        console.log('APP: Deleting Project, ', selectedProject)
-
-        const index = this.list.indexOf(selectedProject)
-        return this.list.splice(index, 1)
+        else return this.list.splice(this.list.indexOf(selectedProject), 1)
     }
     getProject (projectTitle) {
         return this.list.find((project) => project.getID() == projectTitle.toLowerCase())
@@ -53,22 +42,13 @@ export default class toDoList {
         })
     }
     populateMyDay () {
-        // Debugging
-        // console.log('Populating My Day...')
-
         const myDay = this.list[0]
         myDay.clearTasks()
 
         this.list.forEach(project => {
             if (project.getTitle() !== 'My Day' && project.getTitle() !== 'Important') {
-                // Debugging
-                // console.log('Searching: ', project)
-
                 project.getTasks().forEach(task => {
                     if (task.isMyDay()) {
-                        // Debugging
-                        // console.log('Adding task to My Day: ', task)
-
                         myDay.pushTask(task)        // Push instead of copy to retain pointer to the original
                     }
                 })
@@ -76,22 +56,13 @@ export default class toDoList {
         }) 
     }
     populateImportant () {
-        // Debugging
-        // console.log('Populating Important...')
-        
         const important = this.list[1]
         important.clearTasks()
 
         this.list.forEach(project => {
             if (project.getTitle() !== 'My Day' && project.getTitle() !== 'Important') {
-                // Debugging
-                // console.log('Searching: ', project)
-
                 project.getTasks().forEach(task => {
                     if (task.isImportant()) {
-                        // Debugging
-                        // console.log('Adding task to Important: ', task)
-    
                         important.pushTask(task)    // Push instead of copy to retain pointer to the original
                     }
                 })
