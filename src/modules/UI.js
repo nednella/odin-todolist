@@ -183,19 +183,22 @@ export default class UI {
             const classList = target.classList
 
             if (classList.contains('today')) {
-                activeTask.setDueDate(format(new Date(), "yyyy-MM-dd"))    
+                activeTask.setDueDate(format(new Date(), "yyyy-MM-dd"))
+                UI.populateTaskModal()  // Push changes to the UI
+                UI.init()               // Push changes to the UI  
             }
             if (classList.contains('tomorrow')) {
                 activeTask.setDueDate(format(add(new Date(), {days: 1}), "yyyy-MM-dd"))
+                UI.populateTaskModal()  // Push changes to the UI
+                UI.init()               // Push changes to the UI
             }
             if (classList.contains('pick')) {
-                UI.toggleDatePicker()
                 UI.datePicker.displayDateReset()    // Reset displayed month to current month
+                UI.populateDatePicker()
+                UI.toggleDatePicker()
             }
 
-            UI.toggleDueDateMenu()  // Close the menu after option selected
-            UI.populateTaskModal()  // Push changes to the UI
-            UI.init()               // Push changes to the UI
+            UI.toggleDueDateMenu()  // Close the menu after option selected  
         } 
 
         if (target.id !== 'add-due' && !target.classList.contains('menu-option') 
@@ -264,26 +267,22 @@ export default class UI {
         const target = e.target
 
         if(target.id == 'month-left') {
-            // Debugging
-            console.log('Month left button clicked')
-
             UI.datePicker.displayDatePrevMonth()
             UI.populateDatePicker()
         }
 
         if(target.id == 'month-right') {
-            // Debugging
-            console.log('Month right button clicked')
-
             UI.datePicker.displayDateNextMonth()
             UI.populateDatePicker()
         }
 
         if (target.parentElement.classList.contains('calendar')) {
-            // Debugging
-            console.log('calendar clicked')
+            if (target.classList.contains('faded')) return  // Prevent clicks on days not in the displayed month
 
-            // TODO: Handle date buttons
+            const selectedDate = UI.datePicker.getSelectedDate(target)
+            UI.app.getActiveProject().getActiveTask().setDueDate(selectedDate)
+            UI.populateTaskModal()  // Push changes to the UI
+            UI.init()               // Push changes to the UI
         }
     }
 

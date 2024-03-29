@@ -89,8 +89,8 @@ export default class datePicker {
         }
 
         // Debugging
-        console.log('Starting day for current month: ', startDay)
-        console.log('Ending day for current month: ', endDay)
+        // console.log('Starting day for current month: ', startDay)
+        // console.log('Ending day for current month: ', endDay)
 
         // Loop over days to create
         let loopedDay = startDay
@@ -109,7 +109,7 @@ export default class datePicker {
             // Flag today
             if (this.currentDate == formattedLoopedDay) {
                 // Debugging
-                console.log('Looped Day is todays date!')
+                // console.log('Looped Day is todays date!')
 
                 newElement.classList.add('current')
             }
@@ -117,7 +117,7 @@ export default class datePicker {
             // Flag days not in current month
             if (loopedDay < firstOfMonth || loopedDay > lastOfMonth) {
                 // Debugging
-                console.log('This day is not in the current month: ', loopedDay)
+                // console.log('This day is not in the current month: ', loopedDay)
                 
                 newElement.classList.add('faded')
             }
@@ -136,5 +136,15 @@ export default class datePicker {
     }
     displayDateReset () {
         return this.displayedDate = this.defaultDate
+    }
+    getSelectedDate (element) {
+        // Get selected date
+        let date = element.textContent
+
+        // Force format to 'dd'
+        if (date.length == 1) date = `0${date}`
+
+        // Return selected date
+        return `${format(this.displayedDate, "yyyy-MM")}-${date}`
     }
 }
