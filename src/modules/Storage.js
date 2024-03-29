@@ -1,4 +1,5 @@
 import toDoList from "./toDoList"
+import { format } from 'date-fns'
 
 export default class Storage {
     constructor () {
@@ -18,71 +19,56 @@ export default class Storage {
     }
     
     static loadApp () {
-        // this.clear()
-
-        let projects = JSON.parse(localStorage.getItem('projects'))
-        let testJSON = JSON.parse(
-        `[
-            {
-                "title":"Shopping List",
-                "id":"my day",
-                "tasks": [
-                    {
-                        "title":"Bread"
-                    },
-                    {
-                        "title":"Cheese"
-                    },
-                    {
-                        "title":"Wine"
-                    }
-                ]
-            }
-        ]`)
+        // Debugging
+        this.clear()
 
         const app = new toDoList()
 
+        let projects = JSON.parse(localStorage.getItem('projects'))
         if (!projects) {
             console.log('STORAGE: No projects found.')
             return Storage.populateNewApp(app)
         } else {
             console.log('STORAGE: Projects found!')
             app.importJSON(projects)
-            // app.importJSON(testJSON)
             return app
         }
     }
 
     static populateNewApp (app) {
-        // Testing
-        console.log('STORAGE: Populating new app with placeholder content.')
-        console.log(app)
-        app.getProject('My Day').addTask('Test 1')
-        app.getProject('My Day').addTask('Test 2')
-        app.getProject('My Day').addTask('Test 3')
+        console.log('STORAGE: Populating new app with placeholder content...')
 
-        app.getProject('All Tasks').addTask('Another test')
-        app.getProject('All Tasks').addTask('And another!')
-        app.getProject('All Tasks').addTask('Yep, another...')
+        app.getProject('All Tasks').addTask('A nice looking To Do application! (I might be biased)')
+        app.getProject('All Tasks').addTask('Heavily inspired by the Microsoft To Do app')
+        app.getProject('All Tasks').addTask('Check out the App Features project for additional info!')
 
-        app.addProject('March 2024')
-        app.getProject('March 2024').addTask('Solve the localStorage problem')
-        app.getProject('March 2024').addTask('Add a task modal')
-        app.getProject('March 2024').addTask('Add task delete functionality')
-        app.getProject('March 2024').addTask('Add editable task modal boxes (title etc.)')
-        app.getProject('March 2024').addTask('Add dueDate functionality to task modal')
-        app.getProject('March 2024').addTask('Update task with changes on task modal close')
-        app.getProject('March 2024').addTask('Add note method to Task()')
-        app.getProject('March 2024').addTask('Refactor completed tasks to preserve order-of-completion')
-        app.getProject('March 2024').addTask('Complete the To Do List app!')
-        app.getProject('March 2024').addTask('Publish the To Do List app!')
+        app.getProject('All Tasks').getTask('A nice looking To Do application! (I might be biased)').toggleMyDay()
+        app.getProject('All Tasks').getTask('Heavily inspired by the Microsoft To Do app').toggleMyDay()
+
+        app.addProject('App Features')
+        app.getProject('App Features').addTask('Custom projects with rename/delete (try clicking the project title above!)')
+        app.getProject('App Features').addTask('Tasks with rename/delete (try clicking this task and editing the title in the modal!)')
+        app.getProject('App Features').addTask('Task completion toggle w/ separate rendering')
+        app.getProject('App Features').addTask('My Day/Important flags per task with category filtering')
+        app.getProject('App Features').addTask('Task due date selector with custom date picker')
+        app.getProject('App Features').addTask('This task is a part of my day!')
+        app.getProject('App Features').addTask('This task is really important!')
+        app.getProject('App Features').addTask('This task is way overdue!')
+        app.getProject('App Features').addTask('Ability to add notes to your tasks')
+        app.getProject('App Features').addTask('Try some of them out yourself!')
+        
+        app.getProject('App Features').getTask('Task completion toggle w/ separate rendering').toggleComplete()
+        app.getProject('App Features').getTask('This task is a part of my day!').toggleMyDay()
+        app.getProject('App Features').getTask('This task is really important!').toggleImportant()
+        app.getProject('App Features').getTask('Task due date selector with custom date picker').setDueDate(format(new Date(), "yyyy-MM-dd"))
+        app.getProject('App Features').getTask('This task is way overdue!').setDueDate(format(new Date("2024-03-15"), "yyyy-MM-dd"))
+        app.getProject('App Features').getTask('Ability to add notes to your tasks').setNote('Like this one!')
 
         app.addProject('Shopping List')
         app.getProject('Shopping List').addTask('Cheese')
         app.getProject('Shopping List').addTask('Wine')
         app.getProject('Shopping List').addTask('Bread')
-
-        console.log('Stored Projects: ', app.getProjects())
+        app.getProject('Shopping List').addTask('Chocolate!')
 
         return app
     }
