@@ -5,7 +5,7 @@ export default class toDoList {
         this.list = []
         this.list.push(new Project('My Day', true, 'clear_day'))
         this.list.push(new Project('Important', true, 'priority_high'))
-        this.list.push(new Project('All Tasks', true, 'home'))
+        this.list.push(new Project('Tasks', true, 'home'))
         this.activeProject = this.list[0]
     }
     setActiveProject (projectTitle) {

@@ -38,12 +38,12 @@ export default class Storage {
     static populateNewApp (app) {
         console.log('STORAGE: Populating new app with placeholder content...')
 
-        app.getProject('All Tasks').addTask('A nice looking To Do application! (I might be biased)')
-        app.getProject('All Tasks').addTask('Heavily inspired by the Microsoft To Do app')
-        app.getProject('All Tasks').addTask('Check out the App Features project for additional info!')
+        app.getProject('Tasks').addTask('A nice looking To Do application! (I might be biased)')
+        app.getProject('Tasks').addTask('Heavily inspired by the Microsoft To Do app')
+        app.getProject('Tasks').addTask('Check out the App Features project for additional info!')
 
-        app.getProject('All Tasks').getTask('A nice looking To Do application! (I might be biased)').toggleMyDay()
-        app.getProject('All Tasks').getTask('Heavily inspired by the Microsoft To Do app').toggleMyDay()
+        app.getProject('Tasks').getTask('A nice looking To Do application! (I might be biased)').toggleMyDay()
+        app.getProject('Tasks').getTask('Heavily inspired by the Microsoft To Do app').toggleMyDay()
 
         app.addProject('App Features')
         app.getProject('App Features').addTask('Custom projects with rename/delete (try clicking the project title above!)')
