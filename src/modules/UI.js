@@ -619,7 +619,7 @@ export default class UI {
                 </span>
                 <span class="nav-item-right">
                     <span class="project-task-count">${Project.taskCount()}</span>
-                    <span class="project-delete material-symbols-rounded">delete</span>
+                    ${Project.isDefault() ? '' : '<span class="project-delete material-symbols-rounded">delete</span>'}
                 </span>
             </span>`
 
