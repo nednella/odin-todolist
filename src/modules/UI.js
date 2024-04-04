@@ -521,19 +521,19 @@ export default class UI {
 
         // if default project, assign flag based on what project the task was added to
         if (activeProject.isDefault()) {
-            const allTasks = UI.app.getProject('All Tasks')
+            const Tasks = UI.app.getProject('Tasks')
 
             switch (activeProject.getTitle()) {
                 case 'My Day':
-                    allTasks.addTask(Title, true, null)
+                    Tasks.addTask(Title, true, null)
                     break
 
                 case 'Important':
-                    allTasks.addTask(Title, null, true)
+                    Tasks.addTask(Title, null, true)
                     break
                 
-                case 'All Tasks':
-                    allTasks.addTask(Title)
+                case 'Tasks':
+                    Tasks.addTask(Title)
                     break
             }
         } else {
