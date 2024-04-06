@@ -25,6 +25,7 @@ export default class UI {
 
         UI.init()
         UI.initEventListeners()
+        UI.setTheme(Storage.getTheme())
     }
 
     static init() {
@@ -286,6 +287,14 @@ export default class UI {
         }
     }
 
+    static getTheme() {
+        return document.querySelector('html').getAttribute('data-theme')
+    }
+
+    static setTheme(theme) {
+        return document.querySelector('html').setAttribute('data-theme', theme)
+    }
+
     static toggleTheme() {
         const html = document.querySelector('html'),
               currentTheme = html.getAttribute('data-theme')
@@ -293,6 +302,8 @@ export default class UI {
         currentTheme == 'light'
             ? html.setAttribute('data-theme', 'dark')
             : html.setAttribute('data-theme', 'light')
+
+        Storage.saveTheme(UI.getTheme())
     }
 
     static toggleNavModal() {

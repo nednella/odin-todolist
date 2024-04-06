@@ -12,9 +12,19 @@ export default class Storage {
         return localStorage.clear()
     }
 
+    static saveTheme (theme) {
+        console.log('STORAGE: Theme saved.')
+        return localStorage.setItem('theme', theme)
+    }
+
+    static getTheme () {
+        let theme = localStorage.getItem('theme')
+        if (!theme) return 'light'
+        else return theme
+    }
+
     static saveApp (projects) {
         console.log('STORAGE: Projects saved.')
-        Storage.clear()
         return localStorage.setItem('projects', JSON.stringify(projects))
     }
     
